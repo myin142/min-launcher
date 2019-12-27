@@ -43,15 +43,10 @@ public class HomeTop extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         dateView = view.findViewById(R.id.home_top_date);
+        dateView.setOnClickListener((View v) -> openCalendar());
+
         timeView = view.findViewById(R.id.home_top_time);
-
-        dateView.setOnClickListener((View v) -> {
-            openCalendar();
-        });
-
-        timeView.setOnClickListener((View v) -> {
-            openAlarm();
-        });
+        timeView.setOnClickListener((View v) -> openAlarm());
 
         Locale locale = Configuration.getCurrentLocale(getContext());
         timeFormat = SimpleDateFormat.getTimeInstance(DateFormat.SHORT, locale);

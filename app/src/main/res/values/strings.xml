@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MinPhone</string>
+    <string name="app_select">Select App</string>
 </resources>
