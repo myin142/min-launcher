@@ -19,7 +19,7 @@ public class AppsListAdapter extends RecyclerView.Adapter<AppsListAdapter.AppLis
     @NonNull
     @Override
     public AppListItemView onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        TextView textView = (TextView) LayoutInflater.from(parent.getContext()).inflate(R.layout.app_item, parent, false);
+        TextView textView = (TextView) LayoutInflater.from(parent.getContext()).inflate(R.layout.apps_item, parent, false);
         return new AppListItemView(textView);
     }
 

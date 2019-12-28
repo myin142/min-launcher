@@ -22,7 +22,7 @@ public class AppsList extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.apps_list);
+        setContentView(R.layout.apps_activity);
 
         RecyclerView recyclerAppsList = findViewById(R.id.apps_list);
         recyclerAppsList.setHasFixedSize(true);
