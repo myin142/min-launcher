@@ -1,10 +1,11 @@
-package myin.phone;
+package myin.phone.home;
 
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import myin.phone.R;
 import myin.phone.apps.AppsList;
 
 public class HomeActivity extends AppCompatActivity {

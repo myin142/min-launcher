@@ -1,4 +1,4 @@
-package myin.phone;
+package myin.phone.home;
 
 import android.Manifest;
 import android.content.BroadcastReceiver;
@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import myin.phone.R;
 import myin.phone.utils.Configuration;
 import myin.phone.utils.Permission;
 

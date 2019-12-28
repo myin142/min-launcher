@@ -6,7 +6,7 @@
                                                    android:padding="20dp">
     <fragment android:layout_width="0dp"
               android:layout_height="wrap_content"
-              android:name="myin.phone.HomeTop"
+              android:name="myin.phone.home.HomeTop"
               android:id="@+id/home_top"
               app:layout_constraintTop_toTopOf="parent"
               app:layout_constraintEnd_toEndOf="parent"
@@ -21,7 +21,7 @@
     </LinearLayout>
     <fragment android:layout_width="0dp"
               android:layout_height="wrap_content"
-              android:name="myin.phone.HomeBottom"
+              android:name="myin.phone.home.HomeBottom"
               android:id="@+id/home_bottom"
               app:layout_constraintEnd_toEndOf="parent"
               app:layout_constraintBottom_toBottomOf="parent"
