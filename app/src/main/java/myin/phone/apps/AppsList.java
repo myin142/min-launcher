@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import myin.phone.R;
+import myin.phone.list.ListItemAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,8 +42,8 @@ public class AppsList extends AppCompatActivity {
             appItems.add(new AppItem(app.loadLabel(pm), app.activityInfo.packageName));
         }
 
-        AppsListAdapter appsListAdapter = new AppsListAdapter(appItems);
-        appsListAdapter.onAppClickListener(appItem -> {
+        ListItemAdapter<AppItem> appsListAdapter = new ListItemAdapter<>(appItems);
+        appsListAdapter.onItemClickListener(appItem -> {
             Intent data = new Intent();
             data.putExtra(SELECTED_APP, appItem.getFullName());
             System.out.println("Clicked on App: " + appItem.getName());

@@ -8,4 +8,8 @@ import lombok.Data;
 public class AppItem {
     private CharSequence name;
     private CharSequence fullName;
+
+    public String toString() {
+        return name.toString();
+    }
 }
