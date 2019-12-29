@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import lombok.RequiredArgsConstructor;
 import myin.phone.R;
 
+import java.util.Collections;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -50,6 +51,29 @@ public class ListItemAdapter<T> extends RecyclerView.Adapter<ListItemAdapter.Lis
 
     public void onItemClickListener(Consumer<T> itemClickListener) {
         this.itemClickListener = itemClickListener;
+    }
+
+    public void moveItem(int fromPosition, int toPosition) {
+        if (fromPosition < toPosition) {
+            for (int i = fromPosition; i < toPosition; i++) {
+                Collections.swap(list, i, i + 1);
+            }
+        } else {
+            for (int i = fromPosition; i > toPosition; i--) {
+                Collections.swap(list, i, i - 1);
+            }
+        }
+        notifyItemMoved(fromPosition, toPosition);
+    }
+
+    public void addItem(T item) {
+        list.add(item);
+        notifyDataSetChanged();
+    }
+
+    public void removeItem(int position) {
+        list.remove(position);
+        notifyItemRemoved(position);
     }
 
     public static class ListItemView extends RecyclerView.ViewHolder {

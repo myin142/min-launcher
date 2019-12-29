@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import myin.phone.R;
-import myin.phone.apps.AppsList;
+import myin.phone.settings.Settings;
 
 public class HomeBottom extends Fragment {
 
@@ -27,12 +27,12 @@ public class HomeBottom extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         settingsIcon = view.findViewById(R.id.settings);
-        settingsIcon.setOnClickListener((View v) -> test());
+        settingsIcon.setOnClickListener((View v) -> openSettings());
     }
 
-    public void test() {
-        Intent appsIntent = new Intent(getContext(), AppsList.class);
-        startActivityForResult(appsIntent, AppsList.SELECT_APP_REQUEST_CODE);
+    public void openSettings() {
+        Intent appsIntent = new Intent(getContext(), Settings.class);
+        startActivityForResult(appsIntent, 0);
     }
 
 }
