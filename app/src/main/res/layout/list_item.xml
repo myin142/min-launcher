@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content" android:id="@+id/rootText" android:paddingTop="10dp"
-          android:paddingBottom="10dp">
-
+          android:layout_height="wrap_content"
+          android:id="@+id/rootText"
+          android:paddingTop="@dimen/half_view_padding"
+          android:paddingBottom="@dimen/half_view_padding"
+          android:textSize="@dimen/text_size">
 </TextView>

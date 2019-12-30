@@ -22,6 +22,7 @@
         </activity>
         <activity android:name=".apps.AppsList"/>
         <activity android:name=".settings.Settings"/>
+        <activity android:name=".settings.EditApps"/>
     </application>
 
     <uses-permission android:name="android.permission.SET_ALARM"/>

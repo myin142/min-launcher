@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class AppItem {
+public class AppItem implements Comparable<AppItem> {
     private CharSequence name;
     private CharSequence fullName;
 
@@ -31,5 +31,10 @@ public class AppItem {
 
     public String toString() {
         return name.toString();
+    }
+
+    @Override
+    public int compareTo(AppItem o) {
+        return name.toString().toLowerCase().compareTo(o.getName().toString().toLowerCase());
     }
 }

@@ -12,6 +12,7 @@ import myin.phone.R;
 import myin.phone.list.ListItemAdapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -40,6 +41,7 @@ public class AppsList extends AppCompatActivity {
         for (ResolveInfo app : apps) {
             appItems.add(new AppItem(pm, app));
         }
+        Collections.sort(appItems);
 
         ListItemAdapter<AppItem> appsListAdapter = new ListItemAdapter<>(appItems);
         appsListAdapter.onItemClickListener(appItem -> {

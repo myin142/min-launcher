@@ -2,15 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent" android:padding="20dp">
+              android:layout_height="match_parent"
+              android:padding="@dimen/screen_padding">
 
-    <TextView
-            android:text="@string/app_select"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/rootText"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+    <TextView android:text="@string/app_select"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:id="@+id/rootText"
+              android:textSize="@dimen/title_size"/>
 
     <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="match_parent" android:id="@+id/apps_list" android:layout_marginTop="20dp"/>
+            android:layout_height="match_parent"
+            android:id="@+id/apps_list"
+            android:layout_marginTop="@dimen/view_padding"/>
 </LinearLayout>

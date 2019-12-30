@@ -19,27 +19,12 @@ public class LoadAppsActivity extends AppCompatActivity {
     private static final Logger log = Logger.getLogger("LoadAppsActivity");
     protected List<AppItem> appList = new ArrayList<>();
     protected SharedPreferences preferences;
-    protected boolean dirty = true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         preferences = getApplicationContext().getSharedPreferences(SharedConst.PREFERENCE_NAME, 0);
         reloadApps();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-/*
-        if (appsHasChanged()) {
-            reloadApps();
-        }
-*/
-    }
-
-    protected boolean appsHasChanged() {
-        return dirty;
     }
 
     private void reloadApps() {
@@ -55,16 +40,7 @@ public class LoadAppsActivity extends AppCompatActivity {
             appList.add(new AppItem(pm, appPackage));
         }
 
-        markAppsPristine();
         log.info("Loading Apps: " + appList);
-    }
-
-    protected void markAppsPristine() {
-        dirty = false;
-    }
-
-    protected void markAppsDirty() {
-        dirty = true;
     }
 
 }

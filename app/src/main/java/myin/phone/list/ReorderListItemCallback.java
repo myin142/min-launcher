@@ -26,11 +26,6 @@ public class ReorderListItemCallback extends ItemTouchHelper.SimpleCallback {
     }
 
     @Override
-    public void onMoved(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, int fromPos, @NonNull RecyclerView.ViewHolder target, int toPos, int x, int y) {
-        super.onMoved(recyclerView, viewHolder, fromPos, target, toPos, x, y);
-    }
-
-    @Override
     public void onSelectedChanged(@Nullable RecyclerView.ViewHolder viewHolder, int actionState) {
         super.onSelectedChanged(viewHolder, actionState);
 
