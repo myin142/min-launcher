@@ -26,7 +26,12 @@ public class HomeActivity extends LoadAppsActivity {
 
         RecyclerView appsView = findViewById(R.id.apps_list);
         appsView.setHasFixedSize(true);
-        appsView.setLayoutManager(new LinearLayoutManager(this));
+        appsView.setLayoutManager(new LinearLayoutManager(this){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
         appsView.setAdapter(appAdapter);
     }
 
