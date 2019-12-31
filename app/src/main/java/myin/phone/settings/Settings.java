@@ -18,7 +18,7 @@ public class Settings extends AppCompatActivity {
 
     public void openEditApps() {
         Intent appsListIntent = new Intent(this, EditApps.class);
+        appsListIntent.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
         startActivity(appsListIntent);
     }
-
 }

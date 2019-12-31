@@ -14,8 +14,6 @@ import myin.phone.settings.Settings;
 
 public class HomeBottom extends Fragment {
 
-    private ImageView settingsIcon;
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -26,13 +24,12 @@ public class HomeBottom extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        settingsIcon = view.findViewById(R.id.settings);
+        ImageView settingsIcon = view.findViewById(R.id.settings);
         settingsIcon.setOnClickListener((View v) -> openSettings());
     }
 
     public void openSettings() {
         Intent appsIntent = new Intent(getContext(), Settings.class);
-        startActivityForResult(appsIntent, 0);
+        getActivity().startActivityForResult(appsIntent, HomeActivity.REQ_APPS_CHANGED);
     }
-
 }

@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
+import android.view.MotionEvent;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,11 +16,9 @@ import myin.phone.list.ListItemAdapter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class AppsList extends AppCompatActivity {
 
-    private static final Logger log = Logger.getLogger("LoadAppsActivity");
     public static final String SELECTED_APP = "appList_selectedApp";
 
     @Override
@@ -28,9 +28,7 @@ public class AppsList extends AppCompatActivity {
 
         RecyclerView recyclerAppsList = findViewById(R.id.apps_list);
         recyclerAppsList.setHasFixedSize(true);
-
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerAppsList.setLayoutManager(layoutManager);
+        recyclerAppsList.setLayoutManager(new LinearLayoutManager(this));
 
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
@@ -47,7 +45,6 @@ public class AppsList extends AppCompatActivity {
         appsListAdapter.onItemClickListener(appItem -> {
             Intent data = new Intent();
             data.putExtra(SELECTED_APP, appItem.getFullName());
-            log.info("Clicked on App: " + appItem);
 
             setResult(RESULT_OK, data);
             finish();

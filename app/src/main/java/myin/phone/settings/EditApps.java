@@ -10,6 +10,8 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.annimon.stream.Collectors;
+import com.annimon.stream.Stream;
 import myin.phone.R;
 import myin.phone.SharedConst;
 import myin.phone.apps.AppItem;
@@ -18,10 +20,6 @@ import myin.phone.list.ListItemAdapter;
 import myin.phone.list.ReorderListItemCallback;
 import myin.phone.shared.LoadAppsActivity;
 import myin.phone.utils.IntentBuilder;
-import myin.phone.utils.Stream;
-
-import java.util.LinkedHashSet;
-import java.util.List;
 
 public class EditApps extends LoadAppsActivity {
 
@@ -31,7 +29,6 @@ public class EditApps extends LoadAppsActivity {
     private static final int MAX_APPS = 7;
 
     private TextView addText;
-    private RecyclerView editAppsList;
     private ListItemAdapter<AppItem> appsAdapter;
     private boolean changed = false;
 
@@ -43,7 +40,7 @@ public class EditApps extends LoadAppsActivity {
         addText = findViewById(R.id.test);
         addText.setOnClickListener(v -> openNewAppsList());
 
-        editAppsList = findViewById(R.id.edit_apps_list);
+        RecyclerView editAppsList = findViewById(R.id.edit_apps_list);
         editAppsList.setLayoutManager(new LinearLayoutManager(this));
         editAppsList.setHasFixedSize(true);
 
@@ -78,16 +75,15 @@ public class EditApps extends LoadAppsActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (data == null) {
-            return;
+        if (resultCode == RESULT_OK && data != null) {
+            String app = data.getStringExtra(AppsList.SELECTED_APP);
+            switch (requestCode) {
+                case NEW_APP_REQUEST:
+                    addNewApp(app);
+                    break;
+            }
         }
 
-        String app = data.getStringExtra(AppsList.SELECTED_APP);
-        switch (requestCode) {
-            case NEW_APP_REQUEST:
-                addNewApp(app);
-                break;
-        }
     }
 
     private void addNewApp(String appName) {
@@ -98,7 +94,13 @@ public class EditApps extends LoadAppsActivity {
 
     private void updateList() {
         updateAddButtonVisibility();
-        changed = true;
+        if (!changed) {
+            changed = true;
+
+            setResult(RESULT_OK, IntentBuilder.builder()
+                    .put(APPS_CHANGED, true)
+                    .build());
+        }
     }
 
     private void updateAddButtonVisibility() {
@@ -107,24 +109,19 @@ public class EditApps extends LoadAppsActivity {
 
     @Override
     protected void onStop() {
+        super.onStop();
         if (changed) {
             saveApps();
-
-            changed = false;
-            setResult(RESULT_OK, IntentBuilder.builder()
-                    .put(APPS_CHANGED, true)
-                    .build());
         }
-        super.onStop();
     }
 
     private void saveApps() {
         SharedPreferences.Editor editor = preferences.edit();
 
-        List<String> appPackages = Stream.map(appList, AppItem::getFullName);
+        // Use String because StringSet cannot be reordered
+        String apps = Stream.of(appList).map(AppItem::getFullName).collect(Collectors.joining(SharedConst.PREF_APPS_DELIM));
+        editor.putString(SharedConst.PREF_APPS, apps);
 
-        // Use LinkedHashSet to preserve order
-        editor.putStringSet(SharedConst.PREF_APPS, new LinkedHashSet<>(appPackages));
         editor.apply();
     }
 }

@@ -5,18 +5,15 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import com.annimon.stream.Optional;
 import myin.phone.SharedConst;
 import myin.phone.apps.AppItem;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
-import java.util.logging.Logger;
 
 public class LoadAppsActivity extends AppCompatActivity {
 
-    private static final Logger log = Logger.getLogger("LoadAppsActivity");
     protected List<AppItem> appList = new ArrayList<>();
     protected SharedPreferences preferences;
 
@@ -27,20 +24,16 @@ public class LoadAppsActivity extends AppCompatActivity {
         reloadApps();
     }
 
-    private void reloadApps() {
-        Set<String> appPackages = preferences.getStringSet(SharedConst.PREF_APPS, Collections.emptySet());
-
-        if (appPackages == null) {
-            return;
-        }
+    protected void reloadApps() {
+        String[] appPackages = Optional.ofNullable(preferences.getString(SharedConst.PREF_APPS, null))
+                .map(x -> x.split(SharedConst.PREF_APPS_DELIM))
+                .orElse(new String[0]);
 
         appList.clear();
         PackageManager pm = getPackageManager();
         for (String appPackage : appPackages) {
             appList.add(new AppItem(pm, appPackage));
         }
-
-        log.info("Loading Apps: " + appList);
     }
 
 }
