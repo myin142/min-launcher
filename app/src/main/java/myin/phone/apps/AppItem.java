@@ -8,12 +8,25 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class AppItem implements Comparable<AppItem> {
+public class AppItem {
     private CharSequence name;
     private CharSequence fullName;
 
-    public AppItem(PackageManager pm, String packageName) {
-        this(pm, pm.getLaunchIntentForPackage(packageName));
+    public static Intent getIntentForFullName(PackageManager pm, String fullName) {
+        System.out.println("Intent for " + fullName);
+        int lastDot = fullName.lastIndexOf(".");
+        String packageName = fullName.substring(0, lastDot);
+        String className = fullName.substring(lastDot + 1);
+        System.out.println("Package: " + packageName);
+        System.out.println("Class: " + className);
+
+        Intent appIntent = pm.getLaunchIntentForPackage(packageName);
+        appIntent.setClassName(packageName, className);
+        return appIntent;
+    }
+
+    public AppItem(PackageManager pm, String fullName) {
+        this(pm, getIntentForFullName(pm, fullName));
     }
 
     public AppItem(PackageManager pm, Intent intent) {
@@ -22,7 +35,7 @@ public class AppItem implements Comparable<AppItem> {
 
     public AppItem(PackageManager pm, ResolveInfo info) {
         name = info.loadLabel(pm);
-        fullName = info.activityInfo.packageName;
+        fullName = info.activityInfo.name;
     }
 
     public String getFullName() {
@@ -33,8 +46,4 @@ public class AppItem implements Comparable<AppItem> {
         return name.toString();
     }
 
-    @Override
-    public int compareTo(AppItem o) {
-        return name.toString().toLowerCase().compareTo(o.getName().toString().toLowerCase());
-    }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:homeApp="http://schemas.android.com/apk/res-auto"
               android:orientation="horizontal"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
@@ -8,7 +8,7 @@
 
     <ImageView android:layout_width="0dp"
                android:layout_height="@dimen/icon_size"
-               app:srcCompat="@drawable/telephone"
+               homeApp:srcCompat="@drawable/telephone"
                android:id="@+id/phone"
                android:layout_weight="1"/>
     <Space android:layout_width="wrap_content"
@@ -16,7 +16,7 @@
            android:layout_weight="1"/>
     <ImageView android:layout_width="0dp"
                android:layout_height="@dimen/icon_size"
-               app:srcCompat="@drawable/settings"
+               homeApp:srcCompat="@drawable/settings"
                android:id="@+id/settings"
                android:layout_weight="1"/>
 </LinearLayout>

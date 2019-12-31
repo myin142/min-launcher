@@ -25,12 +25,14 @@ public class EditApps extends LoadAppsActivity {
 
     public static final String APPS_CHANGED = "editApps_changed";
 
-    private static final int NEW_APP_REQUEST = 1;
+    private static final int REQ_NEW_APP = 1;
+    private static final int REQ_EDIT_APP = 2;
     private static final int MAX_APPS = 7;
 
     private TextView addText;
     private ListItemAdapter<AppItem> appsAdapter;
     private boolean changed = false;
+    private int editIndex = -1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,6 +47,7 @@ public class EditApps extends LoadAppsActivity {
         editAppsList.setHasFixedSize(true);
 
         appsAdapter = new ListItemAdapter<>(appList);
+        appsAdapter.onItemClickListener((appItem , p) -> openEditAppsList(p));
         editAppsList.setAdapter(appsAdapter);
 
         ItemTouchHelper.Callback callback = new ReorderListItemCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.END) {
@@ -68,7 +71,13 @@ public class EditApps extends LoadAppsActivity {
 
     private void openNewAppsList() {
         Intent appsListIntent = new Intent(this, AppsList.class);
-        startActivityForResult(appsListIntent, NEW_APP_REQUEST);
+        startActivityForResult(appsListIntent, REQ_NEW_APP);
+    }
+
+    private void openEditAppsList(int position) {
+        Intent appsListIntent = new Intent(this, AppsList.class);
+        startActivityForResult(appsListIntent, REQ_EDIT_APP);
+        editIndex = position;
     }
 
     @Override
@@ -76,20 +85,21 @@ public class EditApps extends LoadAppsActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK && data != null) {
-            String app = data.getStringExtra(AppsList.SELECTED_APP);
+            AppItem app = new AppItem(getPackageManager(), data.getStringExtra(AppsList.SELECTED_APP));
             switch (requestCode) {
-                case NEW_APP_REQUEST:
-                    addNewApp(app);
+                case REQ_NEW_APP:
+                    appsAdapter.addItem(app);
+                    break;
+                case REQ_EDIT_APP:
+                    appsAdapter.updateItem(editIndex, app);
                     break;
             }
+
+            updateList();
         }
 
-    }
-
-    private void addNewApp(String appName) {
-        AppItem app = new AppItem(getPackageManager(), appName);
-        appsAdapter.addItem(app);
-        updateList();
+        // Reset edit index after every closed activity
+        editIndex = -1;
     }
 
     private void updateList() {

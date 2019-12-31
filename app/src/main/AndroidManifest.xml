@@ -1,7 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools" package="myin.phone">
 
-    <application android:allowBackup="true"
+    <uses-permission android:name="android.permission.SET_ALARM"/>
+
+    <application android:name=".MainApplication"
+                 android:allowBackup="true"
                  android:label="@string/app_name"
                  android:icon="@mipmap/ic_launcher"
                  android:roundIcon="@mipmap/ic_launcher_round"
@@ -24,6 +27,4 @@
         <activity android:name=".settings.Settings"/>
         <activity android:name=".settings.EditApps"/>
     </application>
-
-    <uses-permission android:name="android.permission.SET_ALARM"/>
 </manifest>

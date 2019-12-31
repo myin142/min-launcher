@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:homeApp="http://schemas.android.com/apk/res-auto"
                                                    android:layout_width="match_parent"
                                                    android:layout_height="match_parent"
                                                    android:padding="@dimen/screen_padding">
@@ -8,16 +8,16 @@
               android:layout_height="wrap_content"
               android:name="myin.phone.home.HomeTop"
               android:id="@+id/home_top"
-              app:layout_constraintTop_toTopOf="parent"
-              app:layout_constraintEnd_toEndOf="parent"
-              app:layout_constraintStart_toStartOf="parent"/>
+              homeApp:layout_constraintTop_toTopOf="parent"
+              homeApp:layout_constraintEnd_toEndOf="parent"
+              homeApp:layout_constraintStart_toStartOf="parent"/>
     <LinearLayout android:orientation="vertical"
                   android:layout_width="0dp"
                   android:layout_height="0dp"
-                  app:layout_constraintEnd_toEndOf="parent"
-                  app:layout_constraintStart_toStartOf="parent"
-                  app:layout_constraintBottom_toTopOf="@+id/home_bottom"
-                  app:layout_constraintTop_toBottomOf="@+id/home_top"
+                  homeApp:layout_constraintEnd_toEndOf="parent"
+                  homeApp:layout_constraintStart_toStartOf="parent"
+                  homeApp:layout_constraintBottom_toTopOf="@+id/home_bottom"
+                  homeApp:layout_constraintTop_toBottomOf="@+id/home_top"
                   android:id="@+id/home_main"
                   android:layout_marginTop="@dimen/view_padding"
                   android:layout_marginBottom="@dimen/view_padding"
@@ -31,7 +31,7 @@
               android:layout_height="wrap_content"
               android:name="myin.phone.home.HomeBottom"
               android:id="@+id/home_bottom"
-              app:layout_constraintEnd_toEndOf="parent"
-              app:layout_constraintBottom_toBottomOf="parent"
-              app:layout_constraintStart_toStartOf="parent"/>
+              homeApp:layout_constraintEnd_toEndOf="parent"
+              homeApp:layout_constraintBottom_toBottomOf="parent"
+              homeApp:layout_constraintStart_toStartOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

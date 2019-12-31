@@ -6,6 +6,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.util.Consumer;
 import androidx.recyclerview.widget.RecyclerView;
+import com.annimon.stream.function.BiConsumer;
 import lombok.RequiredArgsConstructor;
 import myin.phone.R;
 
@@ -16,7 +17,7 @@ import java.util.List;
 public class ListItemAdapter<T> extends RecyclerView.Adapter<ListItemAdapter.ListItemView> {
 
     private final List<T> list;
-    private Consumer<T> itemClickListener;
+    private BiConsumer<T, Integer> itemClickListener;
 
     @NonNull
     @Override
@@ -39,7 +40,7 @@ public class ListItemAdapter<T> extends RecyclerView.Adapter<ListItemAdapter.Lis
 
         textView.setOnClickListener(v -> {
             if (itemClickListener != null) {
-                itemClickListener.accept(item);
+                itemClickListener.accept(item, position);
             }
         });
     }
@@ -49,7 +50,7 @@ public class ListItemAdapter<T> extends RecyclerView.Adapter<ListItemAdapter.Lis
         return list.size();
     }
 
-    public void onItemClickListener(Consumer<T> itemClickListener) {
+    public void onItemClickListener(BiConsumer<T, Integer> itemClickListener) {
         this.itemClickListener = itemClickListener;
     }
 
@@ -74,6 +75,11 @@ public class ListItemAdapter<T> extends RecyclerView.Adapter<ListItemAdapter.Lis
     public void removeItem(int position) {
         list.remove(position);
         notifyItemRemoved(position);
+    }
+
+    public void updateItem(int position, T item) {
+        list.set(position, item);
+        notifyItemChanged(position);
     }
 
     public static class ListItemView extends RecyclerView.ViewHolder {

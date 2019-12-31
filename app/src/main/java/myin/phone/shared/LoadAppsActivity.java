@@ -25,14 +25,14 @@ public class LoadAppsActivity extends AppCompatActivity {
     }
 
     protected void reloadApps() {
-        String[] appPackages = Optional.ofNullable(preferences.getString(SharedConst.PREF_APPS, null))
+        String[] apps = Optional.ofNullable(preferences.getString(SharedConst.PREF_APPS, null))
                 .map(x -> x.split(SharedConst.PREF_APPS_DELIM))
                 .orElse(new String[0]);
 
         appList.clear();
         PackageManager pm = getPackageManager();
-        for (String appPackage : appPackages) {
-            appList.add(new AppItem(pm, appPackage));
+        for (String fullAppName : apps) {
+            appList.add(new AppItem(pm, fullAppName));
         }
     }
 

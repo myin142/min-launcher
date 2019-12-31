@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+        xmlns:homeApp="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/screen_padding">
@@ -10,20 +10,20 @@
               android:layout_width="0dp"
               android:layout_height="wrap_content"
               android:id="@+id/title"
-              app:layout_constraintEnd_toEndOf="parent"
-              app:layout_constraintBottom_toTopOf="@+id/edit_apps_list"
-              app:layout_constraintTop_toTopOf="parent"
-              app:layout_constraintStart_toStartOf="parent"
+              homeApp:layout_constraintEnd_toEndOf="parent"
+              homeApp:layout_constraintBottom_toTopOf="@+id/edit_apps_list"
+              homeApp:layout_constraintTop_toTopOf="parent"
+              homeApp:layout_constraintStart_toStartOf="parent"
               android:textSize="@dimen/title_size"/>
     <androidx.recyclerview.widget.RecyclerView
             android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:id="@+id/edit_apps_list"
-            app:layout_constraintTop_toBottomOf="@+id/title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/test"
+            homeApp:layout_constraintTop_toBottomOf="@+id/title"
+            homeApp:layout_constraintEnd_toEndOf="parent"
+            homeApp:layout_constraintStart_toStartOf="parent"
+            homeApp:layout_constraintBottom_toTopOf="@+id/test"
             android:layout_marginTop="@dimen/view_padding"
             android:layout_marginBottom="@dimen/view_padding">
     </androidx.recyclerview.widget.RecyclerView>
@@ -31,9 +31,9 @@
               android:layout_width="0dp"
               android:layout_height="wrap_content"
               android:id="@+id/test"
-              app:layout_constraintTop_toBottomOf="@+id/edit_apps_list"
-              app:layout_constraintEnd_toEndOf="parent"
-              app:layout_constraintStart_toStartOf="parent"
-              app:layout_constraintBottom_toBottomOf="parent"
+              homeApp:layout_constraintTop_toBottomOf="@+id/edit_apps_list"
+              homeApp:layout_constraintEnd_toEndOf="parent"
+              homeApp:layout_constraintStart_toStartOf="parent"
+              homeApp:layout_constraintBottom_toBottomOf="parent"
               android:textSize="@dimen/text_size"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -35,14 +35,15 @@ public class AppsList extends AppCompatActivity {
 
         PackageManager pm = getPackageManager();
         List<ResolveInfo> apps = pm.queryIntentActivities(intent, 0);
+        Collections.sort(apps, new ResolveInfo.DisplayNameComparator(pm));
+
         List<AppItem> appItems = new ArrayList<>();
         for (ResolveInfo app : apps) {
             appItems.add(new AppItem(pm, app));
         }
-        Collections.sort(appItems);
 
         ListItemAdapter<AppItem> appsListAdapter = new ListItemAdapter<>(appItems);
-        appsListAdapter.onItemClickListener(appItem -> {
+        appsListAdapter.onItemClickListener((appItem, p)-> {
             Intent data = new Intent();
             data.putExtra(SELECTED_APP, appItem.getFullName());
 
