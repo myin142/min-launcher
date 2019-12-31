@@ -23,6 +23,10 @@ public class HomeActivity extends LoadAppsActivity {
         setContentView(R.layout.home_activity);
 
         appAdapter = new ListItemAdapter<>(appList);
+        appAdapter.onItemClickListener(appItem -> {
+            Intent appIntent = getPackageManager().getLaunchIntentForPackage(appItem.getFullName());
+            startActivity(appIntent);
+        });
 
         RecyclerView appsView = findViewById(R.id.apps_list);
         appsView.setHasFixedSize(true);
