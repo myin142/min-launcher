@@ -1,49 +1,31 @@
 package myin.phone.apps;
 
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import myin.phone.data.app.HomeApp;
 
 @Data
 @AllArgsConstructor
 public class AppItem {
-    private CharSequence name;
-    private CharSequence fullName;
 
-    public static Intent getIntentForFullName(PackageManager pm, String fullName) {
-        System.out.println("Intent for " + fullName);
-        int lastDot = fullName.lastIndexOf(".");
-        String packageName = fullName.substring(0, lastDot);
-        String className = fullName.substring(lastDot + 1);
-        System.out.println("Package: " + packageName);
-        System.out.println("Class: " + className);
-
-        Intent appIntent = pm.getLaunchIntentForPackage(packageName);
-        appIntent.setClassName(packageName, className);
-        return appIntent;
-    }
-
-    public AppItem(PackageManager pm, String fullName) {
-        this(pm, getIntentForFullName(pm, fullName));
-    }
-
-    public AppItem(PackageManager pm, Intent intent) {
-        this(pm, pm.resolveActivity(intent, 0));
-    }
+    private final String packageName;
+    private final String className;
+    private final String label;
 
     public AppItem(PackageManager pm, ResolveInfo info) {
-        name = info.loadLabel(pm);
-        fullName = info.activityInfo.name;
-    }
-
-    public String getFullName() {
-        return fullName.toString();
+        label = info.loadLabel(pm).toString();
+        packageName = info.activityInfo.packageName;
+        className = info.activityInfo.name;
     }
 
     public String toString() {
-        return name.toString();
+        return label;
+    }
+
+    public HomeApp toHomeApp() {
+        return new HomeApp(packageName, className, label);
     }
 
 }

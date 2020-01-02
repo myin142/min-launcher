@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
-import android.view.MotionEvent;
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,7 +17,9 @@ import java.util.List;
 
 public class AppsList extends AppCompatActivity {
 
-    public static final String SELECTED_APP = "appList_selectedApp";
+    public static final String SELECTED_PACKAGE_APP = "appList_selectedPackage";
+    public static final String SELECTED_CLASS_APP  = "appList_selectedClass";
+    public static final String SELECTED_LABEL_APP = "appList_selectedLabel";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,7 +45,9 @@ public class AppsList extends AppCompatActivity {
         ListItemAdapter<AppItem> appsListAdapter = new ListItemAdapter<>(appItems);
         appsListAdapter.onItemClickListener((appItem, p)-> {
             Intent data = new Intent();
-            data.putExtra(SELECTED_APP, appItem.getFullName());
+            data.putExtra(SELECTED_PACKAGE_APP, appItem.getPackageName());
+            data.putExtra(SELECTED_CLASS_APP, appItem.getClassName());
+            data.putExtra(SELECTED_LABEL_APP, appItem.getLabel());
 
             setResult(RESULT_OK, data);
             finish();

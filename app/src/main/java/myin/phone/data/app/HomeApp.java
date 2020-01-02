@@ -1,5 +1,7 @@
 package myin.phone.data.app;
 
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -21,5 +23,27 @@ public class HomeApp {
 
     @ColumnInfo(name = "index")
     public int index;
+
+    public HomeApp(String packageName, String className, String label) {
+        this.packageName = packageName;
+        this.className = className;
+        this.label = label;
+    }
+
+    public Intent getActivityIntent(PackageManager pm) {
+        Intent intent = pm.getLaunchIntentForPackage(packageName);
+
+        int lastDot = className.lastIndexOf(".");
+        String clsPackage = className.substring(0, lastDot);
+        String clsName = className.substring(lastDot + 1);
+
+        intent.setClassName(clsPackage, clsName);
+        return intent;
+    }
+
+    @Override
+    public String toString() {
+        return label;
+    }
 
 }

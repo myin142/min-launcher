@@ -3,23 +3,22 @@ package myin.phone.home;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import dagger.android.AndroidInjection;
 import myin.phone.R;
+import myin.phone.data.app.HomeApp;
 import myin.phone.data.app.HomeAppRepository;
-import myin.phone.apps.AppItem;
 import myin.phone.list.ListItemAdapter;
-import myin.phone.settings.EditApps;
-import myin.phone.shared.LoadAppsActivity;
 
 import javax.inject.Inject;
 
-public class HomeActivity extends LoadAppsActivity {
+public class HomeActivity extends AppCompatActivity {
 
     public static final int REQ_APPS_CHANGED = 1;
 
-    private ListItemAdapter<AppItem> appAdapter;
+    private ListItemAdapter<HomeApp> appAdapter;
 
     @Inject
     HomeAppRepository homeAppRepository;
@@ -30,13 +29,14 @@ public class HomeActivity extends LoadAppsActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_activity);
 
-        appAdapter = new ListItemAdapter<>(appList);
-        appAdapter.onItemClickListener((appItem, p) -> {
-            Intent appIntent = AppItem.getIntentForFullName(getPackageManager(), appItem.getFullName());
+        appAdapter = new ListItemAdapter<>();
+        appAdapter.onItemClickListener((homeApp, p) -> {
+            Intent appIntent = homeApp.getActivityIntent(getPackageManager());
             startActivity(appIntent);
         });
 
-        homeAppRepository.getHomeAppsSorted().observe(this, appList -> {
+        homeAppRepository.getHomeApps().observe(this, appList -> {
+            appAdapter.submitList(appList);
         });
 
         RecyclerView appsView = findViewById(R.id.apps_list);
@@ -50,15 +50,4 @@ public class HomeActivity extends LoadAppsActivity {
         appsView.setAdapter(appAdapter);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == REQ_APPS_CHANGED && resultCode == RESULT_OK &&
-                data != null && data.getBooleanExtra(EditApps.APPS_CHANGED, false)) {
-
-            reloadApps();
-            appAdapter.notifyDataSetChanged();
-        }
-    }
 }

@@ -4,20 +4,36 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
-import androidx.core.util.Consumer;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 import com.annimon.stream.function.BiConsumer;
-import lombok.RequiredArgsConstructor;
 import myin.phone.R;
 
-import java.util.Collections;
 import java.util.List;
 
-@RequiredArgsConstructor
-public class ListItemAdapter<T> extends RecyclerView.Adapter<ListItemAdapter.ListItemView> {
+public class ListItemAdapter<T> extends ListAdapter<T, ListItemAdapter.ListItemView> /*RecyclerView.Adapter<ListItemAdapter.ListItemView>*/ {
 
-    private final List<T> list;
     private BiConsumer<T, Integer> itemClickListener;
+
+    public ListItemAdapter(List<T> initialList) {
+        this();
+        submitList(initialList);
+    }
+
+    public ListItemAdapter() {
+        super(new DiffUtil.ItemCallback<T>() {
+            @Override
+            public boolean areContentsTheSame(@NonNull T oldItem, @NonNull T newItem) {
+                return oldItem.equals(newItem);
+            }
+
+            @Override
+            public boolean areItemsTheSame(@NonNull T oldItem, @NonNull T newItem) {
+                return oldItem.equals(newItem);
+            }
+        });
+    }
 
     @NonNull
     @Override
@@ -31,7 +47,7 @@ public class ListItemAdapter<T> extends RecyclerView.Adapter<ListItemAdapter.Lis
     @Override
     public void onBindViewHolder(@NonNull ListItemView holder, int position) {
         TextView textView = holder.textView;
-        T item = list.get(position);
+        T item = getItem(position);
 
         // Uses toString of Object on default
         // If required add custom function to map
@@ -45,41 +61,9 @@ public class ListItemAdapter<T> extends RecyclerView.Adapter<ListItemAdapter.Lis
         });
     }
 
-    @Override
-    public int getItemCount() {
-        return list.size();
-    }
-
     public void onItemClickListener(BiConsumer<T, Integer> itemClickListener) {
         this.itemClickListener = itemClickListener;
-    }
 
-    public void moveItem(int fromPosition, int toPosition) {
-        if (fromPosition < toPosition) {
-            for (int i = fromPosition; i < toPosition; i++) {
-                Collections.swap(list, i, i + 1);
-            }
-        } else {
-            for (int i = fromPosition; i > toPosition; i--) {
-                Collections.swap(list, i, i - 1);
-            }
-        }
-        notifyItemMoved(fromPosition, toPosition);
-    }
-
-    public void addItem(T item) {
-        list.add(item);
-        notifyDataSetChanged();
-    }
-
-    public void removeItem(int position) {
-        list.remove(position);
-        notifyItemRemoved(position);
-    }
-
-    public void updateItem(int position, T item) {
-        list.set(position, item);
-        notifyItemChanged(position);
     }
 
     public static class ListItemView extends RecyclerView.ViewHolder {
