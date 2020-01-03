@@ -71,6 +71,7 @@ public class HomeTop extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        updateCurrentTime();
         getActivity().registerReceiver(timeTickReceiver, new IntentFilter(Intent.ACTION_TIME_TICK));
     }
 

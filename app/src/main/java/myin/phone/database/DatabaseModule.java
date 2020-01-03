@@ -15,6 +15,7 @@ public class DatabaseModule {
     @Singleton
     public MainDatabase mainDatabase(Application application) {
         return Room.databaseBuilder(application, MainDatabase.class, "main_database")
+                .allowMainThreadQueries()
                 .build();
     }
 

@@ -6,10 +6,12 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.Objects;
+
 @Entity(tableName = "home_apps")
 public class HomeApp {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     public int id;
 
     @ColumnInfo(name = "package_name")
@@ -37,13 +39,22 @@ public class HomeApp {
         String clsPackage = className.substring(0, lastDot);
         String clsName = className.substring(lastDot + 1);
 
-        intent.setClassName(clsPackage, clsName);
+//        intent.setClassName(clsPackage, clsName);
         return intent;
     }
 
     @Override
     public String toString() {
         return label;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        HomeApp homeApp = (HomeApp) o;
+        return id == homeApp.id;
     }
 
 }

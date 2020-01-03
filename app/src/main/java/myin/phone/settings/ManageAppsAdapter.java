@@ -3,15 +3,14 @@ package myin.phone.settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
-import androidx.recyclerview.widget.RecyclerView;
 import com.annimon.stream.function.Consumer;
 import lombok.Setter;
 import myin.phone.R;
 import myin.phone.data.app.HomeApp;
+import myin.phone.data.app.HomeAppDiffCallback;
+import myin.phone.list.TextViewHolder;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,21 +20,10 @@ import java.util.List;
 public class ManageAppsAdapter extends ListAdapter<HomeApp, ManageAppsAdapter.ManageAppView> {
 
     private OnListAdapterChange<HomeApp> onListChange;
-    private OnListItemClick<HomeApp> onItemClick;
+    private Consumer<HomeApp> onItemClick;
 
-    protected ManageAppsAdapter() {
-        super(new DiffUtil.ItemCallback<HomeApp>() {
-            @Override
-            public boolean areItemsTheSame(@NonNull HomeApp oldItem, @NonNull HomeApp newItem) {
-                return oldItem.id == newItem.id;
-            }
-
-            @Override
-            public boolean areContentsTheSame(@NonNull HomeApp oldItem, @NonNull HomeApp newItem) {
-                return oldItem.packageName.equals(newItem.packageName) &&
-                        oldItem.className.equals(newItem.className);
-            }
-        });
+    public ManageAppsAdapter() {
+        super(new HomeAppDiffCallback());
     }
 
     @NonNull
@@ -51,7 +39,11 @@ public class ManageAppsAdapter extends ListAdapter<HomeApp, ManageAppsAdapter.Ma
     public void onBindViewHolder(@NonNull ManageAppView holder, int position) {
         HomeApp app = getItem(position);
         holder.setText(app.label);
-        holder.setOnClick(v -> onItemClick.onClick(getItem(position)));
+        holder.setOnTextClick(v -> {
+            if (onItemClick != null) {
+                onItemClick.accept(app);
+            }
+        });
     }
 
     public void addItem(HomeApp app) {
@@ -97,11 +89,24 @@ public class ManageAppsAdapter extends ListAdapter<HomeApp, ManageAppsAdapter.Ma
         });
     }
 
+    public void updateItem(HomeApp homeApp) {
+        updateCurrentList(list -> {
+            int index = list.indexOf(homeApp);
+            if (index != -1) {
+                list.set(index, homeApp);
+                updateIndexes(list);
+                notifyItemChanged(index);
+
+                if (onListChange != null) {
+                    onListChange.onItemUpdated(homeApp);
+                }
+            }
+        });
+    }
+
     private void updateCurrentList(Consumer<List<HomeApp>> listConsumer) {
         // getCurrentList() return read-only list
-        List<HomeApp> current = new ArrayList<>();
-        Collections.copy(current, getCurrentList());
-
+        List<HomeApp> current = new ArrayList<>(getCurrentList());
         listConsumer.accept(current);
 
         // Moved updateIndexes() inside each function
@@ -115,23 +120,9 @@ public class ManageAppsAdapter extends ListAdapter<HomeApp, ManageAppsAdapter.Ma
         }
     }
 
-    public static class ManageAppView extends RecyclerView.ViewHolder {
-
-        private View view;
-        private TextView textView;
-
+    public static class ManageAppView extends TextViewHolder {
         public ManageAppView(View view) {
-            super(view);
-            this.view = view;
-            this.textView = view.findViewById(R.id.text);
-        }
-
-        public void setText(String text) {
-            this.textView.setText(text);
-        }
-
-        public void setOnClick(View.OnClickListener clickListener) {
-            this.textView.setOnClickListener(clickListener);
+            super(view, view.findViewById(R.id.text));
         }
     }
 }

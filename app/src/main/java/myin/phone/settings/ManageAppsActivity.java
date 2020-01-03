@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import dagger.android.AndroidInjection;
 import myin.phone.R;
-import myin.phone.apps.AppItem;
 import myin.phone.apps.AppsList;
 import myin.phone.data.app.HomeApp;
 import myin.phone.data.app.HomeAppRepository;
@@ -41,6 +40,12 @@ public class ManageAppsActivity extends OpenAppsActivity implements OnListAdapte
         addText.setOnClickListener(v -> openNewAppsList());
 
         homeAppRepository.getHomeApps().observe(this, list -> {
+            // Do not have to always update the list
+            // The adapter should handle already it
+            if (appsAdapter.getItemCount() == 0) {
+                appsAdapter.submitList(list);
+            }
+
             updateAddButtonVisibility();
         });
 
@@ -51,7 +56,6 @@ public class ManageAppsActivity extends OpenAppsActivity implements OnListAdapte
         appsAdapter = new ManageAppsAdapter();
         appsAdapter.setOnListChange(this);
         appsAdapter.setOnItemClick(this::openEditAppsList);
-        appsAdapter.submitList(homeAppRepository.getHomeApps().getValue());
 
         editAppsList.setAdapter(appsAdapter);
 
@@ -71,15 +75,16 @@ public class ManageAppsActivity extends OpenAppsActivity implements OnListAdapte
     }
 
     @Override
-    protected void onAppSelected(int requestCode, AppItem appItem) {
+    protected void onAppSelected(int requestCode, HomeApp homeApp) {
         switch (requestCode) {
             case REQ_NEW_APP:
-                appsAdapter.addItem(appItem.toHomeApp());
+                appsAdapter.addItem(homeApp);
                 break;
             case REQ_EDIT_APP:
-                editApp.label = appItem.getLabel();
-                editApp.packageName = appItem.getPackageName();
-                editApp.className = appItem.getClassName();
+                editApp.packageName = homeApp.packageName;
+                editApp.className = homeApp.className;
+                editApp.label = homeApp.label;
+                appsAdapter.updateItem(editApp);
                 break;
         }
     }
@@ -109,5 +114,10 @@ public class ManageAppsActivity extends OpenAppsActivity implements OnListAdapte
     @Override
     public void onItemMoved(HomeApp target, HomeApp dest) {
         homeAppRepository.update(target, dest);
+    }
+
+    @Override
+    public void onItemUpdated(HomeApp item) {
+        homeAppRepository.update(item);
     }
 }

@@ -4,13 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import dagger.android.AndroidInjection;
 import myin.phone.R;
 import myin.phone.data.app.HomeApp;
+import myin.phone.data.app.HomeAppDiffCallback;
 import myin.phone.data.app.HomeAppRepository;
-import myin.phone.list.ListItemAdapter;
+import myin.phone.list.NoScrollLinearLayout;
+import myin.phone.list.TextListAdapter;
 
 import javax.inject.Inject;
 
@@ -18,7 +19,7 @@ public class HomeActivity extends AppCompatActivity {
 
     public static final int REQ_APPS_CHANGED = 1;
 
-    private ListItemAdapter<HomeApp> appAdapter;
+    private TextListAdapter<HomeApp> appAdapter;
 
     @Inject
     HomeAppRepository homeAppRepository;
@@ -29,8 +30,8 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_activity);
 
-        appAdapter = new ListItemAdapter<>();
-        appAdapter.onItemClickListener((homeApp, p) -> {
+        appAdapter = new TextListAdapter<>(new HomeAppDiffCallback());
+        appAdapter.setOnItemClickListener(homeApp -> {
             Intent appIntent = homeApp.getActivityIntent(getPackageManager());
             startActivity(appIntent);
         });
@@ -40,13 +41,7 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         RecyclerView appsView = findViewById(R.id.apps_list);
-        appsView.setHasFixedSize(true);
-        appsView.setLayoutManager(new LinearLayoutManager(this){
-            @Override
-            public boolean canScrollVertically() {
-                return false;
-            }
-        });
+        appsView.setLayoutManager(new NoScrollLinearLayout(this));
         appsView.setAdapter(appAdapter);
     }
 

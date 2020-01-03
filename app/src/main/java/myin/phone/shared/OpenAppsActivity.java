@@ -3,8 +3,8 @@ package myin.phone.shared;
 import android.content.Intent;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import myin.phone.apps.AppItem;
 import myin.phone.apps.AppsList;
+import myin.phone.data.app.HomeApp;
 
 public class OpenAppsActivity extends AppCompatActivity {
 
@@ -17,11 +17,11 @@ public class OpenAppsActivity extends AppCompatActivity {
             String className = data.getStringExtra(AppsList.SELECTED_CLASS_APP);
             String label = data.getStringExtra(AppsList.SELECTED_LABEL_APP);
 
-            AppItem appItem = new AppItem(packageName, className, label);
+            HomeApp appItem = new HomeApp(packageName, className, label);
             onAppSelected(requestCode, appItem);
         }
     }
 
-    protected void onAppSelected(int requestCode, AppItem appItem) {
+    protected void onAppSelected(int requestCode, HomeApp homeApp) {
     }
 }
