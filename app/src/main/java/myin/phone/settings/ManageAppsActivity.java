@@ -13,6 +13,7 @@ import myin.phone.R;
 import myin.phone.apps.AppsList;
 import myin.phone.data.app.HomeApp;
 import myin.phone.data.app.HomeAppRepository;
+import myin.phone.list.NoScrollLinearLayout;
 import myin.phone.shared.OpenAppsActivity;
 
 import javax.inject.Inject;
@@ -41,7 +42,7 @@ public class ManageAppsActivity extends OpenAppsActivity implements OnListAdapte
 
         homeAppRepository.getHomeApps().observe(this, list -> {
             // Do not have to always update the list
-            // The adapter should handle already it
+            // The adapter should handle it already
             if (appsAdapter.getItemCount() == 0) {
                 appsAdapter.submitList(list);
             }
@@ -50,7 +51,7 @@ public class ManageAppsActivity extends OpenAppsActivity implements OnListAdapte
         });
 
         RecyclerView editAppsList = findViewById(R.id.edit_apps_list);
-        editAppsList.setLayoutManager(new LinearLayoutManager(this));
+        editAppsList.setLayoutManager(new NoScrollLinearLayout(this));
         editAppsList.setHasFixedSize(true);
 
         appsAdapter = new ManageAppsAdapter();
