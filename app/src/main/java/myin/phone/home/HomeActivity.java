@@ -32,7 +32,7 @@ public class HomeActivity extends AppCompatActivity {
 
         appAdapter = new TextListAdapter<>(new HomeAppDiffCallback());
         appAdapter.setOnItemClickListener(homeApp -> {
-            Intent appIntent = homeApp.getActivityIntent(getPackageManager());
+            Intent appIntent = homeApp.getActivityIntent();
             startActivity(appIntent);
         });
 

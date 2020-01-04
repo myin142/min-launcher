@@ -1,5 +1,6 @@
 package myin.phone.data.app;
 
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import androidx.room.ColumnInfo;
@@ -32,14 +33,15 @@ public class HomeApp {
         this.label = label;
     }
 
-    public Intent getActivityIntent(PackageManager pm) {
-        Intent intent = pm.getLaunchIntentForPackage(packageName);
+    public Intent getActivityIntent() {
+        Intent intent = new Intent();
+        ComponentName component = new ComponentName(packageName, className);
 
-        int lastDot = className.lastIndexOf(".");
-        String clsPackage = className.substring(0, lastDot);
-        String clsName = className.substring(lastDot + 1);
+        intent.setAction(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+        intent.setComponent(component);
 
-//        intent.setClassName(clsPackage, clsName);
         return intent;
     }
 
