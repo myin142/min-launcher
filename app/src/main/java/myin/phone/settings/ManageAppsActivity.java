@@ -43,7 +43,7 @@ public class ManageAppsActivity extends SelectAppActivity implements ManageAppsC
         TextView openAppText = findViewById(R.id.action_open_app);
         openAppText.setOnClickListener(v -> openAppsList());
 
-        homeAppRepository.getHomeApps().observe(this, list -> {
+        homeAppRepository.getHomeAppsSorted().observe(this, list -> {
             // Do not have to always update the list
             // The adapter should handle it already
             if (appsAdapter.getItemCount() == 0) {

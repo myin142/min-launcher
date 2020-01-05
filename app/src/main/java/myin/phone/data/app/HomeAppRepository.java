@@ -8,8 +8,8 @@ import java.util.List;
 @Dao
 public interface HomeAppRepository {
 
-    @Query("SELECT * FROM home_apps")
-    LiveData<List<HomeApp>> getHomeApps();
+    @Query("SELECT * FROM home_apps ORDER BY `index`")
+    LiveData<List<HomeApp>> getHomeAppsSorted();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(HomeApp... homeApps);

@@ -36,7 +36,7 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(appIntent);
         });
 
-        homeAppRepository.getHomeApps().observe(this, appList -> {
+        homeAppRepository.getHomeAppsSorted().observe(this, appList -> {
             appAdapter.submitList(appList);
         });
 
