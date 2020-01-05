@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import dagger.android.AndroidInjection;
 import myin.phone.R;
@@ -22,6 +21,7 @@ public class ManageAppsActivity extends OpenAppsActivity implements OnListAdapte
 
     private static final int REQ_NEW_APP = 1;
     private static final int REQ_EDIT_APP = 2;
+    private static final int REQ_OPEN_APP = 3;
     private static final int MAX_APPS = 7;
 
     private TextView addText;
@@ -37,8 +37,11 @@ public class ManageAppsActivity extends OpenAppsActivity implements OnListAdapte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_edit_apps);
 
-        addText = findViewById(R.id.test);
+        addText = findViewById(R.id.action_add);
         addText.setOnClickListener(v -> openNewAppsList());
+
+        TextView openAppText = findViewById(R.id.action_open_app);
+        openAppText.setOnClickListener(v -> openAppsList());
 
         homeAppRepository.getHomeApps().observe(this, list -> {
             // Do not have to always update the list
@@ -75,6 +78,11 @@ public class ManageAppsActivity extends OpenAppsActivity implements OnListAdapte
         editApp = app;
     }
 
+    private void openAppsList() {
+        Intent appsListIntent = new Intent(this, AppsList.class);
+        startActivityForResult(appsListIntent, REQ_OPEN_APP);
+    }
+
     @Override
     protected void onAppSelected(int requestCode, HomeApp homeApp) {
         switch (requestCode) {
@@ -86,6 +94,9 @@ public class ManageAppsActivity extends OpenAppsActivity implements OnListAdapte
                 editApp.className = homeApp.className;
                 editApp.label = homeApp.label;
                 appsAdapter.updateItem(editApp);
+                break;
+            case REQ_OPEN_APP:
+                startActivity(homeApp.getActivityIntent());
                 break;
         }
     }
