@@ -3,6 +3,7 @@ package myin.phone.list;
 import android.view.View;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
+import myin.phone.R;
 
 public class TextViewHolder extends RecyclerView.ViewHolder {
 
@@ -20,4 +21,5 @@ public class TextViewHolder extends RecyclerView.ViewHolder {
     public void setOnTextClick(View.OnClickListener clickListener) {
         this.textView.setOnClickListener(clickListener);
     }
+
 }

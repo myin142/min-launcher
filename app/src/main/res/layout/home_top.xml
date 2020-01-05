@@ -9,12 +9,12 @@
               android:layout_height="wrap_content"
               android:id="@+id/home_top_date"
               android:textAlignment="center"
-              android:textSize="@dimen/title_size"/>
+              android:textSize="@dimen/text_size"/>
     <Space android:layout_width="0dp"
            android:layout_height="wrap_content"
            android:layout_weight="1"/>
     <TextView android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:id="@+id/home_top_time"
-              android:textSize="@dimen/title_size"/>
+              android:textSize="@dimen/text_size"/>
 </LinearLayout>
