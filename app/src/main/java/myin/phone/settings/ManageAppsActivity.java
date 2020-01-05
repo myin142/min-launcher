@@ -16,6 +16,8 @@ import myin.phone.list.NoScrollLinearLayout;
 import myin.phone.shared.SelectAppActivity;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ManageAppsActivity extends SelectAppActivity implements ManageAppsChangeListener {
 
@@ -44,12 +46,7 @@ public class ManageAppsActivity extends SelectAppActivity implements ManageAppsC
         openAppText.setOnClickListener(v -> openAppsList());
 
         homeAppRepository.getHomeAppsSorted().observe(this, list -> {
-            // Do not have to always update the list
-            // The adapter should handle it already
-            if (appsAdapter.getItemCount() == 0) {
-                appsAdapter.submitList(list);
-            }
-
+            appsAdapter.submitList(list);
             updateAddButtonVisibility();
         });
 
@@ -122,13 +119,10 @@ public class ManageAppsActivity extends SelectAppActivity implements ManageAppsC
     }
 
     @Override
-    public void onItemMoved(HomeApp target, HomeApp dest) {
-        homeAppRepository.update(target, dest);
-    }
-
-    @Override
-    public void onItemUpdated(HomeApp app) {
-        homeAppRepository.update(app);
+    public void syncApps() {
+        List<HomeApp> apps = new ArrayList<>(appsAdapter.getCurrentList());
+        appsAdapter.updateIndexes(apps);
+        homeAppRepository.update(apps.toArray(new HomeApp[0]));
     }
 
 }

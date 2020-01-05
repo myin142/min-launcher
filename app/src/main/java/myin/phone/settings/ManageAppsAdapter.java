@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ListAdapter;
+import com.annimon.stream.Stream;
 import com.annimon.stream.function.Consumer;
 import lombok.Setter;
 import myin.phone.R;
@@ -14,6 +15,7 @@ import myin.phone.list.TextViewHolder;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Setter
@@ -68,13 +70,6 @@ public class ManageAppsAdapter extends ListAdapter<HomeApp, ManageAppsAdapter.Ma
                     Collections.swap(list, i, i - 1);
                 }
             }
-
-            updateIndexes(list);
-
-            // Invert position since they already have changed
-            if (onAppChange != null) {
-                onAppChange.onItemMoved(list.get(toPosition), list.get(fromPosition));
-            }
         });
     }
 
@@ -94,12 +89,7 @@ public class ManageAppsAdapter extends ListAdapter<HomeApp, ManageAppsAdapter.Ma
             int index = list.indexOf(homeApp);
             if (index != -1) {
                 list.set(index, homeApp);
-                updateIndexes(list);
                 notifyItemChanged(index);
-
-                if (onAppChange != null) {
-                    onAppChange.onItemUpdated(homeApp);
-                }
             }
         });
     }
@@ -109,12 +99,14 @@ public class ManageAppsAdapter extends ListAdapter<HomeApp, ManageAppsAdapter.Ma
         List<HomeApp> current = new ArrayList<>(getCurrentList());
         listConsumer.accept(current);
 
-        // Moved updateIndexes() inside each function
-        // So the listener has the up-to-date indexes
-        submitList(current);
+        submitList(current, () -> {
+            if (onAppChange != null) {
+                onAppChange.syncApps();
+            }
+        });
     }
 
-    private void updateIndexes(List<HomeApp> list) {
+    public void updateIndexes(List<HomeApp> list) {
         for (int i = 0; i < list.size(); i++) {
             list.get(i).index = i;
         }
