@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import myin.phone.apps.AppsList;
 import myin.phone.data.app.HomeApp;
 
-public class OpenAppsActivity extends AppCompatActivity {
+public class SelectAppActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

@@ -13,11 +13,11 @@ import myin.phone.apps.AppsList;
 import myin.phone.data.app.HomeApp;
 import myin.phone.data.app.HomeAppRepository;
 import myin.phone.list.NoScrollLinearLayout;
-import myin.phone.shared.OpenAppsActivity;
+import myin.phone.shared.SelectAppActivity;
 
 import javax.inject.Inject;
 
-public class ManageAppsActivity extends OpenAppsActivity implements OnListAdapterChange<HomeApp> {
+public class ManageAppsActivity extends SelectAppActivity implements ManageAppsChangeListener {
 
     private static final int REQ_NEW_APP = 1;
     private static final int REQ_EDIT_APP = 2;
@@ -58,7 +58,7 @@ public class ManageAppsActivity extends OpenAppsActivity implements OnListAdapte
         editAppsList.setHasFixedSize(true);
 
         appsAdapter = new ManageAppsAdapter();
-        appsAdapter.setOnListChange(this);
+        appsAdapter.setOnAppChange(this);
         appsAdapter.setOnItemClick(this::openEditAppsList);
 
         editAppsList.setAdapter(appsAdapter);
@@ -90,9 +90,7 @@ public class ManageAppsActivity extends OpenAppsActivity implements OnListAdapte
                 appsAdapter.addItem(homeApp);
                 break;
             case REQ_EDIT_APP:
-                editApp.packageName = homeApp.packageName;
-                editApp.className = homeApp.className;
-                editApp.label = homeApp.label;
+                editApp.copyValuesFrom(homeApp);
                 appsAdapter.updateItem(editApp);
                 break;
             case REQ_OPEN_APP:
@@ -114,13 +112,13 @@ public class ManageAppsActivity extends OpenAppsActivity implements OnListAdapte
     }
 
     @Override
-    public void onItemAdded(HomeApp item) {
-        homeAppRepository.insert(item);
+    public void onItemAdded(HomeApp app) {
+        homeAppRepository.insert(app);
     }
 
     @Override
-    public void onItemDeleted(HomeApp item) {
-        homeAppRepository.delete(item);
+    public void onItemDeleted(HomeApp app) {
+        homeAppRepository.delete(app);
     }
 
     @Override
@@ -129,7 +127,8 @@ public class ManageAppsActivity extends OpenAppsActivity implements OnListAdapte
     }
 
     @Override
-    public void onItemUpdated(HomeApp item) {
-        homeAppRepository.update(item);
+    public void onItemUpdated(HomeApp app) {
+        homeAppRepository.update(app);
     }
+
 }

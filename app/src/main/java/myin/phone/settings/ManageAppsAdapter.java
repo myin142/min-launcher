@@ -19,7 +19,7 @@ import java.util.List;
 @Setter
 public class ManageAppsAdapter extends ListAdapter<HomeApp, ManageAppsAdapter.ManageAppView> {
 
-    private OnListAdapterChange<HomeApp> onListChange;
+    private ManageAppsChangeListener onAppChange;
     private Consumer<HomeApp> onItemClick;
 
     public ManageAppsAdapter() {
@@ -51,8 +51,8 @@ public class ManageAppsAdapter extends ListAdapter<HomeApp, ManageAppsAdapter.Ma
             list.add(app);
             updateIndexes(list);
 
-            if (onListChange != null) {
-                onListChange.onItemAdded(app);
+            if (onAppChange != null) {
+                onAppChange.onItemAdded(app);
             }
         });
     }
@@ -72,8 +72,8 @@ public class ManageAppsAdapter extends ListAdapter<HomeApp, ManageAppsAdapter.Ma
             updateIndexes(list);
 
             // Invert position since they already have changed
-            if (onListChange != null) {
-                onListChange.onItemMoved(list.get(toPosition), list.get(fromPosition));
+            if (onAppChange != null) {
+                onAppChange.onItemMoved(list.get(toPosition), list.get(fromPosition));
             }
         });
     }
@@ -83,8 +83,8 @@ public class ManageAppsAdapter extends ListAdapter<HomeApp, ManageAppsAdapter.Ma
             HomeApp app = list.remove(position);
             updateIndexes(list);
 
-            if (onListChange != null) {
-                onListChange.onItemDeleted(app);
+            if (onAppChange != null) {
+                onAppChange.onItemDeleted(app);
             }
         });
     }
@@ -97,8 +97,8 @@ public class ManageAppsAdapter extends ListAdapter<HomeApp, ManageAppsAdapter.Ma
                 updateIndexes(list);
                 notifyItemChanged(index);
 
-                if (onListChange != null) {
-                    onListChange.onItemUpdated(homeApp);
+                if (onAppChange != null) {
+                    onAppChange.onItemUpdated(homeApp);
                 }
             }
         });

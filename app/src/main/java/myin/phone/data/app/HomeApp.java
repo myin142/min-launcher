@@ -2,12 +2,9 @@ package myin.phone.data.app;
 
 import android.content.ComponentName;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-
-import java.util.Objects;
 
 @Entity(tableName = "home_apps")
 public class HomeApp {
@@ -43,6 +40,12 @@ public class HomeApp {
         intent.setComponent(component);
 
         return intent;
+    }
+
+    public void copyValuesFrom(HomeApp app) {
+        packageName = app.packageName;
+        className = app.className;
+        label = app.label;
     }
 
     @Override
