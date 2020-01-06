@@ -20,7 +20,7 @@
                   homeApp:layout_constraintTop_toBottomOf="@+id/title"
                   homeApp:layout_constraintEnd_toEndOf="parent"
                   homeApp:layout_constraintStart_toStartOf="parent"
-                  homeApp:layout_constraintBottom_toTopOf="@+id/test"
+                  homeApp:layout_constraintBottom_toBottomOf="parent"
                   android:layout_marginTop="@dimen/view_padding"
                   android:layout_marginBottom="@dimen/view_padding">
         <TextView android:text="@string/settings_edit_apps"
@@ -29,11 +29,4 @@
                   android:id="@+id/edit_apps"
                   android:textSize="@dimen/text_size"/>
     </LinearLayout>
-    <TextView android:text="Test"
-              android:layout_width="0dp"
-              android:layout_height="wrap_content"
-              android:id="@+id/test"
-              homeApp:layout_constraintEnd_toEndOf="parent"
-              homeApp:layout_constraintStart_toStartOf="parent"
-              homeApp:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
