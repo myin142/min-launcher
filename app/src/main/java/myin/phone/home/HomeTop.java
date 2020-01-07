@@ -1,10 +1,7 @@
 package myin.phone.home;
 
 import android.Manifest;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
+import android.content.*;
 import android.os.Bundle;
 import android.provider.AlarmClock;
 import android.view.LayoutInflater;
@@ -89,9 +86,13 @@ public class HomeTop extends Fragment {
     }
 
     private void openAlarm() {
-        Permission.hasPermission(getActivity(), Manifest.permission.SET_ALARM, () -> {
-            Intent alarm = new Intent(AlarmClock.ACTION_SHOW_ALARMS);
-            startActivity(alarm);
-        });
+        Intent alarm = new Intent(AlarmClock.ACTION_SHOW_ALARMS);
+        ComponentName componentName = alarm.resolveActivity(getActivity().getPackageManager());
+
+        if (componentName != null) {
+            alarm = getActivity().getPackageManager().getLaunchIntentForPackage(componentName.getPackageName());
+        }
+
+        startActivity(alarm);
     }
 }
