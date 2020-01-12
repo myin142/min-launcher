@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import myin.phone.R;
 import myin.phone.data.app.HomeApp;
-import myin.phone.data.app.HomeAppDiffCallback;
+import myin.phone.data.BaseAppDiffCallback;
 import myin.phone.list.TextListAdapter;
 
 import java.util.ArrayList;
@@ -47,7 +47,7 @@ public class AppsList extends AppCompatActivity {
             appList.add(homeApp);
         }
 
-        TextListAdapter<HomeApp> appsListAdapter = new TextListAdapter<>(new HomeAppDiffCallback());
+        TextListAdapter<HomeApp> appsListAdapter = new TextListAdapter<>(new BaseAppDiffCallback());
         appsListAdapter.setOnItemClickListener(appItem -> {
             Intent data = new Intent();
             data.putExtra(SELECTED_PACKAGE_APP, appItem.packageName);

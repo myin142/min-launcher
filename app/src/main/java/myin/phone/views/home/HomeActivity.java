@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import dagger.android.AndroidInjection;
 import myin.phone.R;
 import myin.phone.data.app.HomeApp;
-import myin.phone.data.app.HomeAppDiffCallback;
+import myin.phone.data.BaseAppDiffCallback;
 import myin.phone.data.app.HomeAppRepository;
 import myin.phone.list.NoScrollLinearLayout;
 import myin.phone.list.TextListAdapter;
@@ -30,7 +30,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_activity);
 
-        appAdapter = new TextListAdapter<>(new HomeAppDiffCallback(), getResources().getDimensionPixelSize(R.dimen.title_size));
+        appAdapter = new TextListAdapter<>(new BaseAppDiffCallback(), getResources().getDimensionPixelSize(R.dimen.title_size));
         appAdapter.setOnItemClickListener(homeApp -> {
             Intent appIntent = homeApp.getActivityIntent();
             startActivity(appIntent);

@@ -9,7 +9,7 @@ import com.annimon.stream.function.Consumer;
 import lombok.Setter;
 import myin.phone.R;
 import myin.phone.data.app.HomeApp;
-import myin.phone.data.app.HomeAppDiffCallback;
+import myin.phone.data.BaseAppDiffCallback;
 import myin.phone.list.TextViewHolder;
 
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public class ManageAppsAdapter extends ListAdapter<HomeApp, ManageAppsAdapter.Ma
     private Consumer<HomeApp> onItemClick;
 
     public ManageAppsAdapter() {
-        super(new HomeAppDiffCallback());
+        super(new BaseAppDiffCallback());
     }
 
     @NonNull
