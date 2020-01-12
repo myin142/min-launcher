@@ -1,11 +1,10 @@
-package myin.phone.settings;
+package myin.phone.views.settings.apps;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ListAdapter;
-import com.annimon.stream.Stream;
 import com.annimon.stream.function.Consumer;
 import lombok.Setter;
 import myin.phone.R;
@@ -15,7 +14,6 @@ import myin.phone.list.TextViewHolder;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 @Setter

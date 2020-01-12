@@ -1,4 +1,4 @@
-package myin.phone.settings;
+package myin.phone.views.settings.apps;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

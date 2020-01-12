@@ -1,4 +1,4 @@
-package myin.phone.home;
+package myin.phone.views.home;
 
 import android.Manifest;
 import android.content.*;

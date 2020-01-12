@@ -3,6 +3,7 @@
     <string name="app_select">Select App</string>
     <string name="settings">Settings</string>
     <string name="settings_edit_apps">Edit Apps</string>
+    <string name="settings_edit_tools">Edit Toolbar</string>
     <string name="settings_add">Add</string>
     <string name="settings_open_app">Open App</string>
 </resources>

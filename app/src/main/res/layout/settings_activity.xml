@@ -28,5 +28,10 @@
                   android:layout_height="wrap_content"
                   android:id="@+id/edit_apps"
                   android:textSize="@dimen/text_size"/>
+        <TextView android:text="@string/settings_edit_tools"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/edit_tools"
+                  android:textSize="@dimen/text_size"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

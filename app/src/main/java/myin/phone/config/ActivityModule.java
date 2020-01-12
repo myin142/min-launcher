@@ -1,10 +1,9 @@
-package myin.phone.modules;
+package myin.phone.config;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
-import myin.phone.database.DatabaseModule;
-import myin.phone.home.HomeActivity;
-import myin.phone.settings.ManageAppsActivity;
+import myin.phone.views.home.HomeActivity;
+import myin.phone.views.settings.apps.ManageAppsActivity;
 
 @Module(includes = DatabaseModule.class)
 public abstract class ActivityModule {

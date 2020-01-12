@@ -1,10 +1,11 @@
-package myin.phone.settings;
+package myin.phone.views.settings;
 
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import myin.phone.R;
+import myin.phone.views.settings.apps.ManageAppsActivity;
 
 public class Settings extends AppCompatActivity {
 

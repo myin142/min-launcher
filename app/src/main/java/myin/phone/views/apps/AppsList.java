@@ -1,4 +1,4 @@
-package myin.phone.apps;
+package myin.phone.views.apps;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;

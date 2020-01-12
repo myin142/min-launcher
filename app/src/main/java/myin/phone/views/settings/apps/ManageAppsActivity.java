@@ -1,4 +1,4 @@
-package myin.phone.settings;
+package myin.phone.views.settings.apps;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,11 +9,11 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import dagger.android.AndroidInjection;
 import myin.phone.R;
-import myin.phone.apps.AppsList;
+import myin.phone.views.apps.AppsList;
 import myin.phone.data.app.HomeApp;
 import myin.phone.data.app.HomeAppRepository;
 import myin.phone.list.NoScrollLinearLayout;
-import myin.phone.shared.SelectAppActivity;
+import myin.phone.views.SelectAppActivity;
 
 import javax.inject.Inject;
 import java.util.ArrayList;

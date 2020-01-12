@@ -1,9 +1,9 @@
-package myin.phone.shared;
+package myin.phone.views;
 
 import android.content.Intent;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import myin.phone.apps.AppsList;
+import myin.phone.views.apps.AppsList;
 import myin.phone.data.app.HomeApp;
 
 public class SelectAppActivity extends AppCompatActivity {

@@ -1,4 +1,4 @@
-package myin.phone.home;
+package myin.phone.views.home;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import myin.phone.R;
-import myin.phone.settings.Settings;
+import myin.phone.views.settings.Settings;
 
 public class HomeBottom extends Fragment {
 

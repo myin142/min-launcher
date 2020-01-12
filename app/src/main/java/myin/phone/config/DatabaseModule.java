@@ -1,4 +1,4 @@
-package myin.phone.database;
+package myin.phone.config;
 
 import android.app.Application;
 import androidx.room.Room;
