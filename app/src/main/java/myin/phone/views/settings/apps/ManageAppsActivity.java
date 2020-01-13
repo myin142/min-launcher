@@ -37,7 +37,7 @@ public class ManageAppsActivity extends SelectAppActivity implements ManageAppsC
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.settings_edit_apps);
+        setContentView(R.layout.settings_apps_edit);
 
         addText = findViewById(R.id.action_add);
         addText.setOnClickListener(v -> openNewAppsList());
