@@ -6,6 +6,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import myin.phone.R;
 import myin.phone.views.settings.apps.ManageAppsActivity;
+import myin.phone.views.settings.toolbar.ManageToolsActivity;
 
 public class Settings extends AppCompatActivity {
 
@@ -15,10 +16,17 @@ public class Settings extends AppCompatActivity {
         setContentView(R.layout.settings_activity);
 
         findViewById(R.id.edit_apps).setOnClickListener(v -> openEditApps());
+        findViewById(R.id.edit_tools).setOnClickListener(v -> openEditTools());
     }
 
     public void openEditApps() {
         Intent appsListIntent = new Intent(this, ManageAppsActivity.class);
+        appsListIntent.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
+        startActivity(appsListIntent);
+    }
+
+    public void openEditTools() {
+        Intent appsListIntent = new Intent(this, ManageToolsActivity.class);
         appsListIntent.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
         startActivity(appsListIntent);
     }
