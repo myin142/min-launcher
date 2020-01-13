@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import dagger.android.AndroidInjection;
 import myin.phone.R;
+import myin.phone.list.OnListChangeListener;
 import myin.phone.views.apps.AppsList;
 import myin.phone.data.app.HomeApp;
 import myin.phone.data.app.HomeAppRepository;
@@ -19,7 +20,7 @@ import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ManageAppsActivity extends SelectAppActivity implements ManageAppsChangeListener {
+public class ManageAppsActivity extends SelectAppActivity implements OnListChangeListener<HomeApp> {
 
     private static final int REQ_NEW_APP = 1;
     private static final int REQ_EDIT_APP = 2;
@@ -55,7 +56,7 @@ public class ManageAppsActivity extends SelectAppActivity implements ManageAppsC
         editAppsList.setHasFixedSize(true);
 
         appsAdapter = new ManageAppsAdapter();
-        appsAdapter.setOnAppChange(this);
+        appsAdapter.setOnListChange(this);
         appsAdapter.setOnItemClick(this::openEditAppsList);
 
         editAppsList.setAdapter(appsAdapter);
