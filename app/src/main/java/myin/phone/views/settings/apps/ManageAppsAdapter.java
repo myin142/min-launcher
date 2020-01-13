@@ -23,7 +23,7 @@ public class ManageAppsAdapter extends ListAdapter<HomeApp, ManageAppsAdapter.Ma
     private Consumer<HomeApp> onItemClick;
 
     public ManageAppsAdapter() {
-        super(new BaseAppDiffCallback());
+        super(new BaseAppDiffCallback<>());
     }
 
     @NonNull

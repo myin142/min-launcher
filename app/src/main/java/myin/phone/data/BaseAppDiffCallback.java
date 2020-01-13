@@ -4,15 +4,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import myin.phone.data.BaseApp;
 
-public class BaseAppDiffCallback extends DiffUtil.ItemCallback<BaseApp> {
+public class BaseAppDiffCallback<T extends BaseApp> extends DiffUtil.ItemCallback<T> {
 
     @Override
-    public boolean areItemsTheSame(@NonNull BaseApp oldItem, @NonNull BaseApp newItem) {
+    public boolean areItemsTheSame(@NonNull T oldItem, @NonNull T newItem) {
         return oldItem.id == newItem.id;
     }
 
     @Override
-    public boolean areContentsTheSame(@NonNull BaseApp oldItem, @NonNull BaseApp newItem) {
+    public boolean areContentsTheSame(@NonNull T oldItem, @NonNull T newItem) {
         return oldItem.packageName.equals(newItem.packageName) &&
                 oldItem.className.equals(newItem.className);
     }
