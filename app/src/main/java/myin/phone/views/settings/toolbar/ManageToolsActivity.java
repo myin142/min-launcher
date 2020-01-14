@@ -11,9 +11,9 @@ import myin.phone.data.tool.HomeTool;
 import myin.phone.data.tool.HomeToolRepository;
 import myin.phone.list.OnListChangeListener;
 import myin.phone.list.NoScrollLinearLayout;
-import myin.phone.views.settings.apps.ManageAppsTouchHelper;
 
 import javax.inject.Inject;
+import java.util.List;
 
 public class ManageToolsActivity extends AppCompatActivity implements OnListChangeListener<HomeTool> {
 
@@ -32,6 +32,10 @@ public class ManageToolsActivity extends AppCompatActivity implements OnListChan
             toolsAdapter.submitList(list);
         });
 
+        findViewById(R.id.add_phone).setOnClickListener(v -> {
+
+        });
+
         RecyclerView editAppsList = findViewById(R.id.edit_apps_list);
         editAppsList.setLayoutManager(new NoScrollLinearLayout(this));
         editAppsList.setHasFixedSize(true);
@@ -47,17 +51,17 @@ public class ManageToolsActivity extends AppCompatActivity implements OnListChan
     }
 
     @Override
-    public void onItemAdded(HomeTool app) {
-
+    public void onItemAdded(HomeTool tool) {
+        homeToolRepository.insert(tool);
     }
 
     @Override
-    public void onItemDeleted(HomeTool app) {
-
+    public void onItemDeleted(HomeTool tool) {
+        homeToolRepository.delete(tool);
     }
 
     @Override
-    public void syncApps() {
-
+    public void syncItems(List<HomeTool> tools) {
+        homeToolRepository.update(tools.toArray(new HomeTool[0]));
     }
 }

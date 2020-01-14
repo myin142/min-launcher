@@ -24,7 +24,12 @@
                   app:layout_constraintStart_toStartOf="parent"
                   app:layout_constraintEnd_toEndOf="parent"
                   android:layout_marginTop="@dimen/view_padding"
-                  android:layout_marginBottom="@dimen/view_padding" />
+                  android:layout_marginBottom="@dimen/view_padding" >
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/add_phone"
+                android:text="@string/settings_enable_phone"/>
+    </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
             android:orientation="horizontal"
             android:layout_width="match_parent"

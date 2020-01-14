@@ -120,9 +120,7 @@ public class ManageAppsActivity extends SelectAppActivity implements OnListChang
     }
 
     @Override
-    public void syncApps() {
-        List<HomeApp> apps = new ArrayList<>(appsAdapter.getCurrentList());
-        appsAdapter.updateIndexes(apps);
+    public void syncItems(List<HomeApp> apps) {
         homeAppRepository.update(apps.toArray(new HomeApp[0]));
     }
 

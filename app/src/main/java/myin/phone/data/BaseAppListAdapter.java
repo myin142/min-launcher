@@ -76,12 +76,14 @@ public abstract class BaseAppListAdapter<T extends BaseApp, V extends RecyclerVi
 
         submitList(current, () -> {
             if (onListChange != null) {
-                onListChange.syncApps();
+                List<T> items = new ArrayList<>(getCurrentList());
+                updateIndexes(items);
+                onListChange.syncItems(items);
             }
         });
     }
 
-    public void updateIndexes(List<T> list) {
+    private void updateIndexes(List<T> list) {
         for (int i = 0; i < list.size(); i++) {
             list.get(i).index = i;
         }
