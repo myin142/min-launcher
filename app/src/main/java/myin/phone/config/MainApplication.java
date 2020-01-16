@@ -1,10 +1,12 @@
 package myin.phone.config;
 
+import android.app.Activity;
 import android.app.Application;
+import android.content.pm.ActivityInfo;
+import android.os.Bundle;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasAndroidInjector;
-import myin.phone.config.DaggerInjectComponent;
 
 import javax.inject.Inject;
 
@@ -25,5 +27,16 @@ public class MainApplication extends Application implements HasAndroidInjector {
                 .application(this)
                 .build()
                 .inject(this);
+
+        registerPortraitOrientationCallback();
+    }
+
+    private void registerPortraitOrientationCallback() {
+        registerActivityLifecycleCallbacks(new SimpleActivityLifecycleCallback(){
+            @Override
+            public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+                activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            }
+        });
     }
 }
