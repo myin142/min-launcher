@@ -5,11 +5,12 @@
               android:layout_height="match_parent"
               android:padding="@dimen/screen_padding">
 
-    <TextView android:text="@string/app_select"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:id="@+id/rootText"
-              android:textSize="@dimen/title_size"/>
+    <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/search_input"
+            android:textSize="@dimen/title_size"
+            android:inputType="textShortMessage" android:hint="@string/app_select"/>
 
     <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
