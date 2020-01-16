@@ -26,8 +26,8 @@ public class Settings extends AppCompatActivity {
     }
 
     public void openEditTools() {
-        Intent appsListIntent = new Intent(this, ManageToolsActivity.class);
-        appsListIntent.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
-        startActivity(appsListIntent);
+        Intent toolsIntent = new Intent(this, ManageToolsActivity.class);
+        toolsIntent.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
+        startActivity(toolsIntent);
     }
 }

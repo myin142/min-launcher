@@ -1,6 +1,8 @@
 package myin.phone.views.settings.toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -33,10 +35,11 @@ public class ManageToolsActivity extends AppCompatActivity implements OnListChan
         });
 
         findViewById(R.id.add_phone).setOnClickListener(v -> {
-
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivity(intent);
         });
 
-        RecyclerView editAppsList = findViewById(R.id.edit_apps_list);
+        RecyclerView editAppsList = findViewById(R.id.edit_tools_list);
         editAppsList.setLayoutManager(new NoScrollLinearLayout(this));
         editAppsList.setHasFixedSize(true);
 

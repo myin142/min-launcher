@@ -30,7 +30,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_activity);
 
-        appAdapter = new TextListAdapter<>(new BaseAppDiffCallback(), getResources().getDimensionPixelSize(R.dimen.title_size));
+        appAdapter = new TextListAdapter<>(new BaseAppDiffCallback<>(), getResources().getDimensionPixelSize(R.dimen.title_size));
         appAdapter.setOnItemClickListener(homeApp -> {
             Intent appIntent = homeApp.getActivityIntent();
             startActivity(appIntent);
