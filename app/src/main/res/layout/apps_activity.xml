@@ -12,9 +12,18 @@
             android:textSize="@dimen/title_size"
             android:inputType="textShortMessage" android:hint="@string/app_select"/>
 
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:gravity="center" android:id="@+id/progress_layout">
+        <ProgressBar style="@style/Widget.AppCompat.ProgressBar"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:id="@+id/progressBar"/>
+    </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/apps_list"
-            android:layout_marginTop="@dimen/view_padding"/>
+            android:layout_marginTop="@dimen/view_padding" android:visibility="gone"/>
 </LinearLayout>
