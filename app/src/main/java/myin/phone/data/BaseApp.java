@@ -4,6 +4,7 @@ import android.content.ComponentName;
 import android.content.Intent;
 import androidx.room.ColumnInfo;
 import androidx.room.PrimaryKey;
+import myin.phone.utils.IntentUtils;
 
 public class BaseApp {
 
@@ -25,13 +26,11 @@ public class BaseApp {
     }
 
     public Intent getActivityIntent() {
-        Intent intent = new Intent();
-        ComponentName component = new ComponentName(packageName, className);
+        Intent intent = IntentUtils.fromPackageAndClass(packageName, className);
 
         intent.setAction(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-        intent.setComponent(component);
 
         return intent;
     }

@@ -1,5 +1,7 @@
 package myin.phone.views.apps;
 
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.text.Editable;
 import android.text.TextWatcher;
 import com.annimon.stream.Collectors;
@@ -9,15 +11,19 @@ import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.subjects.ReplaySubject;
 import io.reactivex.subjects.Subject;
+import lombok.RequiredArgsConstructor;
 import myin.phone.data.app.HomeApp;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class AppsListSearch extends Observable<List<HomeApp>> implements TextWatcher {
+@RequiredArgsConstructor
+public class AppsListSearch extends Observable<List<ResolveInfo>> implements TextWatcher {
 
-    private List<HomeApp> appsList = new ArrayList<>();
+    private final PackageManager packageManager;
+
+    private List<ResolveInfo> appsList = new ArrayList<>();
     private Subject<String> changed = ReplaySubject.create();
 
     @Override
@@ -35,12 +41,12 @@ public class AppsListSearch extends Observable<List<HomeApp>> implements TextWat
         changed.onNext(s.toString());
     }
 
-    public void loadedApps(List<HomeApp> apps) {
+    public void loadedApps(List<ResolveInfo> apps) {
         appsList.addAll(apps);
     }
 
     @Override
-    protected void subscribeActual(Observer<? super List<HomeApp>> observer) {
+    protected void subscribeActual(Observer<? super List<ResolveInfo>> observer) {
         Disposable searchDisposable = changed.debounce(100, TimeUnit.MILLISECONDS)
                 .map(this::filteredAppsList)
                 .subscribe(observer::onNext);
@@ -48,9 +54,10 @@ public class AppsListSearch extends Observable<List<HomeApp>> implements TextWat
         observer.onSubscribe(searchDisposable);
     }
 
-    private List<HomeApp> filteredAppsList(String name) {
+    private List<ResolveInfo> filteredAppsList(String name) {
         return Stream.of(appsList)
-                .filter(app -> app.label.toLowerCase().contains(name.toLowerCase()))
+                .filter(app -> app.loadLabel(packageManager).toString().toLowerCase().contains(name.toLowerCase()))
+//                .filter(app -> app.label.toLowerCase().contains(name.toLowerCase()))
                 .collect(Collectors.toList());
     }
 

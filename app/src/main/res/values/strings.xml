@@ -7,5 +7,5 @@
     <string name="settings_open_app">Open App</string>
 
     <string name="settings_edit_tools">Edit Toolbar</string>
-    <string name="settings_enable_phone">Enable Phone</string>
+    <string name="settings_add_tool">Add Tool</string>
 </resources>

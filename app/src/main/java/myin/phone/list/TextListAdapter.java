@@ -8,12 +8,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import com.annimon.stream.function.Consumer;
+import com.annimon.stream.function.Function;
 import lombok.Setter;
 import myin.phone.R;
 
 @Setter
 public class TextListAdapter<T> extends ListAdapter<T, TextViewHolder> {
 
+    private Function<T, String> displayFunction;
     private Consumer<T> onItemClickListener;
     private int fontSize;
 
@@ -43,10 +45,9 @@ public class TextListAdapter<T> extends ListAdapter<T, TextViewHolder> {
     public void onBindViewHolder(@NonNull TextViewHolder holder, int position) {
         T item = getItem(position);
 
-        // Uses toString of Object on default
-        // If required add custom function to map
-        // to different value
-        holder.setText(item.toString());
+        String text = (this.displayFunction != null) ? this.displayFunction.apply(item) : item.toString();
+        holder.setText(text);
+
         holder.setOnTextClick(v -> {
             if (onItemClickListener != null) {
                 onItemClickListener.accept(item);

@@ -1,6 +1,7 @@
 package myin.phone.views.apps;
 
 import android.content.Intent;
+import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -14,11 +15,13 @@ import myin.phone.data.app.HomeApp;
 import myin.phone.data.BaseAppDiffCallback;
 import myin.phone.list.TextListAdapter;
 
+import java.util.List;
+
 public class AppsList extends AppCompatActivity {
 
     public static final String SELECTED_PACKAGE_APP = "appList_selectedPackage";
     public static final String SELECTED_CLASS_APP = "appList_selectedClass";
-    public static final String SELECTED_LABEL_APP = "appList_selectedLabel";
+//    public static final String SELECTED_LABEL_APP = "appList_selectedLabel";
 
     private Disposable searchDisposable;
     private Disposable loadingDisposable;
@@ -35,10 +38,11 @@ public class AppsList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.apps_activity);
 
-        TextListAdapter<HomeApp> listAdapter = new TextListAdapter<>(new BaseAppDiffCallback<>());
+        TextListAdapter<ResolveInfo> listAdapter = new TextListAdapter<>(new ResolveInfoDiffCallback());
+        listAdapter.setDisplayFunction(resolve -> resolve.loadLabel(getPackageManager()).toString());
         listAdapter.setOnItemClickListener(this::closeWithAppResult);
 
-        AppsListSearch appsListSearch = new AppsListSearch();
+        AppsListSearch appsListSearch = new AppsListSearch(getPackageManager());
         searchDisposable = appsListSearch.subscribe(listAdapter::submitList);
 
         EditText searchInput = findViewById(R.id.search_input);
@@ -58,11 +62,11 @@ public class AppsList extends AppCompatActivity {
         });
     }
 
-    private void closeWithAppResult(HomeApp app) {
+    private void closeWithAppResult(ResolveInfo app) {
         Intent data = new Intent();
-        data.putExtra(SELECTED_PACKAGE_APP, app.packageName);
-        data.putExtra(SELECTED_CLASS_APP, app.className);
-        data.putExtra(SELECTED_LABEL_APP, app.label);
+        data.putExtra(SELECTED_PACKAGE_APP, app.activityInfo.packageName);
+        data.putExtra(SELECTED_CLASS_APP, app.activityInfo.name);
+//        data.putExtra(SELECTED_LABEL_APP, app.label);
 
         setResult(RESULT_OK, data);
         finish();

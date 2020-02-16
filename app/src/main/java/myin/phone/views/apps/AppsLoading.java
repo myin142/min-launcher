@@ -15,18 +15,19 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import lombok.AllArgsConstructor;
+import myin.phone.data.BaseApp;
 import myin.phone.data.app.HomeApp;
 
 import java.util.Collections;
 import java.util.List;
 
 @AllArgsConstructor
-public class AppsLoading extends Observable<List<HomeApp>> {
+public class AppsLoading extends Observable<List<ResolveInfo>> {
     private Context context;
 
     @Override
-    protected void subscribeActual(Observer<? super List<HomeApp>> observer) {
-        Disposable listDisposable = Observable.create((ObservableOnSubscribe<List<HomeApp>>) emitter -> {
+    protected void subscribeActual(Observer<? super List<ResolveInfo>> observer) {
+        Disposable listDisposable = Observable.create((ObservableOnSubscribe<List<ResolveInfo>>) emitter -> {
             emitter.onNext(getAllAppsAsHomeApps());
             emitter.onComplete();
         })
@@ -40,9 +41,9 @@ public class AppsLoading extends Observable<List<HomeApp>> {
         observer.onSubscribe(listDisposable);
     }
 
-    private List<HomeApp> getAllAppsAsHomeApps() {
+    private List<ResolveInfo> getAllAppsAsHomeApps() {
         return Stream.of(getAllApps())
-                .map(this::infoToHomeApp)
+//                .map(this::infoToHomeApp)
                 .collect(Collectors.toList());
     }
 

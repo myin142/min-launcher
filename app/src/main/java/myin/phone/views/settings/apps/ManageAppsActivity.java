@@ -1,6 +1,8 @@
 package myin.phone.views.settings.apps;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -9,6 +11,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import dagger.android.AndroidInjection;
 import myin.phone.R;
+import myin.phone.data.BaseApp;
 import myin.phone.list.OnListChangeListener;
 import myin.phone.views.apps.AppsList;
 import myin.phone.data.app.HomeApp;
@@ -25,7 +28,6 @@ public class ManageAppsActivity extends SelectAppActivity implements OnListChang
     private static final int REQ_NEW_APP = 1;
     private static final int REQ_EDIT_APP = 2;
     private static final int REQ_OPEN_APP = 3;
-    private static final int MAX_APPS = 7;
 
     private TextView addText;
     private ManageAppsAdapter appsAdapter;
@@ -48,7 +50,6 @@ public class ManageAppsActivity extends SelectAppActivity implements OnListChang
 
         homeAppRepository.getHomeAppsSorted().observe(this, list -> {
             appsAdapter.submitList(list);
-            updateAddButtonVisibility();
         });
 
         RecyclerView editAppsList = findViewById(R.id.edit_apps_list);
@@ -82,7 +83,8 @@ public class ManageAppsActivity extends SelectAppActivity implements OnListChang
     }
 
     @Override
-    protected void onAppSelected(int requestCode, HomeApp homeApp) {
+    protected void onAppSelected(int requestCode, ResolveInfo info) {
+        HomeApp homeApp = resolveToHomeApp(info);
         switch (requestCode) {
             case REQ_NEW_APP:
                 appsAdapter.addItem(homeApp);
@@ -97,16 +99,17 @@ public class ManageAppsActivity extends SelectAppActivity implements OnListChang
         }
     }
 
+    private HomeApp resolveToHomeApp(ResolveInfo resolveInfo) {
+        ActivityInfo info = resolveInfo.activityInfo;
+        return new HomeApp(info.packageName, info.name, resolveInfo.loadLabel(getPackageManager()).toString());
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         // Reset edit index after every closed activity
         editApp = null;
-    }
-
-    private void updateAddButtonVisibility() {
-        addText.setVisibility(appsAdapter.getItemCount() == MAX_APPS ? View.GONE : View.VISIBLE);
     }
 
     @Override

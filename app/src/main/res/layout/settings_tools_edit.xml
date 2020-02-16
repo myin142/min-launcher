@@ -27,8 +27,8 @@
                   android:layout_marginBottom="@dimen/view_padding" >
         <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/add_phone"
-                android:text="@string/settings_enable_phone"/>
+                android:layout_height="wrap_content" android:id="@+id/add_tool"
+                android:text="@string/settings_add_tool"/>
     </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
             android:orientation="horizontal"

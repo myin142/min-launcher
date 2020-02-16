@@ -10,9 +10,8 @@ public class HomeTool extends BaseApp {
     @ColumnInfo(name = "file_name")
     public String fileName;
 
-    public HomeTool(String packageName, String className, String fileName) {
+    public HomeTool(String packageName, String className) {
         super(packageName, className);
-        this.fileName = fileName;
     }
 
     public void copyValuesFrom(HomeTool app) {

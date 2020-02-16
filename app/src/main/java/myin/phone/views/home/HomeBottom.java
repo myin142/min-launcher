@@ -9,27 +9,55 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import dagger.android.AndroidInjection;
 import myin.phone.R;
+import myin.phone.data.BaseApp;
+import myin.phone.data.BaseAppDiffCallback;
+import myin.phone.data.tool.HomeTool;
+import myin.phone.data.tool.HomeToolRepository;
+import myin.phone.list.NoScrollLinearLayout;
+import myin.phone.list.TextListAdapter;
 import myin.phone.views.settings.Settings;
 
+import javax.inject.Inject;
+
 public class HomeBottom extends Fragment {
+
+    private TextListAdapter<HomeTool> toolAdapter;
+
+    @Inject
+    HomeToolRepository homeToolRepository;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+//        AndroidInjection.inject(this);
+        super.onCreate(savedInstanceState);
+
+        toolAdapter = new TextListAdapter<>(new BaseAppDiffCallback<>());
+        toolAdapter.setOnItemClickListener(homeTool -> {
+            Intent appIntent = homeTool.getActivityIntent();
+            startActivity(appIntent);
+        });
+
+        homeToolRepository.getHomeToolSorted().observe(this, appList -> {
+            toolAdapter.submitList(appList);
+        });
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.home_bottom, container, false);
+        View view = inflater.inflate(R.layout.home_bottom, container, false);
+
+        if (view != null) {
+            RecyclerView appsView = view.findViewById(R.id.apps_list);
+            appsView.setLayoutManager(new NoScrollLinearLayout(getContext(), LinearLayoutManager.HORIZONTAL));
+            appsView.setAdapter(toolAdapter);
+        }
+
+        return view;
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        ImageView settingsIcon = view.findViewById(R.id.settings);
-        settingsIcon.setOnClickListener((View v) -> openSettings());
-    }
-
-    public void openSettings() {
-        Intent appsIntent = new Intent(getContext(), Settings.class);
-        getActivity().startActivityForResult(appsIntent, HomeActivity.REQ_APPS_CHANGED);
-    }
 }

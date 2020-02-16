@@ -1,5 +1,8 @@
 package myin.phone.views.settings.toolbar;
 
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +21,11 @@ import myin.phone.list.TextViewHolder;
 @Setter
 public class ManageToolsAdapter extends BaseAppListAdapter<HomeTool, ManageToolsAdapter.ManageToolView> {
 
-    public ManageToolsAdapter() {
+    private PackageManager packageManager;
+
+    public ManageToolsAdapter(PackageManager pm) {
         super(new BaseAppDiffCallback<>());
+        this.packageManager = pm;
     }
 
     @NonNull
@@ -34,6 +40,11 @@ public class ManageToolsAdapter extends BaseAppListAdapter<HomeTool, ManageTools
     @Override
     public void onBindViewHolder(@NonNull ManageToolView holder, int position) {
         HomeTool app = getItem(position);
+
+        ResolveInfo info = packageManager.resolveActivity(app.getActivityIntent(), PackageManager.MATCH_DEFAULT_ONLY);
+        Drawable icon = info.loadIcon(packageManager);
+        holder.setImage(icon);
+
         holder.setOnImageClick(v -> {
             if (onItemClick != null) {
                 onItemClick.accept(app);
@@ -52,6 +63,10 @@ public class ManageToolsAdapter extends BaseAppListAdapter<HomeTool, ManageTools
 
         public void setOnImageClick(View.OnClickListener clickListener) {
             this.imageView.setOnClickListener(clickListener);
+        }
+
+        public void setImage(Drawable drawable) {
+            this.imageView.setImageDrawable(drawable);
         }
     }
 }
