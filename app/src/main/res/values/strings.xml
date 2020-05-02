@@ -10,6 +10,8 @@
     <string name="settings_add_tool">Add Tool</string>
 
     <string name="settings_enable_open_apps">Enable Open Apps</string>
+    <string name="settings_enable_show_clock">Show Clock</string>
+    <string name="settings_enable_show_date">Show Date</string>
 
     <string name="about">About</string>
     <string name="about_source"><a href="https://github.com/myin142/min-launcher">Source Code</a></string>

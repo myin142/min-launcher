@@ -11,7 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import io.github.myin.phone.R;
+import io.github.myin.phone.SharedConst;
 import io.github.myin.phone.utils.Configuration;
+import io.github.myin.phone.utils.FeaturePreference;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -57,6 +59,16 @@ public class HomeTop extends Fragment {
         };
     }
 
+    private void updateVisibility() {
+        setViewVisibility(dateView, SharedConst.PREF_SHOW_DATE_FEATURE);
+        setViewVisibility(timeView, SharedConst.PREF_SHOW_CLOCK_FEATURE);
+    }
+
+    private void setViewVisibility(View view, String feature) {
+        int visible = FeaturePreference.isFeatureEnabled(feature) ? View.VISIBLE : View.INVISIBLE;
+        view.setVisibility(visible);
+    }
+
     private void updateCurrentTime() {
         Date currentDate = new Date();
         dateView.setText(dateFormat.format(currentDate));
@@ -66,6 +78,7 @@ public class HomeTop extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        updateVisibility();
         updateCurrentTime();
         getActivity().registerReceiver(timeTickReceiver, new IntentFilter(Intent.ACTION_TIME_TICK));
     }

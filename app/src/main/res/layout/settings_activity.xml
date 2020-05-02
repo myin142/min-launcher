@@ -40,5 +40,15 @@
                 android:layout_width="match_parent"
                 style="@style/ListText"
                 android:layout_height="wrap_content" />
+        <Switch android:text="@string/settings_enable_show_clock"
+                android:id="@+id/show_clock"
+                android:layout_width="match_parent"
+                style="@style/ListText"
+                android:layout_height="wrap_content" />
+        <Switch android:text="@string/settings_enable_show_date"
+                android:id="@+id/show_date"
+                android:layout_width="match_parent"
+                style="@style/ListText"
+                android:layout_height="wrap_content" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

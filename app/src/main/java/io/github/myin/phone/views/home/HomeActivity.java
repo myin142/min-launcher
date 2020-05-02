@@ -14,12 +14,11 @@ import io.github.myin.phone.data.BaseAppDiffCallback;
 import io.github.myin.phone.data.app.HomeAppRepository;
 import io.github.myin.phone.list.NoScrollLinearLayout;
 import io.github.myin.phone.list.TextListAdapter;
-import io.github.myin.phone.utils.PreferenceSettings;
+import io.github.myin.phone.utils.FeaturePreference;
 import io.github.myin.phone.views.SelectAppActivity;
 import io.github.myin.phone.views.apps.AppsList;
 
 import javax.inject.Inject;
-import java.util.Set;
 
 public class HomeActivity extends SelectAppActivity {
 
@@ -31,7 +30,6 @@ public class HomeActivity extends SelectAppActivity {
     private float upSwipe, downSwipe;
 
     private TextListAdapter<HomeApp> appAdapter;
-    private Set<String> features;
 
     @Inject
     HomeAppRepository homeAppRepository;
@@ -58,14 +56,8 @@ public class HomeActivity extends SelectAppActivity {
     }
 
     @Override
-    protected void onResume() {
-        features = PreferenceSettings.getFeatures(this);
-        super.onResume();
-    }
-
-    @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (features.contains(SharedConst.PREF_OPEN_APP_FEATURE)) {
+        if (FeaturePreference.isFeatureEnabled(SharedConst.PREF_OPEN_APP_FEATURE)) {
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     upSwipe = event.getY();

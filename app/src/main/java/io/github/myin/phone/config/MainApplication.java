@@ -7,6 +7,7 @@ import android.os.Bundle;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasAndroidInjector;
+import io.github.myin.phone.utils.FeaturePreference;
 
 import javax.inject.Inject;
 
@@ -29,6 +30,7 @@ public class MainApplication extends Application implements HasAndroidInjector {
                 .inject(this);
 
         registerPortraitOrientationCallback();
+        FeaturePreference.init(this);
     }
 
     private void registerPortraitOrientationCallback() {
