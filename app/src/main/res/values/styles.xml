@@ -13,6 +13,8 @@
     </style>
 
     <style name="ListText" parent="Widget.AppCompat.TextView">
+        <!-- Global Text Color does not work for Switch -->
+        <item name="android:textColor">?attr/colorControlNormal</item>
         <item name="android:paddingTop">@dimen/half_view_padding</item>
         <item name="android:paddingBottom">@dimen/half_view_padding</item>
     </style>

@@ -8,15 +8,18 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 import dagger.android.AndroidInjection;
 import io.github.myin.phone.R;
+import io.github.myin.phone.SharedConst;
 import io.github.myin.phone.data.app.HomeApp;
 import io.github.myin.phone.data.BaseAppDiffCallback;
 import io.github.myin.phone.data.app.HomeAppRepository;
 import io.github.myin.phone.list.NoScrollLinearLayout;
 import io.github.myin.phone.list.TextListAdapter;
+import io.github.myin.phone.utils.PreferenceSettings;
 import io.github.myin.phone.views.SelectAppActivity;
 import io.github.myin.phone.views.apps.AppsList;
 
 import javax.inject.Inject;
+import java.util.Set;
 
 public class HomeActivity extends SelectAppActivity {
 
@@ -28,6 +31,7 @@ public class HomeActivity extends SelectAppActivity {
     private float upSwipe, downSwipe;
 
     private TextListAdapter<HomeApp> appAdapter;
+    private Set<String> features;
 
     @Inject
     HomeAppRepository homeAppRepository;
@@ -54,18 +58,26 @@ public class HomeActivity extends SelectAppActivity {
     }
 
     @Override
+    protected void onResume() {
+        features = PreferenceSettings.getFeatures(this);
+        super.onResume();
+    }
+
+    @Override
     public boolean onTouchEvent(MotionEvent event) {
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                upSwipe = event.getY();
-                break;
-            case MotionEvent.ACTION_UP:
-                downSwipe = event.getY();
-                float deltaY = upSwipe - downSwipe;
-                if (deltaY > MIN_SWIPE_DISTANCE) {
-                    openAppsList();
-                }
-                break;
+        if (features.contains(SharedConst.PREF_OPEN_APP_FEATURE)) {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    upSwipe = event.getY();
+                    break;
+                case MotionEvent.ACTION_UP:
+                    downSwipe = event.getY();
+                    float deltaY = upSwipe - downSwipe;
+                    if (deltaY > MIN_SWIPE_DISTANCE) {
+                        openAppsList();
+                    }
+                    break;
+            }
         }
 
         return super.onTouchEvent(event);

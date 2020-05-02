@@ -35,5 +35,10 @@
                   android:id="@+id/about"
                   style="@style/ListText"
                   android:textSize="@dimen/text_size"/>
+        <Switch android:text="@string/settings_enable_open_apps"
+                android:id="@+id/enable_open_apps"
+                android:layout_width="match_parent"
+                style="@style/ListText"
+                android:layout_height="wrap_content" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
