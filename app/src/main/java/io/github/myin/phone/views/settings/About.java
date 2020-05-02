@@ -17,7 +17,7 @@ public class About extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.about_activity);
 
-        List<Integer> textIds = Arrays.asList(R.id.about_source, R.id.about_img_credits);
+        List<Integer> textIds = Arrays.asList(R.id.about_source);
         for (Integer textId : textIds) {
             TextView text = findViewById(textId);
             text.setMovementMethod(LinkMovementMethod.getInstance());

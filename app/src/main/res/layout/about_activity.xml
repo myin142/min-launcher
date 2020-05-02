@@ -28,10 +28,5 @@
                   android:layout_height="wrap_content"
                   style="@style/ListText"
                   android:id="@+id/about_source"/>
-        <TextView android:text="@string/about_images"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  style="@style/ListText"
-                  android:id="@+id/about_img_credits"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
