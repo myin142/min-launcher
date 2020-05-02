@@ -1,10 +1,12 @@
 package io.github.myin.phone.views;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import io.github.myin.phone.data.app.HomeApp;
 import io.github.myin.phone.utils.IntentUtils;
 import io.github.myin.phone.views.apps.AppsList;
 
@@ -23,6 +25,11 @@ public abstract class SelectAppActivity extends AppCompatActivity {
             ResolveInfo resolveInfo = getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY);
             onAppSelected(requestCode, resolveInfo);
         }
+    }
+
+    protected HomeApp resolveToHomeApp(ResolveInfo resolveInfo) {
+        ActivityInfo info = resolveInfo.activityInfo;
+        return new HomeApp(info.packageName, info.name, resolveInfo.loadLabel(getPackageManager()).toString());
     }
 
     protected abstract void onAppSelected(int requestCode, ResolveInfo info);

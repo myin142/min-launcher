@@ -24,7 +24,6 @@ public class ManageAppsActivity extends SelectAppActivity implements OnListChang
 
     private static final int REQ_NEW_APP = 1;
     private static final int REQ_EDIT_APP = 2;
-    private static final int REQ_OPEN_APP = 3;
 
     private TextView addText;
     private ManageAppsAdapter appsAdapter;
@@ -41,9 +40,6 @@ public class ManageAppsActivity extends SelectAppActivity implements OnListChang
 
         addText = findViewById(R.id.action_add);
         addText.setOnClickListener(v -> openNewAppsList());
-
-        TextView openAppText = findViewById(R.id.action_open_app);
-        openAppText.setOnClickListener(v -> openAppsList());
 
         homeAppRepository.getHomeAppsSorted().observe(this, list -> {
             appsAdapter.submitList(list);
@@ -74,11 +70,6 @@ public class ManageAppsActivity extends SelectAppActivity implements OnListChang
         editApp = app;
     }
 
-    private void openAppsList() {
-        Intent appsListIntent = new Intent(this, AppsList.class);
-        startActivityForResult(appsListIntent, REQ_OPEN_APP);
-    }
-
     @Override
     protected void onAppSelected(int requestCode, ResolveInfo info) {
         HomeApp homeApp = resolveToHomeApp(info);
@@ -90,15 +81,7 @@ public class ManageAppsActivity extends SelectAppActivity implements OnListChang
                 editApp.copyValuesFrom(homeApp);
                 appsAdapter.updateItem(editApp);
                 break;
-            case REQ_OPEN_APP:
-                startActivity(homeApp.getActivityIntent());
-                break;
         }
-    }
-
-    private HomeApp resolveToHomeApp(ResolveInfo resolveInfo) {
-        ActivityInfo info = resolveInfo.activityInfo;
-        return new HomeApp(info.packageName, info.name, resolveInfo.loadLabel(getPackageManager()).toString());
     }
 
     @Override

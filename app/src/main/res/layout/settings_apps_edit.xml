@@ -39,13 +39,5 @@
                   android:layout_height="wrap_content"
                   android:id="@+id/action_add"
                   android:textSize="@dimen/text_size"/>
-        <Space android:layout_width="0dp"
-               android:layout_height="wrap_content"
-               android:layout_weight="1"/>
-        <TextView android:text="@string/settings_open_app"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:id="@+id/action_open_app"
-                  android:textSize="@dimen/text_size"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
