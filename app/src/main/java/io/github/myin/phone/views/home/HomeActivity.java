@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.view.MotionEvent;
+import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 import dagger.android.AndroidInjection;
@@ -31,6 +32,7 @@ public class HomeActivity extends SelectAppActivity {
     private float upSwipe, downSwipe;
 
     private TextListAdapter<HomeApp> appAdapter;
+    private View homeTop;
 
     @Inject
     HomeAppRepository homeAppRepository;
@@ -47,6 +49,8 @@ public class HomeActivity extends SelectAppActivity {
             startActivity(appIntent);
         });
 
+        homeTop = findViewById(R.id.home_top);
+
         homeAppRepository.getHomeAppsSorted().observe(this, appList -> {
             appAdapter.submitList(appList);
         });
@@ -54,6 +58,15 @@ public class HomeActivity extends SelectAppActivity {
         RecyclerView appsView = findViewById(R.id.apps_list);
         appsView.setLayoutManager(new NoScrollLinearLayout(this));
         appsView.setAdapter(appAdapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        boolean showDate = FeaturePreference.isFeatureEnabled(SharedConst.PREF_SHOW_DATE_FEATURE);
+        boolean showClock = FeaturePreference.isFeatureEnabled(SharedConst.PREF_SHOW_CLOCK_FEATURE);
+        homeTop.setVisibility((!showDate && !showClock) ? View.GONE : View.VISIBLE);
     }
 
     @Override

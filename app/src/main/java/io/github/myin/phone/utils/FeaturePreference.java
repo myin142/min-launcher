@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import io.github.myin.phone.SharedConst;
 import lombok.experimental.UtilityClass;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
