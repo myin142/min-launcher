@@ -16,6 +16,7 @@ public class Settings extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
+        overridePendingTransition(R.anim.anim_top_in, R.anim.anim_top_out);
 
         findViewById(R.id.edit_apps).setOnClickListener(v -> openEditApps());
         findViewById(R.id.about).setOnClickListener(v -> openAbout());

@@ -28,8 +28,9 @@ public class HomeActivity extends SelectAppActivity {
 
     private static final int REQ_OPEN_APP = 3;
 
-    private final int MIN_SWIPE_DISTANCE = 150;
-    private float upSwipe, downSwipe;
+    private final int APPS_SWIPE_DISTANCE = 150;
+    private final int SETTINGS_SWIPE_DISTANCE = 600;
+    private float swipeStartY;
 
     private TextListAdapter<HomeApp> appAdapter;
     private View homeTop;
@@ -73,16 +74,16 @@ public class HomeActivity extends SelectAppActivity {
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                upSwipe = event.getY();
+                swipeStartY = event.getY();
                 break;
             case MotionEvent.ACTION_UP:
-                downSwipe = event.getY();
-                float deltaY = upSwipe - downSwipe;
-                if (deltaY > MIN_SWIPE_DISTANCE) {
+                float deltaY = swipeStartY - event.getY();
+
+                if (deltaY > APPS_SWIPE_DISTANCE) {
                     if (FeaturePreference.isFeatureEnabled(SharedConst.PREF_OPEN_APP_FEATURE)) {
                         openAppsList();
                     }
-                } else if (-deltaY > MIN_SWIPE_DISTANCE) {
+                } else if (-deltaY > SETTINGS_SWIPE_DISTANCE) {
                     openSettings();
                 }
                 break;
