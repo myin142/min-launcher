@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 public class NoScrollLinearLayout extends LinearLayoutManager {
     public NoScrollLinearLayout(Context context) {
-        this(context, LinearLayoutManager.HORIZONTAL);
+        this(context, LinearLayoutManager.VERTICAL);
     }
 
     public NoScrollLinearLayout(Context context, int orientation) {
