@@ -16,7 +16,7 @@
                   android:layout_height="0dp"
                   homeApp:layout_constraintEnd_toEndOf="parent"
                   homeApp:layout_constraintStart_toStartOf="parent"
-                  homeApp:layout_constraintBottom_toTopOf="@+id/home_bottom"
+                  homeApp:layout_constraintBottom_toBottomOf="parent"
                   homeApp:layout_constraintTop_toBottomOf="@+id/home_top"
                   android:id="@+id/home_main"
                   android:layout_marginTop="@dimen/view_padding"
@@ -27,6 +27,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/apps_list"/>
     </LinearLayout>
+<!--
     <fragment android:layout_width="0dp"
               android:layout_height="wrap_content"
               android:name="io.github.myin.phone.views.home.HomeBottom"
@@ -34,4 +35,5 @@
               homeApp:layout_constraintEnd_toEndOf="parent"
               homeApp:layout_constraintBottom_toBottomOf="parent"
               homeApp:layout_constraintStart_toStartOf="parent"/>
+-->
 </androidx.constraintlayout.widget.ConstraintLayout>

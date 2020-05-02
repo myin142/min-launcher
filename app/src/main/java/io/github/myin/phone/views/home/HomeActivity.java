@@ -17,6 +17,7 @@ import io.github.myin.phone.list.TextListAdapter;
 import io.github.myin.phone.utils.FeaturePreference;
 import io.github.myin.phone.views.SelectAppActivity;
 import io.github.myin.phone.views.apps.AppsList;
+import io.github.myin.phone.views.settings.Settings;
 
 import javax.inject.Inject;
 
@@ -57,19 +58,21 @@ public class HomeActivity extends SelectAppActivity {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (FeaturePreference.isFeatureEnabled(SharedConst.PREF_OPEN_APP_FEATURE)) {
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    upSwipe = event.getY();
-                    break;
-                case MotionEvent.ACTION_UP:
-                    downSwipe = event.getY();
-                    float deltaY = upSwipe - downSwipe;
-                    if (deltaY > MIN_SWIPE_DISTANCE) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                upSwipe = event.getY();
+                break;
+            case MotionEvent.ACTION_UP:
+                downSwipe = event.getY();
+                float deltaY = upSwipe - downSwipe;
+                if (deltaY > MIN_SWIPE_DISTANCE) {
+                    if (FeaturePreference.isFeatureEnabled(SharedConst.PREF_OPEN_APP_FEATURE)) {
                         openAppsList();
                     }
-                    break;
-            }
+                } else if (-deltaY > MIN_SWIPE_DISTANCE) {
+                    openSettings();
+                }
+                break;
         }
 
         return super.onTouchEvent(event);
@@ -86,6 +89,11 @@ public class HomeActivity extends SelectAppActivity {
     private void openAppsList() {
         Intent appsListIntent = new Intent(this, AppsList.class);
         startActivityForResult(appsListIntent, REQ_OPEN_APP);
+    }
+
+    private void openSettings() {
+        Intent appsIntent = new Intent(this, Settings.class);
+        startActivityForResult(appsIntent, HomeActivity.REQ_APPS_CHANGED);
     }
 
 }
