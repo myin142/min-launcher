@@ -29,7 +29,7 @@ public class HomeBottom extends Fragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        AndroidInjection.inject(this);
+//        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
 
         toolAdapter = new TextListAdapter<>(new BaseAppDiffCallback<>());

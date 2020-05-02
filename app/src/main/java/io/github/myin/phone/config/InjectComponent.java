@@ -5,7 +5,6 @@ import dagger.BindsInstance;
 import dagger.Component;
 import dagger.android.AndroidInjector;
 import dagger.android.support.AndroidSupportInjectionModule;
-import io.github.myin.phone.views.home.HomeBottom;
 
 import javax.inject.Singleton;
 
@@ -26,5 +25,4 @@ public interface InjectComponent extends AndroidInjector<MainApplication> {
 
     @Override
     void inject(MainApplication instance);
-    void inject(HomeBottom homeBottom);
 }
