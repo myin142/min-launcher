@@ -28,7 +28,7 @@ public class HomeActivity extends SelectAppActivity {
 
     private static final int REQ_OPEN_APP = 3;
 
-    private final int MIN_SWIPE_DISTANCE = 200;
+    private final int MIN_SWIPE_DISTANCE = 150;
     private float upSwipe, downSwipe;
 
     private TextListAdapter<HomeApp> appAdapter;
