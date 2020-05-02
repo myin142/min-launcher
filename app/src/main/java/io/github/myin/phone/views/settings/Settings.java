@@ -6,7 +6,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import io.github.myin.phone.R;
 import io.github.myin.phone.views.settings.apps.ManageAppsActivity;
-import io.github.myin.phone.views.settings.toolbar.ManageToolsActivity;
 
 public class Settings extends AppCompatActivity {
 
@@ -16,7 +15,7 @@ public class Settings extends AppCompatActivity {
         setContentView(R.layout.settings_activity);
 
         findViewById(R.id.edit_apps).setOnClickListener(v -> openEditApps());
-        findViewById(R.id.edit_tools).setOnClickListener(v -> openEditTools());
+        findViewById(R.id.about).setOnClickListener(v -> openAbout());
     }
 
     public void openEditApps() {
@@ -25,9 +24,8 @@ public class Settings extends AppCompatActivity {
         startActivity(appsListIntent);
     }
 
-    public void openEditTools() {
-        Intent toolsIntent = new Intent(this, ManageToolsActivity.class);
-        toolsIntent.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
-        startActivity(toolsIntent);
+    public void openAbout() {
+        Intent aboutIntent = new Intent(this, About.class);
+        startActivity(aboutIntent);
     }
 }

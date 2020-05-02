@@ -1,11 +1,15 @@
 <resources>
-    <string name="app_name">MinPhone</string>
+    <string name="app_name">MinLauncher</string>
     <string name="app_select">Select App</string>
+
     <string name="settings">Settings</string>
     <string name="settings_edit_apps">Edit Apps</string>
     <string name="settings_add">Add</string>
     <string name="settings_open_app">Open App</string>
-
     <string name="settings_edit_tools">Edit Toolbar</string>
     <string name="settings_add_tool">Add Tool</string>
+
+    <string name="about">About</string>
+    <string name="about_source"><a href="https://github.com/myin142/min-launcher">Source Code</a></string>
+    <string name="about_images"><a href="https://www.flaticon.com/authors/gregor-cresnar">Image Credits</a></string>
 </resources>

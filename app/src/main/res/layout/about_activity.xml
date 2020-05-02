@@ -6,7 +6,7 @@
                                                    android:layout_height="match_parent"
                                                    android:padding="@dimen/screen_padding">
 
-    <TextView android:text="@string/settings"
+    <TextView android:text="@string/about"
               android:layout_width="0dp"
               android:layout_height="wrap_content"
               android:id="@+id/title"
@@ -23,17 +23,15 @@
                   homeApp:layout_constraintBottom_toBottomOf="parent"
                   android:layout_marginTop="@dimen/view_padding"
                   android:layout_marginBottom="@dimen/view_padding">
-        <TextView android:text="@string/settings_edit_apps"
+        <TextView android:text="@string/about_source"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:id="@+id/edit_apps"
                   style="@style/ListText"
-                  android:textSize="@dimen/text_size"/>
-        <TextView android:text="@string/about"
+                  android:id="@+id/about_source"/>
+        <TextView android:text="@string/about_images"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:id="@+id/about"
                   style="@style/ListText"
-                  android:textSize="@dimen/text_size"/>
+                  android:id="@+id/about_img_credits"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

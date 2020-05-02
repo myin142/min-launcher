@@ -3,11 +3,18 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="android:windowFullscreen">true</item>
+        <item name="android:textSize">@dimen/text_size</item>
+        <item name="android:textColor">?attr/colorControlNormal</item>
 
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="ListText" parent="Widget.AppCompat.TextView">
+        <item name="android:paddingTop">@dimen/half_view_padding</item>
+        <item name="android:paddingBottom">@dimen/half_view_padding</item>
     </style>
 
 </resources>
