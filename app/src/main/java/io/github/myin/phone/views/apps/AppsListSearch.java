@@ -22,8 +22,8 @@ public class AppsListSearch extends Observable<List<ResolveInfo>> implements Tex
 
     private final PackageManager packageManager;
 
-    private List<ResolveInfo> appsList = new ArrayList<>();
-    private Subject<String> changed = ReplaySubject.create();
+    private final List<ResolveInfo> appsList = new ArrayList<>();
+    private final Subject<String> changed = ReplaySubject.create();
 
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {

@@ -13,8 +13,10 @@ import io.github.myin.phone.SharedConst;
 import io.github.myin.phone.data.app.HomeApp;
 import io.github.myin.phone.data.BaseAppDiffCallback;
 import io.github.myin.phone.data.app.HomeAppRepository;
+import io.github.myin.phone.data.setting.AppSettingRepository;
 import io.github.myin.phone.list.NoScrollLinearLayout;
 import io.github.myin.phone.list.TextListAdapter;
+import io.github.myin.phone.list.TextViewHolder;
 import io.github.myin.phone.utils.FeaturePreference;
 import io.github.myin.phone.views.SelectAppActivity;
 import io.github.myin.phone.views.apps.AppsList;
@@ -32,7 +34,7 @@ public class HomeActivity extends SelectAppActivity {
     private final int SETTINGS_SWIPE_DISTANCE = 800;
     private float swipeStartY;
 
-    private TextListAdapter<HomeApp> appAdapter;
+    private TextListAdapter<HomeApp, TextViewHolder> appAdapter;
     private View homeTop;
 
     @Inject
@@ -44,7 +46,7 @@ public class HomeActivity extends SelectAppActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_activity);
 
-        appAdapter = new TextListAdapter<>(new BaseAppDiffCallback<>(), getResources().getDimensionPixelSize(R.dimen.title_size));
+        appAdapter = new TextListAdapter<>(new BaseAppDiffCallback<>(), TextViewHolder::new, getResources().getDimensionPixelSize(R.dimen.title_size));
         appAdapter.setOnItemClickListener(homeApp -> {
             Intent appIntent = homeApp.getActivityIntent();
             startActivity(appIntent);

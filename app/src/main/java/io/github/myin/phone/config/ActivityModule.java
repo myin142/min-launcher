@@ -2,6 +2,7 @@ package io.github.myin.phone.config;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
+import io.github.myin.phone.views.apps.AppsList;
 import io.github.myin.phone.views.home.HomeActivity;
 import io.github.myin.phone.views.home.HomeBottom;
 import io.github.myin.phone.views.settings.apps.ManageAppsActivity;
@@ -21,5 +22,8 @@ public abstract class ActivityModule {
 
     @ContributesAndroidInjector
     abstract ManageToolsActivity manageToolsActivity();
+
+    @ContributesAndroidInjector
+    abstract AppsList appsList();
 
 }

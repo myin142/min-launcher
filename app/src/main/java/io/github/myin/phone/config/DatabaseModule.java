@@ -5,6 +5,7 @@ import androidx.room.Room;
 import dagger.Module;
 import dagger.Provides;
 import io.github.myin.phone.data.app.HomeAppRepository;
+import io.github.myin.phone.data.setting.AppSettingRepository;
 import io.github.myin.phone.data.tool.HomeToolRepository;
 
 import javax.inject.Singleton;
@@ -17,7 +18,7 @@ public class DatabaseModule {
     public MainDatabase mainDatabase(Application application) {
         return Room.databaseBuilder(application, MainDatabase.class, "main_database")
                 .allowMainThreadQueries()
-                .addMigrations(DatabaseMigrations.MIGRATION_1_2)
+                .addMigrations(DatabaseMigrations.MIGRATION_1_2, DatabaseMigrations.MIGRATION_2_3)
                 .build();
     }
 
@@ -31,6 +32,12 @@ public class DatabaseModule {
     @Singleton
     public HomeToolRepository homeToolRepository(MainDatabase database) {
         return database.homeToolRepository();
+    }
+
+    @Provides
+    @Singleton
+    public AppSettingRepository appSettingRepository(MainDatabase database) {
+        return database.appSettingRepository();
     }
 
 }

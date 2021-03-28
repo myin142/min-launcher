@@ -19,4 +19,17 @@ public class DatabaseMigrations {
         }
     };
 
+    static final Migration MIGRATION_2_3 = new Migration(2, 3) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("CREATE TABLE IF NOT EXISTS `app_settings` (" +
+                    "`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+                    "`package_name` TEXT," +
+                    "`class_name` TEXT," +
+                    "`index` INTEGER NOT NULL," +
+                    "`hidden` INTEGER NOT NULL" +
+                    ")");
+        }
+    };
+
 }
