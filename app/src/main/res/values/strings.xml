@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">MinLauncher</string>
     <string name="app_select">Select App</string>
+    <string name="app_hide">Hide App</string>
+    <string name="app_show">Show App</string>
 
     <string name="settings">Settings</string>
     <string name="settings_edit_apps">Edit Apps</string>
@@ -12,6 +14,7 @@
     <string name="settings_enable_open_apps">Enable Open Apps</string>
     <string name="settings_enable_show_clock">Show Clock</string>
     <string name="settings_enable_show_date">Show Date</string>
+    <string name="settings_enable_show_hidden_apps">Show hidden apps</string>
 
     <string name="about">About</string>
     <string name="about_source"><a href="https://github.com/myin142/min-launcher">Source Code</a></string>

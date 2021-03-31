@@ -15,26 +15,20 @@ import lombok.Setter;
 import io.github.myin.phone.R;
 
 @Setter
-public class TextListAdapter<T, H extends TextViewHolder> extends ListAdapter<T, H> {
+public class TextListAdapter<T> extends ListAdapter<T, TextViewHolder> {
 
     private Function<T, String> displayFunction;
     private Consumer<T> onItemClickListener;
     private int fontSize;
-    private BiFunction<View, TextView, H> constructor;
 
-    public TextListAdapter(DiffUtil.ItemCallback<T> diffUtil, BiFunction<View, TextView, H> constructor) {
-        this(diffUtil, constructor, -1);
-    }
-
-    public TextListAdapter(DiffUtil.ItemCallback<T> diffUtil, BiFunction<View, TextView, H> constructor, int size) {
+    public TextListAdapter(DiffUtil.ItemCallback<T> diffUtil, int size) {
         super(diffUtil);
         this.fontSize = size;
-        this.constructor = constructor;
     }
 
     @NonNull
     @Override
-    public H onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public TextViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         TextView view = (TextView) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.list_item, parent, false);
 
@@ -42,7 +36,7 @@ public class TextListAdapter<T, H extends TextViewHolder> extends ListAdapter<T,
             view.setTextSize(TypedValue.COMPLEX_UNIT_PX, fontSize);
         }
 
-        return constructor.apply(view, view);
+        return new TextViewHolder(view, view);
     }
 
     @Override

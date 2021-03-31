@@ -11,16 +11,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import dagger.android.AndroidInjection;
+import io.github.myin.phone.SharedConst;
 import io.github.myin.phone.data.setting.AppSetting;
 import io.github.myin.phone.data.setting.AppSettingRepository;
+import io.github.myin.phone.utils.FeaturePreference;
 import io.reactivex.disposables.Disposable;
 import io.github.myin.phone.R;
-import io.github.myin.phone.list.TextListAdapter;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class AppsList extends AppCompatActivity {
 
@@ -29,7 +29,7 @@ public class AppsList extends AppCompatActivity {
 
     private Disposable searchDisposable;
     private Disposable loadingDisposable;
-    private TextListAdapter<ResolveInfo, AppViewHolder> listAdapter;
+    private AppListAdapter listAdapter;
 
     @Inject
     AppSettingRepository appSettingRepository;
@@ -48,8 +48,7 @@ public class AppsList extends AppCompatActivity {
         setContentView(R.layout.apps_activity);
         overridePendingTransition(R.anim.anim_bottom_in, R.anim.anim_bottom_out);
 
-        listAdapter = new TextListAdapter<>(new ResolveInfoDiffCallback(), AppViewHolder::new);
-        listAdapter.setDisplayFunction(resolve -> resolve.loadLabel(getPackageManager()).toString());
+        listAdapter = new AppListAdapter(getPackageManager(), this::findAppSetting);
         listAdapter.setOnItemClickListener(this::closeWithAppResult);
 
         AppsListSearch appsListSearch = new AppsListSearch(getPackageManager());
@@ -74,9 +73,14 @@ public class AppsList extends AppCompatActivity {
 
     private void setAppsList(List<ResolveInfo> infoList) {
         List<ResolveInfo> filteredList = new ArrayList<>();
-        for (ResolveInfo resolveInfo : infoList) {
-            if (!findAppSetting(resolveInfo).isHidden()) {
-                filteredList.add(resolveInfo);
+        for (ResolveInfo info: infoList) {
+            AppSetting setting = findAppSetting(info);
+            if (setting.isHidden()) {
+                if (FeaturePreference.isFeatureEnabled(SharedConst.PREF_SHOW_HIDDEN_APPS)) {
+                    filteredList.add(info);
+                }
+            } else {
+                filteredList.add(info);
             }
         }
 
@@ -91,11 +95,15 @@ public class AppsList extends AppCompatActivity {
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case AppViewHolder.MENU_HIDE_ACTION:
-                ResolveInfo info = listAdapter.getCurrentList().get(item.getGroupId());
-                AppSetting setting = findAppSetting(info);
-                setting.toggleHidden();
-                appSettingRepository.insert(setting);
-                reloadList();
+                int position = item.getGroupId();
+                AppSetting app = findAppSetting(listAdapter.getCurrentList().get(position));
+                app.toggleHidden();
+                appSettingRepository.insert(app);
+                if (FeaturePreference.isFeatureEnabled(SharedConst.PREF_SHOW_HIDDEN_APPS)) {
+                    listAdapter.notifyItemChanged(position);
+                } else {
+                    reloadList();
+                }
                 break;
         }
 

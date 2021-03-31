@@ -50,5 +50,10 @@
                 android:layout_width="match_parent"
                 style="@style/ListText"
                 android:layout_height="wrap_content" />
+        <Switch android:text="@string/settings_enable_show_hidden_apps"
+                android:id="@+id/show_hidden_apps"
+                android:layout_width="match_parent"
+                style="@style/ListText"
+                android:layout_height="wrap_content" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

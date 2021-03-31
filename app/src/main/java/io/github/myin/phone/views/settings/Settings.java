@@ -24,6 +24,7 @@ public class Settings extends AppCompatActivity {
         initSwitch(R.id.enable_open_apps, SharedConst.PREF_OPEN_APP_FEATURE);
         initSwitch(R.id.show_clock, SharedConst.PREF_SHOW_CLOCK_FEATURE);
         initSwitch(R.id.show_date, SharedConst.PREF_SHOW_DATE_FEATURE);
+        initSwitch(R.id.show_hidden_apps, SharedConst.PREF_SHOW_HIDDEN_APPS);
     }
 
     private void initSwitch(int id, String feature) {

@@ -6,7 +6,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class TextViewHolder extends RecyclerView.ViewHolder {
 
-    private TextView textView;
+    private final TextView textView;
+
+    public TextViewHolder(TextView textView) {
+        this(textView, textView);
+    }
 
     public TextViewHolder(View view, TextView textView) {
         super(view);
@@ -15,6 +19,10 @@ public class TextViewHolder extends RecyclerView.ViewHolder {
 
     public void setText(String text) {
         this.textView.setText(text);
+    }
+
+    public TextView getTextView() {
+        return textView;
     }
 
     public void setOnTextClick(View.OnClickListener clickListener) {

@@ -34,7 +34,7 @@ public class HomeActivity extends SelectAppActivity {
     private final int SETTINGS_SWIPE_DISTANCE = 800;
     private float swipeStartY;
 
-    private TextListAdapter<HomeApp, TextViewHolder> appAdapter;
+    private TextListAdapter<HomeApp> appAdapter;
     private View homeTop;
 
     @Inject
@@ -46,7 +46,7 @@ public class HomeActivity extends SelectAppActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_activity);
 
-        appAdapter = new TextListAdapter<>(new BaseAppDiffCallback<>(), TextViewHolder::new, getResources().getDimensionPixelSize(R.dimen.title_size));
+        appAdapter = new TextListAdapter<>(new BaseAppDiffCallback<>(), getResources().getDimensionPixelSize(R.dimen.title_size));
         appAdapter.setOnItemClickListener(homeApp -> {
             Intent appIntent = homeApp.getActivityIntent();
             startActivity(appIntent);
