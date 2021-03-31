@@ -3,6 +3,7 @@
     <string name="app_select">Select App</string>
     <string name="app_hide">Hide App</string>
     <string name="app_show">Show App</string>
+    <string name="app_uninstall">Uninstall App</string>
 
     <string name="settings">Settings</string>
     <string name="settings_edit_apps">Edit Apps</string>

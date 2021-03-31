@@ -7,7 +7,7 @@ import android.content.pm.ResolveInfo;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import io.github.myin.phone.data.app.HomeApp;
-import io.github.myin.phone.utils.IntentUtils;
+import io.github.myin.phone.utils.IntentBuilder;
 import io.github.myin.phone.views.apps.AppsList;
 
 public abstract class SelectAppActivity extends AppCompatActivity {
@@ -21,7 +21,7 @@ public abstract class SelectAppActivity extends AppCompatActivity {
             String className = data.getStringExtra(AppsList.SELECTED_CLASS_APP);
 //            String label = data.getStringExtra(AppsList.SELECTED_LABEL_APP);
 
-            Intent intent = IntentUtils.fromPackageAndClass(packageName, className);
+            Intent intent = new IntentBuilder(packageName, className).appIntent();
             ResolveInfo resolveInfo = getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY);
             onAppSelected(requestCode, resolveInfo);
         }

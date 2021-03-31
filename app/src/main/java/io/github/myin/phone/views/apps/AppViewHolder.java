@@ -1,6 +1,5 @@
 package io.github.myin.phone.views.apps;
 
-import android.graphics.Typeface;
 import android.view.ContextMenu;
 import android.view.View;
 import android.widget.TextView;
@@ -12,6 +11,7 @@ import io.github.myin.phone.list.TextViewHolder;
 public class AppViewHolder extends TextViewHolder implements View.OnCreateContextMenuListener {
 
     public static final int MENU_HIDE_ACTION = 0;
+    public static final int MENU_UNINSTALL_ACTION = 1;
 
     private AppSetting appSetting;
 
@@ -34,7 +34,9 @@ public class AppViewHolder extends TextViewHolder implements View.OnCreateContex
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         int hideTxt = isHidden() ? R.string.app_show : R.string.app_hide;
+
         menu.add(getAdapterPosition(), MENU_HIDE_ACTION, 0, hideTxt);
+        menu.add(getAdapterPosition(), MENU_UNINSTALL_ACTION, 0, R.string.app_uninstall);
     }
 
 }

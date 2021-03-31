@@ -3,7 +3,7 @@ package io.github.myin.phone.data;
 import android.content.Intent;
 import androidx.room.ColumnInfo;
 import androidx.room.PrimaryKey;
-import io.github.myin.phone.utils.IntentUtils;
+import io.github.myin.phone.utils.IntentBuilder;
 
 public class BaseApp {
 
@@ -25,13 +25,7 @@ public class BaseApp {
     }
 
     public Intent getActivityIntent() {
-        Intent intent = IntentUtils.fromPackageAndClass(packageName, className);
-
-        intent.setAction(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_LAUNCHER);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-
-        return intent;
+        return new IntentBuilder(this).start();
     }
 
     public void copyValuesFrom(BaseApp app) {

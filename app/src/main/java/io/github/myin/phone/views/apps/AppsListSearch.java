@@ -5,12 +5,12 @@ import android.content.pm.ResolveInfo;
 import android.text.Editable;
 import android.text.TextWatcher;
 import com.annimon.stream.Collectors;
+import com.annimon.stream.Optional;
 import com.annimon.stream.Stream;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.subjects.ReplaySubject;
-import io.reactivex.subjects.Subject;
+import io.reactivex.subjects.BehaviorSubject;
 import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
@@ -22,8 +22,8 @@ public class AppsListSearch extends Observable<List<ResolveInfo>> implements Tex
 
     private final PackageManager packageManager;
 
-    private final List<ResolveInfo> appsList = new ArrayList<>();
-    private final Subject<String> changed = ReplaySubject.create();
+    private final BehaviorSubject<String> changed = BehaviorSubject.create();
+    private List<ResolveInfo> appsList = new ArrayList<>();
 
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -40,8 +40,10 @@ public class AppsListSearch extends Observable<List<ResolveInfo>> implements Tex
         changed.onNext(s.toString());
     }
 
-    public void loadedApps(List<ResolveInfo> apps) {
-        appsList.addAll(apps);
+    public void loadApps(List<ResolveInfo> apps) {
+        appsList = apps;
+        String value = Optional.ofNullable(changed.getValue()).orElse("");
+        changed.onNext(value);
     }
 
     @Override

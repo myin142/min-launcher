@@ -15,6 +15,7 @@ import io.github.myin.phone.SharedConst;
 import io.github.myin.phone.data.setting.AppSetting;
 import io.github.myin.phone.data.setting.AppSettingRepository;
 import io.github.myin.phone.utils.FeaturePreference;
+import io.github.myin.phone.utils.IntentBuilder;
 import io.reactivex.disposables.Disposable;
 import io.github.myin.phone.R;
 
@@ -30,6 +31,7 @@ public class AppsList extends AppCompatActivity {
     private Disposable searchDisposable;
     private Disposable loadingDisposable;
     private AppListAdapter listAdapter;
+    private AppsLoading appsLoading;
 
     @Inject
     AppSettingRepository appSettingRepository;
@@ -62,13 +64,26 @@ public class AppsList extends AppCompatActivity {
         recyclerAppsList.setLayoutManager(new LinearLayoutManager(this));
         recyclerAppsList.setAdapter(listAdapter);
 
-        AppsLoading appsLoading = new AppsLoading(this);
-        loadingDisposable = appsLoading.subscribe(apps -> {
-            appsListSearch.loadedApps(apps);
-            setAppsList(apps);
-            findViewById(R.id.progress_layout).setVisibility(View.GONE);
+        appsLoading = new AppsLoading(this);
+
+        View progress = findViewById(R.id.progress_layout);
+        appsLoading.setOnLoadStart(() -> {
+            progress.setVisibility(View.VISIBLE);
+            recyclerAppsList.setVisibility(View.GONE);
+        });
+        appsLoading.setOnLoadFinish(() -> {
+            progress.setVisibility(View.GONE);
             recyclerAppsList.setVisibility(View.VISIBLE);
         });
+
+        loadingDisposable = appsLoading.subscribe(appsListSearch::loadApps);
+        appsLoading.reload();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        appsLoading.reload();
     }
 
     private void setAppsList(List<ResolveInfo> infoList) {
@@ -93,10 +108,12 @@ public class AppsList extends AppCompatActivity {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
+        int position = item.getGroupId();
+        ResolveInfo info = listAdapter.getCurrentList().get(position);
+
         switch (item.getItemId()) {
             case AppViewHolder.MENU_HIDE_ACTION:
-                int position = item.getGroupId();
-                AppSetting app = findAppSetting(listAdapter.getCurrentList().get(position));
+                AppSetting app = findAppSetting(info);
                 app.toggleHidden();
                 appSettingRepository.insert(app);
                 if (FeaturePreference.isFeatureEnabled(SharedConst.PREF_SHOW_HIDDEN_APPS)) {
@@ -104,6 +121,10 @@ public class AppsList extends AppCompatActivity {
                 } else {
                     reloadList();
                 }
+                break;
+            case AppViewHolder.MENU_UNINSTALL_ACTION:
+                Intent uninstallIntent = new IntentBuilder(info).uninstall();
+                startActivity(uninstallIntent);
                 break;
         }
 
