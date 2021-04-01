@@ -3,4 +3,4 @@
            android:id="@+id/icon"
            android:layout_width="@dimen/icon_size"
            android:layout_height="@dimen/icon_size"
-           android:padding="@dimen/half_view_padding"/>
+           android:layout_marginHorizontal="@dimen/half_view_padding"/>

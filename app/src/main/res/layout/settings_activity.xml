@@ -29,6 +29,12 @@
                   android:id="@+id/edit_apps"
                   style="@style/ListText"
                   android:textSize="@dimen/text_size"/>
+        <TextView android:text="@string/settings_edit_tools"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/edit_tools"
+                  style="@style/ListText"
+                  android:textSize="@dimen/text_size"/>
         <TextView android:text="@string/about"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"

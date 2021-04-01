@@ -9,6 +9,7 @@ import io.github.myin.phone.R;
 import io.github.myin.phone.SharedConst;
 import io.github.myin.phone.utils.FeaturePreference;
 import io.github.myin.phone.views.settings.apps.ManageAppsActivity;
+import io.github.myin.phone.views.settings.toolbar.ManageToolsActivity;
 
 public class Settings extends AppCompatActivity {
 
@@ -19,6 +20,7 @@ public class Settings extends AppCompatActivity {
         overridePendingTransition(R.anim.anim_top_in, R.anim.anim_top_out);
 
         findViewById(R.id.edit_apps).setOnClickListener(v -> openEditApps());
+        findViewById(R.id.edit_tools).setOnClickListener(v -> openEditTools());
         findViewById(R.id.about).setOnClickListener(v -> openAbout());
 
         initSwitch(R.id.enable_open_apps, SharedConst.PREF_OPEN_APP_FEATURE);
@@ -37,6 +39,12 @@ public class Settings extends AppCompatActivity {
         Intent appsListIntent = new Intent(this, ManageAppsActivity.class);
         appsListIntent.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
         startActivity(appsListIntent);
+    }
+
+    public void openEditTools() {
+        Intent toolListIntent = new Intent(this, ManageToolsActivity.class);
+        toolListIntent.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
+        startActivity(toolListIntent);
     }
 
     public void openAbout() {

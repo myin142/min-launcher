@@ -2,6 +2,8 @@ package io.github.myin.phone.views.settings.toolbar;
 
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,11 +53,17 @@ public class ManageToolsAdapter extends BaseAppListAdapter<HomeTool, ManageTools
 
     public static class ManageToolView extends RecyclerView.ViewHolder {
 
-        private ImageView imageView;
+        private final ImageView imageView;
 
         public ManageToolView(View view, ImageView imageView) {
             super(view);
             this.imageView = imageView;
+
+            ColorMatrix matrix = new ColorMatrix();
+            matrix.setSaturation(0);
+
+            ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
+            this.imageView.setColorFilter(filter);
         }
 
         public void setOnImageClick(View.OnClickListener clickListener) {
