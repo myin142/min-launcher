@@ -17,6 +17,7 @@
         <item name="android:textColor">?attr/colorControlNormal</item>
         <item name="android:paddingTop">@dimen/half_view_padding</item>
         <item name="android:paddingBottom">@dimen/half_view_padding</item>
+        <item name="android:textColorLink">?attr/colorControlNormal</item>
     </style>
 
 </resources>

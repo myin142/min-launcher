@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="horizontal"
@@ -13,6 +14,31 @@
     <Space android:layout_width="0dp"
            android:layout_height="wrap_content"
            android:layout_weight="1"/>
+
+<!--
+    <RelativeLayout android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/badge"
+                    android:layout_weight="1">
+
+        <ImageView android:id="@+id/badge_icon"
+                   android:layout_centerHorizontal="true"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   app:srcCompat="@drawable/ic_circle"/>
+        <TextView android:text="0"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textAlignment="center"
+                  android:gravity="center"
+                  android:layout_alignTop="@+id/badge_icon"
+                  android:layout_alignStart="@+id/badge_icon"
+                  android:layout_alignEnd="@+id/badge_icon"
+                  android:layout_alignBottom="@+id/badge_icon"
+                  android:id="@+id/badge_value"/>
+    </RelativeLayout>
+-->
+
     <TextView android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:id="@+id/home_top_time"
