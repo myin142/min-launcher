@@ -17,3 +17,4 @@
 *.jks
 keystore.properties
 /fastlane/report.xml
+/.bundle
