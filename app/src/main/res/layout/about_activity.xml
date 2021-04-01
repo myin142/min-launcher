@@ -23,6 +23,10 @@
                   homeApp:layout_constraintBottom_toBottomOf="parent"
                   android:layout_marginTop="@dimen/view_padding"
                   android:layout_marginBottom="@dimen/view_padding">
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  style="@style/ListText"
+                  android:id="@+id/about_app"/>
         <TextView android:text="@string/about_source"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"

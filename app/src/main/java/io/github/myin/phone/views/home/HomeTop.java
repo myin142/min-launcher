@@ -64,14 +64,14 @@ public class HomeTop extends Fragment {
             }
         };
 
-        notificationCountView = view.findViewById(R.id.badge_value);
-        notificationCountReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                NotificationChange change = new NotificationChange(intent);
-                notificationCountView.setText(String.valueOf(change.getNotificationCount()));
-            }
-        };
+//        notificationCountView = view.findViewById(R.id.badge_value);
+//        notificationCountReceiver = new BroadcastReceiver() {
+//            @Override
+//            public void onReceive(Context context, Intent intent) {
+//                NotificationChange change = new NotificationChange(intent);
+//                notificationCountView.setText(String.valueOf(change.getNotificationCount()));
+//            }
+//        };
 
         new Thread() {
             @Override
@@ -116,14 +116,14 @@ public class HomeTop extends Fragment {
         updateVisibility();
         updateCurrentTime();
         getActivity().registerReceiver(timeTickReceiver, new IntentFilter(Intent.ACTION_TIME_TICK));
-        getActivity().registerReceiver(notificationCountReceiver, new IntentFilter(NotificationService.NOTIFICATION_CHANGE));
+//        getActivity().registerReceiver(notificationCountReceiver, new IntentFilter(NotificationService.NOTIFICATION_CHANGE));
     }
 
     @Override
     public void onPause() {
         super.onPause();
         getActivity().unregisterReceiver(timeTickReceiver);
-        getActivity().unregisterReceiver(notificationCountReceiver);
+//        getActivity().unregisterReceiver(notificationCountReceiver);
     }
 
     private void openCalendar() {
