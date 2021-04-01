@@ -8,3 +8,11 @@
 .externalNativeBuild
 .cxx
 /app/release
+/vendor
+/api-credentials.json
+.project
+.settings/
+.classpath
+/.vscode/
+*.jks
+keystore.properties
