@@ -1,0 +1,4 @@
+Hide applications
+Uninstall applications
+Add simple instruction for new users
+Add toolbar
