@@ -22,10 +22,28 @@
                   android:layout_marginTop="@dimen/view_padding"
                   android:layout_marginBottom="@dimen/view_padding"
                   android:gravity="center_vertical">
+
         <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/apps_list"/>
+        <LinearLayout
+                android:id="@+id/start_intro"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            <TextView
+                    android:textAlignment="center"
+                    android:text="@string/start_intro_text"
+                    android:layout_marginVertical="@dimen/view_padding"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/textView"/>
+            <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/intro_arrow_height"
+                    homeApp:srcCompat="@drawable/ic_down_arrow"
+                    android:id="@+id/imageView2"/>
+        </LinearLayout>
     </LinearLayout>
     <fragment android:layout_width="0dp"
               android:layout_height="wrap_content"

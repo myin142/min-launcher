@@ -6,4 +6,6 @@
     <dimen name="view_padding">20dp</dimen>
     <dimen name="half_view_padding">10dp</dimen>
     <dimen name="icon_size">32dp</dimen>
+
+    <dimen name="intro_arrow_height">128dp</dimen>
 </resources>

@@ -54,7 +54,10 @@ public class HomeActivity extends SelectAppActivity {
 
         homeTop = findViewById(R.id.home_top);
 
+        View startIntro = findViewById(R.id.start_intro);
+
         homeAppRepository.getHomeAppsSorted().observe(this, appList -> {
+            startIntro.setVisibility(appList.isEmpty() ? View.VISIBLE : View.GONE);
             appAdapter.submitList(appList);
         });
 
