@@ -73,25 +73,25 @@ public class HomeTop extends Fragment {
 //            }
 //        };
 
-        new Thread() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), "TEST_NOTFICATION_ID_MYIN")
-                        .setContentTitle("My notification")
-                        .setContentText("Much longer text that cannot fit one line...")
-                        .setStyle(new NotificationCompat.BigTextStyle()
-                                .bigText("Much longer text that cannot fit one line..."))
-                        .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
-                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getContext());
-                notificationManager.notify(198312, builder.build());
-            }
-        }.start();
+//        new Thread() {
+//            @Override
+//            public void run() {
+//                try {
+//                    Thread.sleep(5000);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//                NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), "TEST_NOTFICATION_ID_MYIN")
+//                        .setContentTitle("My notification")
+//                        .setContentText("Much longer text that cannot fit one line...")
+//                        .setStyle(new NotificationCompat.BigTextStyle()
+//                                .bigText("Much longer text that cannot fit one line..."))
+//                        .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+//
+//                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getContext());
+//                notificationManager.notify(198312, builder.build());
+//            }
+//        }.start();
     }
 
     private void updateVisibility() {
