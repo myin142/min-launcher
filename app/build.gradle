@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.2"
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
     defaultConfig {
         applicationId "io.github.myin.phone"
         minSdkVersion 19
-        targetSdkVersion 29
-        versionCode 6
-        versionName "v0.3"
+        targetSdkVersion 30
+        versionCode 7
+        versionName "v0.3.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary true
     }

@@ -30,7 +30,7 @@ public class About extends AppCompatActivity {
         try {
             PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
             String version = pInfo.versionName;
-            info += " - " + getText(R.string.about_version) + " " + version;
+            info += " - " + version;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
             log.warning("Failed to get application version");

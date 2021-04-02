@@ -44,6 +44,7 @@ public class ManageToolsActivity extends SelectAppActivity implements OnListChan
 
         homeToolRepository.getHomeToolSorted().observe(this, list -> {
             toolsAdapter.submitList(list);
+            toolsAdapter.notifyDataSetChanged();
         });
 
         RecyclerView editAppsList = findViewById(R.id.edit_tools_list);

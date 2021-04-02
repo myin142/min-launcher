@@ -40,6 +40,7 @@ public class ManageToolsAdapter extends BaseAppListAdapter<HomeTool, ManageTools
     public void onBindViewHolder(@NonNull ManageToolView holder, int position) {
         HomeTool app = getItem(position);
 
+        System.out.println("Update image");
         ResolveInfo info = packageManager.resolveActivity(app.getActivityIntent(), PackageManager.MATCH_DEFAULT_ONLY);
         Drawable icon = info.loadIcon(packageManager);
         holder.setImage(icon);
