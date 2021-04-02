@@ -42,14 +42,10 @@ public class ManageToolsActivity extends SelectAppActivity implements OnListChan
         addText = findViewById(R.id.add_tool);
         addText.setOnClickListener(v -> openNewAppsList());
 
-        homeToolRepository.getHomeToolSorted().observe(this, list -> {
-            toolsAdapter.submitList(list);
-            toolsAdapter.notifyDataSetChanged();
-        });
+        homeToolRepository.getHomeToolSorted().observe(this, list -> toolsAdapter.submitList(list));
 
         RecyclerView editAppsList = findViewById(R.id.edit_tools_list);
         editAppsList.setLayoutManager(new NoScrollLinearLayout(this, LinearLayoutManager.HORIZONTAL));
-        editAppsList.setHasFixedSize(true);
 
         toolsAdapter = new ManageToolsAdapter(getPackageManager());
         toolsAdapter.setOnListChange(this);
@@ -81,7 +77,7 @@ public class ManageToolsActivity extends SelectAppActivity implements OnListChan
                 break;
             case REQ_EDIT_APP:
                 editTool.copyValuesFrom(homeTool);
-                toolsAdapter.updateItem(homeTool);
+                toolsAdapter.updateItem(editTool);
                 break;
         }
     }

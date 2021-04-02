@@ -40,9 +40,7 @@ public class ManageAppsActivity extends SelectAppActivity implements OnListChang
         addText = findViewById(R.id.action_add);
         addText.setOnClickListener(v -> openNewAppsList());
 
-        homeAppRepository.getHomeAppsSorted().observe(this, list -> {
-            appsAdapter.submitList(list);
-        });
+        homeAppRepository.getHomeAppsSorted().observe(this, list -> appsAdapter.submitList(list));
 
         RecyclerView editAppsList = findViewById(R.id.edit_apps_list);
         editAppsList.setLayoutManager(new NoScrollLinearLayout(this));
