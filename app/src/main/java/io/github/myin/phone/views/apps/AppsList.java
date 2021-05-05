@@ -32,6 +32,7 @@ public class AppsList extends AppCompatActivity {
     private Disposable loadingDisposable;
     private AppListAdapter listAdapter;
     private AppsLoading appsLoading;
+    private EditText searchInput;
 
     @Inject
     AppSettingRepository appSettingRepository;
@@ -56,7 +57,7 @@ public class AppsList extends AppCompatActivity {
         AppsListSearch appsListSearch = new AppsListSearch(getPackageManager());
         searchDisposable = appsListSearch.subscribe(this::setAppsList);
 
-        EditText searchInput = findViewById(R.id.search_input);
+        searchInput = findViewById(R.id.search_input);
         searchInput.addTextChangedListener(appsListSearch);
 
         RecyclerView recyclerAppsList = findViewById(R.id.apps_list);
@@ -84,6 +85,7 @@ public class AppsList extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         appsLoading.reload();
+        searchInput.requestFocus();
     }
 
     private void setAppsList(List<ResolveInfo> infoList) {
