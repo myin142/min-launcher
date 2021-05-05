@@ -3,6 +3,9 @@
 
 <!--    <uses-permission android:name="android.permission.SET_ALARM"/>-->
 
+    <!-- Permission needed for Android P and above -->
+    <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" />
+
     <application android:name=".config.MainApplication"
                  android:allowBackup="true"
                  android:label="@string/app_name"

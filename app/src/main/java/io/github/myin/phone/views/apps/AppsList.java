@@ -1,11 +1,14 @@
 package io.github.myin.phone.views.apps;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,6 +35,7 @@ public class AppsList extends AppCompatActivity {
     private Disposable loadingDisposable;
     private AppListAdapter listAdapter;
     private AppsLoading appsLoading;
+    private EditText searchInput;
 
     @Inject
     AppSettingRepository appSettingRepository;
@@ -56,13 +60,22 @@ public class AppsList extends AppCompatActivity {
         AppsListSearch appsListSearch = new AppsListSearch(getPackageManager());
         searchDisposable = appsListSearch.subscribe(this::setAppsList);
 
-        EditText searchInput = findViewById(R.id.search_input);
+        searchInput = findViewById(R.id.search_input);
         searchInput.addTextChangedListener(appsListSearch);
 
         RecyclerView recyclerAppsList = findViewById(R.id.apps_list);
         recyclerAppsList.setHasFixedSize(true);
         recyclerAppsList.setLayoutManager(new LinearLayoutManager(this));
         recyclerAppsList.setAdapter(listAdapter);
+        recyclerAppsList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(searchInput.getWindowToken(), 0);
+                }
+            }
+        });
 
         appsLoading = new AppsLoading(this);
 
@@ -84,6 +97,15 @@ public class AppsList extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         appsLoading.reload();
+
+        focusSearchInput();
+    }
+
+    private void focusSearchInput() {
+        if (searchInput.requestFocus()) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+        }
     }
 
     private void setAppsList(List<ResolveInfo> infoList) {
