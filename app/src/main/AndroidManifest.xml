@@ -2,6 +2,8 @@
           xmlns:tools="http://schemas.android.com/tools" package="io.github.myin.phone">
 
 <!--    <uses-permission android:name="android.permission.SET_ALARM"/>-->
+
+    <!-- Permission needed for Android P and above -->
     <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" />
 
     <application android:name=".config.MainApplication"

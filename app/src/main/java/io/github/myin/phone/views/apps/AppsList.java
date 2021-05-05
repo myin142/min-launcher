@@ -1,11 +1,14 @@
 package io.github.myin.phone.views.apps;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -64,6 +67,15 @@ public class AppsList extends AppCompatActivity {
         recyclerAppsList.setHasFixedSize(true);
         recyclerAppsList.setLayoutManager(new LinearLayoutManager(this));
         recyclerAppsList.setAdapter(listAdapter);
+        recyclerAppsList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(searchInput.getWindowToken(), 0);
+                }
+            }
+        });
 
         appsLoading = new AppsLoading(this);
 
@@ -85,7 +97,15 @@ public class AppsList extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         appsLoading.reload();
-        searchInput.requestFocus();
+
+        focusSearchInput();
+    }
+
+    private void focusSearchInput() {
+        if (searchInput.requestFocus()) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+        }
     }
 
     private void setAppsList(List<ResolveInfo> infoList) {
