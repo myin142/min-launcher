@@ -36,6 +36,7 @@ public class HomeActivity extends SelectAppActivity {
 
     private TextListAdapter<HomeApp> appAdapter;
     private View homeTop;
+    private View root;
 
     @Inject
     HomeAppRepository homeAppRepository;
@@ -45,6 +46,8 @@ public class HomeActivity extends SelectAppActivity {
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_activity);
+
+        root = findViewById(R.id.root);
 
         appAdapter = new TextListAdapter<>(new BaseAppDiffCallback<>(), getResources().getDimensionPixelSize(R.dimen.title_size));
         appAdapter.setOnItemClickListener(homeApp -> {
@@ -73,6 +76,8 @@ public class HomeActivity extends SelectAppActivity {
         boolean showDate = FeaturePreference.isFeatureEnabled(SharedConst.PREF_SHOW_DATE_FEATURE);
         boolean showClock = FeaturePreference.isFeatureEnabled(SharedConst.PREF_SHOW_CLOCK_FEATURE);
         homeTop.setVisibility((!showDate && !showClock) ? View.GONE : View.VISIBLE);
+
+        root.setLayoutDirection(FeaturePreference.getLayoutDirection().getValue());
     }
 
     @Override

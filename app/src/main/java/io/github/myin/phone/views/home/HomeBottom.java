@@ -12,6 +12,7 @@ import dagger.android.support.DaggerFragment;
 import io.github.myin.phone.R;
 import io.github.myin.phone.data.tool.HomeToolRepository;
 import io.github.myin.phone.list.NoScrollLinearLayout;
+import io.github.myin.phone.utils.FeaturePreference;
 import io.github.myin.phone.views.settings.toolbar.ManageToolsAdapter;
 
 import javax.inject.Inject;
@@ -19,6 +20,7 @@ import javax.inject.Inject;
 public class HomeBottom extends DaggerFragment {
 
     private ManageToolsAdapter toolsAdapter;
+    private View root;
 
     @Inject
     HomeToolRepository toolRepository;
@@ -42,9 +44,16 @@ public class HomeBottom extends DaggerFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        root = view.findViewById(R.id.root);
 
         RecyclerView appsView = view.findViewById(R.id.tools_list);
         appsView.setLayoutManager(new NoScrollLinearLayout(getActivity(), LinearLayoutManager.HORIZONTAL));
         appsView.setAdapter(toolsAdapter);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        root.setLayoutDirection(FeaturePreference.getLayoutDirection().getValue());
     }
 }

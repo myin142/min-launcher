@@ -86,7 +86,6 @@ public class FeaturePreference {
     }
 
     public void setLayoutDirection(LayoutDirection dir) {
-        System.out.println(dir);
         featureValues.put(SharedConst.PREF_LAYOUT_DIRECTION, dir.value);
         setFeatureSetting(editor -> editor.putInt(SharedConst.PREF_LAYOUT_DIRECTION, dir.value));
     }

@@ -14,11 +14,14 @@ import io.github.myin.phone.views.settings.toolbar.ManageToolsActivity;
 
 public class Settings extends AppCompatActivity {
 
+    private Spinner layoutDirection;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
         overridePendingTransition(R.anim.anim_top_in, R.anim.anim_top_out);
+        updateLayout();
 
         findViewById(R.id.edit_apps).setOnClickListener(v -> openEditApps());
         findViewById(R.id.edit_tools).setOnClickListener(v -> openEditTools());
@@ -29,20 +32,18 @@ public class Settings extends AppCompatActivity {
         initSwitch(R.id.show_date, SharedConst.PREF_SHOW_DATE_FEATURE);
         initSwitch(R.id.show_hidden_apps, SharedConst.PREF_SHOW_HIDDEN_APPS);
 
-        Spinner layoutDirection = findViewById(R.id.layout_direction);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.settings_layout_direction_array, R.layout.list_item);
+        layoutDirection = findViewById(R.id.layout_direction);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.settings_layout_direction_array,
+                R.layout.dropdown_item);
         layoutDirection.setAdapter(adapter);
         layoutDirection.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                CharSequence value = (CharSequence) parent.getItemAtPosition(position);
-                switch (value.toString()) {
-                    case "Left":
-                        FeaturePreference.setLayoutDirection(FeaturePreference.LayoutDirection.LEFT);
-                        break;
-                    case "Right":
-                        FeaturePreference.setLayoutDirection(FeaturePreference.LayoutDirection.RIGHT);
-                        break;
+                FeaturePreference.LayoutDirection[] dirs = FeaturePreference.LayoutDirection.values();
+                if (position >= 0 && position < dirs.length) {
+                    FeaturePreference.setLayoutDirection(dirs[position]);
+//                    updateLayout(); // Switch Widget does not work with dynamic layout change
                 }
             }
 
@@ -50,6 +51,16 @@ public class Settings extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+    }
+
+    private void updateLayout() {
+        findViewById(R.id.root).setLayoutDirection(FeaturePreference.getLayoutDirection().getValue());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        layoutDirection.setSelection(FeaturePreference.getLayoutDirection().ordinal());
     }
 
     private void initSwitch(int id, String feature) {

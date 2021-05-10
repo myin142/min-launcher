@@ -54,6 +54,8 @@ public class AppsList extends AppCompatActivity {
         setContentView(R.layout.apps_activity);
         overridePendingTransition(R.anim.anim_bottom_in, R.anim.anim_bottom_out);
 
+        findViewById(R.id.root).setLayoutDirection(FeaturePreference.getLayoutDirection().getValue());
+
         listAdapter = new AppListAdapter(getPackageManager(), this::findAppSetting);
         listAdapter.setOnItemClickListener(app -> {
             hideKeyboard();
