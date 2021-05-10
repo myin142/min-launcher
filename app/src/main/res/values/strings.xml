@@ -19,6 +19,12 @@
     <string name="settings_enable_show_date">Show Date</string>
     <string name="settings_enable_show_hidden_apps">Show hidden apps</string>
 
+    <string name="settings_layout_direction">Layout Direction</string>
+    <string-array name="settings_layout_direction_array">
+        <item>Left</item>
+        <item>Right</item>
+    </string-array>
+
     <string name="about">About</string>
     <string name="about_source"><a href="https://github.com/myin142/min-launcher">Source Code</a></string>
     <string name="about_images"><a href="https://github.com/myin142/min-launcher#image-credits">Image Credits</a></string>

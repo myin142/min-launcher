@@ -2,7 +2,8 @@ package io.github.myin.phone.views.settings;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Switch;
+import android.view.View;
+import android.widget.*;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import io.github.myin.phone.R;
@@ -27,6 +28,28 @@ public class Settings extends AppCompatActivity {
         initSwitch(R.id.show_clock, SharedConst.PREF_SHOW_CLOCK_FEATURE);
         initSwitch(R.id.show_date, SharedConst.PREF_SHOW_DATE_FEATURE);
         initSwitch(R.id.show_hidden_apps, SharedConst.PREF_SHOW_HIDDEN_APPS);
+
+        Spinner layoutDirection = findViewById(R.id.layout_direction);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.settings_layout_direction_array, R.layout.list_item);
+        layoutDirection.setAdapter(adapter);
+        layoutDirection.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                CharSequence value = (CharSequence) parent.getItemAtPosition(position);
+                switch (value.toString()) {
+                    case "Left":
+                        FeaturePreference.setLayoutDirection(FeaturePreference.LayoutDirection.LEFT);
+                        break;
+                    case "Right":
+                        FeaturePreference.setLayoutDirection(FeaturePreference.LayoutDirection.RIGHT);
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
     }
 
     private void initSwitch(int id, String feature) {

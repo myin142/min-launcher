@@ -45,21 +45,37 @@
                 android:id="@+id/enable_open_apps"
                 android:layout_width="match_parent"
                 style="@style/ListText"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
         <Switch android:text="@string/settings_enable_show_clock"
                 android:id="@+id/show_clock"
                 android:layout_width="match_parent"
                 style="@style/ListText"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
         <Switch android:text="@string/settings_enable_show_date"
                 android:id="@+id/show_date"
                 android:layout_width="match_parent"
                 style="@style/ListText"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
         <Switch android:text="@string/settings_enable_show_hidden_apps"
                 android:id="@+id/show_hidden_apps"
                 android:layout_width="match_parent"
                 style="@style/ListText"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/half_view_padding"
+                android:paddingBottom="@dimen/half_view_padding">
+            <TextView
+                    android:text="@string/settings_layout_direction"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" android:id="@+id/textView2" android:layout_weight="1"
+                    android:textSize="@dimen/text_size"/>
+            <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/layout_direction"
+                    android:spinnerMode="dropdown"/>
+        </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
