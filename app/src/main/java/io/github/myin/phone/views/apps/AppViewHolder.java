@@ -1,7 +1,9 @@
 package io.github.myin.phone.views.apps;
 
+import android.content.Context;
 import android.view.ContextMenu;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import com.annimon.stream.Optional;
 import io.github.myin.phone.R;
@@ -19,6 +21,11 @@ public class AppViewHolder extends TextViewHolder implements View.OnCreateContex
         super(textView);
         textView.setOnCreateContextMenuListener(this);
         textView.setLongClickable(true);
+        textView.setOnLongClickListener(v -> {
+            InputMethodManager imm = (InputMethodManager) textView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(textView.getWindowToken(), 0);
+            return false;
+        });
     }
 
     public void setAppSetting(AppSetting appSetting) {

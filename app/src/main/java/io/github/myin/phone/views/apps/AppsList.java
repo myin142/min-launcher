@@ -55,7 +55,10 @@ public class AppsList extends AppCompatActivity {
         overridePendingTransition(R.anim.anim_bottom_in, R.anim.anim_bottom_out);
 
         listAdapter = new AppListAdapter(getPackageManager(), this::findAppSetting);
-        listAdapter.setOnItemClickListener(this::closeWithAppResult);
+        listAdapter.setOnItemClickListener(app -> {
+            hideKeyboard();
+            closeWithAppResult(app);
+        });
 
         AppsListSearch appsListSearch = new AppsListSearch(getPackageManager());
         searchDisposable = appsListSearch.subscribe(this::setAppsList);
@@ -71,8 +74,7 @@ public class AppsList extends AppCompatActivity {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(searchInput.getWindowToken(), 0);
+                    hideKeyboard();
                 }
             }
         });
@@ -99,6 +101,11 @@ public class AppsList extends AppCompatActivity {
         appsLoading.reload();
 
         focusSearchInput();
+    }
+
+    private void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(searchInput.getWindowToken(), 0);
     }
 
     private void focusSearchInput() {
