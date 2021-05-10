@@ -15,6 +15,7 @@ import io.github.myin.phone.data.tool.HomeTool;
 import io.github.myin.phone.data.tool.HomeToolRepository;
 import io.github.myin.phone.list.OnListChangeListener;
 import io.github.myin.phone.list.NoScrollLinearLayout;
+import io.github.myin.phone.utils.FeaturePreference;
 import io.github.myin.phone.views.SelectAppActivity;
 import io.github.myin.phone.views.apps.AppsList;
 
@@ -38,6 +39,7 @@ public class ManageToolsActivity extends SelectAppActivity implements OnListChan
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_tools_edit);
+        findViewById(R.id.root).setLayoutDirection(FeaturePreference.getLayoutDirection().getValue());
 
         addText = findViewById(R.id.add_tool);
         addText.setOnClickListener(v -> openNewAppsList());

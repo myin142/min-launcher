@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import dagger.android.AndroidInjection;
 import io.github.myin.phone.R;
 import io.github.myin.phone.list.OnListChangeListener;
+import io.github.myin.phone.utils.FeaturePreference;
 import io.github.myin.phone.views.apps.AppsList;
 import io.github.myin.phone.data.app.HomeApp;
 import io.github.myin.phone.data.app.HomeAppRepository;
@@ -36,6 +37,8 @@ public class ManageAppsActivity extends SelectAppActivity implements OnListChang
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_apps_edit);
+
+        findViewById(R.id.root).setLayoutDirection(FeaturePreference.getLayoutDirection().getValue());
 
         addText = findViewById(R.id.action_add);
         addText.setOnClickListener(v -> openNewAppsList());

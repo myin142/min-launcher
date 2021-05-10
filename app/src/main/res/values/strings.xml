@@ -21,8 +21,8 @@
 
     <string name="settings_layout_direction">Layout Direction</string>
     <string-array name="settings_layout_direction_array">
-        <item>Left</item>
-        <item>Right</item>
+        <item>Left Layout</item>
+        <item>Right Layout</item>
     </string-array>
 
     <string name="about">About</string>

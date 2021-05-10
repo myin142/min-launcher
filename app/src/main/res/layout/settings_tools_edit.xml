@@ -4,17 +4,20 @@
         xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/root"
         android:padding="@dimen/screen_padding">
 
-    <TextView android:text="@string/settings_edit_tools"
-              android:layout_width="0dp"
-              android:layout_height="wrap_content"
-              android:id="@+id/title"
-              app:layout_constraintEnd_toEndOf="parent"
-              app:layout_constraintBottom_toTopOf="@+id/actions"
-              app:layout_constraintTop_toTopOf="parent"
-              app:layout_constraintStart_toStartOf="parent"
-              android:textSize="@dimen/title_size"/>
+    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                  app:layout_constraintEnd_toEndOf="parent"
+                  app:layout_constraintBottom_toTopOf="@+id/actions"
+                  app:layout_constraintTop_toTopOf="parent"
+                  android:id="@+id/title"
+                  app:layout_constraintStart_toStartOf="parent">
+        <TextView android:text="@string/settings_edit_tools"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textSize="@dimen/title_size"/>
+    </LinearLayout>
     <LinearLayout android:orientation="vertical"
                   android:layout_width="0dp"
                   android:layout_height="0dp"
@@ -26,7 +29,7 @@
                   android:layout_marginTop="@dimen/view_padding"
                   android:layout_marginBottom="@dimen/view_padding" >
         <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:id="@+id/add_tool"
                 android:text="@string/settings_add_tool"/>
     </LinearLayout>

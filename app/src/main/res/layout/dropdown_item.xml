@@ -5,5 +5,7 @@
           android:id="@+id/rootText"
           android:paddingTop="@dimen/half_view_padding"
           android:paddingBottom="@dimen/half_view_padding"
+          android:paddingStart="@dimen/half_view_padding"
+          android:paddingEnd="@dimen/half_view_padding"
           android:textSize="@dimen/text_size">
 </TextView>
