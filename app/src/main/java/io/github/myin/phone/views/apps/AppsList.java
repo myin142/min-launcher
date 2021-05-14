@@ -48,6 +48,12 @@ public class AppsList extends AppCompatActivity {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        hideKeyboard();
+    }
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
@@ -57,10 +63,7 @@ public class AppsList extends AppCompatActivity {
         findViewById(R.id.root).setLayoutDirection(FeaturePreference.getLayoutDirection().getValue());
 
         listAdapter = new AppListAdapter(getPackageManager(), this::findAppSetting);
-        listAdapter.setOnItemClickListener(app -> {
-            hideKeyboard();
-            closeWithAppResult(app);
-        });
+        listAdapter.setOnItemClickListener(this::closeWithAppResult);
 
         AppsListSearch appsListSearch = new AppsListSearch(getPackageManager());
         searchDisposable = appsListSearch.subscribe(this::setAppsList);
