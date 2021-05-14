@@ -8,10 +8,12 @@ import android.text.SpannableString;
 import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.URLSpan;
+import android.view.View;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import io.github.myin.phone.R;
+import io.github.myin.phone.utils.FeaturePreference;
 import lombok.extern.java.Log;
 
 import java.util.Arrays;
@@ -20,10 +22,13 @@ import java.util.List;
 @Log
 public class About extends AppCompatActivity {
 
+    private View root;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.about_activity);
+        root = findViewById(R.id.root);
 
         TextView appInfo = findViewById(R.id.about_app);
         String info = getText(R.string.app_name).toString();
@@ -44,6 +49,12 @@ public class About extends AppCompatActivity {
             text.setMovementMethod(LinkMovementMethod.getInstance());
             stripUnderlines(text);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        root.setLayoutDirection(FeaturePreference.getLayoutDirection().getValue());
     }
 
     private void stripUnderlines(TextView textView) {
