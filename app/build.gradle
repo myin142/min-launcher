@@ -7,8 +7,8 @@ android {
         applicationId "io.github.myin.phone"
         minSdkVersion 19
         targetSdkVersion 30
-        versionCode 11
-        versionName "v0.3.5"
+        versionCode 12
+        versionName "v0.3.6"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary true
     }

@@ -12,6 +12,7 @@ import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.Subject;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Collections;
 import java.util.List;
@@ -23,27 +24,20 @@ public class AppsLoading extends Observable<List<ResolveInfo>> {
     private final Subject<String> reload = BehaviorSubject.create();
 
     private Runnable onLoadStart = () -> {};
-    private Runnable onLoadFinish = () -> {};
 
     @Override
     protected void subscribeActual(Observer<? super List<ResolveInfo>> observer) {
         Disposable listDisposable = reload
                 .map(x -> {
                     onLoadStart.run();
-                    return getAllApps();
+                    return x;
                 })
-                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.newThread())
+                .map(x -> getAllApps())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(list -> {
-                    observer.onNext(list);
-                    onLoadFinish.run();
-                });
+                .subscribe(observer::onNext);
 
         observer.onSubscribe(listDisposable);
-    }
-
-    public void setOnLoadFinish(Runnable onLoadFinish) {
-        this.onLoadFinish = onLoadFinish;
     }
 
     public void setOnLoadStart(Runnable onLoadStart) {

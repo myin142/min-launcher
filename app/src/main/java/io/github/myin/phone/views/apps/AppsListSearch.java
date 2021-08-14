@@ -9,7 +9,9 @@ import com.annimon.stream.Optional;
 import com.annimon.stream.Stream;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.BehaviorSubject;
 import lombok.RequiredArgsConstructor;
 
@@ -24,6 +26,12 @@ public class AppsListSearch extends Observable<List<ResolveInfo>> implements Tex
 
     private final BehaviorSubject<String> changed = BehaviorSubject.create();
     private List<ResolveInfo> appsList = new ArrayList<>();
+
+    private Runnable onFinish = () -> {};
+
+    public void setOnFinish(Runnable onFinish) {
+        this.onFinish = onFinish;
+    }
 
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -48,9 +56,14 @@ public class AppsListSearch extends Observable<List<ResolveInfo>> implements Tex
 
     @Override
     protected void subscribeActual(Observer<? super List<ResolveInfo>> observer) {
-        Disposable searchDisposable = changed.debounce(100, TimeUnit.MILLISECONDS)
+        Disposable searchDisposable = changed.debounce(200, TimeUnit.MILLISECONDS)
+                .observeOn(Schedulers.newThread())
                 .map(this::filteredAppsList)
-                .subscribe(observer::onNext);
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(x -> {
+                    observer.onNext(x);
+                    onFinish.run();
+                });
 
         observer.onSubscribe(searchDisposable);
     }

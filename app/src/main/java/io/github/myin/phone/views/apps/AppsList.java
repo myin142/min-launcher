@@ -37,6 +37,8 @@ public class AppsList extends AppCompatActivity {
     private AppsLoading appsLoading;
     private EditText searchInput;
 
+    private boolean dirty = false;
+
     @Inject
     AppSettingRepository appSettingRepository;
 
@@ -91,9 +93,12 @@ public class AppsList extends AppCompatActivity {
             progress.setVisibility(View.VISIBLE);
             recyclerAppsList.setVisibility(View.GONE);
         });
-        appsLoading.setOnLoadFinish(() -> {
-            progress.setVisibility(View.GONE);
-            recyclerAppsList.setVisibility(View.VISIBLE);
+
+        appsListSearch.setOnFinish(() -> {
+            if (progress.getVisibility() == View.VISIBLE) {
+                progress.setVisibility(View.GONE);
+                recyclerAppsList.setVisibility(View.VISIBLE);
+            }
         });
 
         loadingDisposable = appsLoading.subscribe(appsListSearch::loadApps);
@@ -103,7 +108,10 @@ public class AppsList extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        appsLoading.reload();
+        if (dirty) {
+            appsLoading.reload();
+            dirty = false;
+        }
 
         focusSearchInput();
     }
@@ -159,6 +167,7 @@ public class AppsList extends AppCompatActivity {
             case AppViewHolder.MENU_UNINSTALL_ACTION:
                 Intent uninstallIntent = new IntentBuilder(info).uninstall();
                 startActivity(uninstallIntent);
+                dirty = true;
                 break;
         }
 
