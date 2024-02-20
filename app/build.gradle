@@ -71,16 +71,4 @@ dependencies {
 //    implementation 'com.annimon:stream:1.2.1'
     compileOnly "org.projectlombok:lombok:$lombok_version"
     annotationProcessor "org.projectlombok:lombok:$lombok_version"
-
-    def espresso_version = "3.2.0"
-
-    // Test
-//    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.5.2'
-//    testImplementation 'org.mockito:mockito-core:3.2.4'
-//    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-//    androidTestImplementation 'androidx.test:runner:1.2.0'
-//    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
-//    androidTestImplementation "androidx.test.espresso:espresso-contrib:$espresso_version"
-//    androidTestImplementation "com.github.fabioCollini.daggermock:daggermock:0.8.5"
-
 }
