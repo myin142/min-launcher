@@ -54,7 +54,8 @@ public class AppsLoading extends Observable<List<ResolveInfo>> {
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
 
         List<ResolveInfo> apps = getPackageManager().queryIntentActivities(intent, 0);
-        Collections.sort(apps, new ResolveInfo.DisplayNameComparator(getPackageManager()));
+        System.out.println("Found apps: " + apps.size());
+        apps.sort(new ResolveInfo.DisplayNameComparator(getPackageManager()));
 
         return apps;
     }
