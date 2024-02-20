@@ -1,5 +1,6 @@
 package io.github.myin.phone.views.apps;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
@@ -55,6 +56,7 @@ public class AppsList extends AppCompatActivity {
         hideKeyboard();
     }
 
+    @SuppressLint("WrongConstant")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         AndroidInjection.inject(this);
@@ -74,7 +76,7 @@ public class AppsList extends AppCompatActivity {
         searchInput.addTextChangedListener(appsListSearch);
 
         RecyclerView recyclerAppsList = findViewById(R.id.apps_list);
-        recyclerAppsList.setHasFixedSize(true);
+//        recyclerAppsList.setHasFixedSize(true);
         recyclerAppsList.setLayoutManager(new LinearLayoutManager(this));
         recyclerAppsList.setAdapter(listAdapter);
         recyclerAppsList.addOnScrollListener(new RecyclerView.OnScrollListener() {

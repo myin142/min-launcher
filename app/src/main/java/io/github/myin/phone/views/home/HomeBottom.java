@@ -1,5 +1,6 @@
 package io.github.myin.phone.views.home;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,6 +52,7 @@ public class HomeBottom extends DaggerFragment {
         appsView.setAdapter(toolsAdapter);
     }
 
+    @SuppressLint("WrongConstant")
     @Override
     public void onResume() {
         super.onResume();

@@ -1,5 +1,6 @@
 package io.github.myin.phone.views.settings;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -53,6 +54,7 @@ public class Settings extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("WrongConstant")
     private void updateLayout() {
         findViewById(R.id.root).setLayoutDirection(FeaturePreference.getLayoutDirection().getValue());
     }

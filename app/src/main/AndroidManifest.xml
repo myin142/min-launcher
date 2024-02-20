@@ -1,39 +1,45 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools" package="io.github.myin.phone">
+    xmlns:tools="http://schemas.android.com/tools">
 
-<!--    <uses-permission android:name="android.permission.SET_ALARM"/>-->
+    <!--    <uses-permission android:name="android.permission.SET_ALARM"/>-->
 
     <!-- Permission needed for Android P and above -->
     <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" />
 
-    <application android:name=".config.MainApplication"
-                 android:allowBackup="true"
-                 android:label="@string/app_name"
-                 android:icon="@mipmap/ic_launcher"
-                 android:roundIcon="@mipmap/ic_launcher_round"
-                 android:supportsRtl="true"
-                 android:theme="@style/AppTheme"
-                 tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".views.home.HomeActivity"
-                  android:label="@string/app_name"
-                  android:launchMode="singleTask"
-                  android:stateNotNeeded="true">
+    <application
+        android:name=".config.MainApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity
+            android:name=".views.home.HomeActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:stateNotNeeded="true">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.HOME"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.HOME" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".views.apps.AppsList"/>
-        <activity android:name=".views.settings.Settings"/>
-        <activity android:name=".views.settings.apps.ManageAppsActivity"/>
-        <activity android:name=".views.settings.toolbar.ManageToolsActivity"/>
-        <activity android:name=".views.settings.About"/>
+        <activity android:name=".views.apps.AppsList" />
+        <activity android:name=".views.settings.Settings" />
+        <activity android:name=".views.settings.apps.ManageAppsActivity" />
+        <activity android:name=".views.settings.toolbar.ManageToolsActivity" />
+        <activity android:name=".views.settings.About" />
 
-        <service android:name=".notification.NotificationService"
-                 android:label="@string/app_name"
-                 android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+        <service
+            android:name=".notification.NotificationService"
+            android:exported="false"
+            android:label="@string/app_name"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
             <intent-filter>
                 <action android:name="android.service.notification.NotificationListenerService" />
             </intent-filter>

@@ -1,5 +1,6 @@
 package io.github.myin.phone.views.home;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
@@ -13,10 +14,8 @@ import io.github.myin.phone.SharedConst;
 import io.github.myin.phone.data.app.HomeApp;
 import io.github.myin.phone.data.BaseAppDiffCallback;
 import io.github.myin.phone.data.app.HomeAppRepository;
-import io.github.myin.phone.data.setting.AppSettingRepository;
 import io.github.myin.phone.list.NoScrollLinearLayout;
 import io.github.myin.phone.list.TextListAdapter;
-import io.github.myin.phone.list.TextViewHolder;
 import io.github.myin.phone.utils.FeaturePreference;
 import io.github.myin.phone.views.SelectAppActivity;
 import io.github.myin.phone.views.apps.AppsList;
@@ -69,6 +68,7 @@ public class HomeActivity extends SelectAppActivity {
         appsView.setAdapter(appAdapter);
     }
 
+    @SuppressLint("WrongConstant")
     @Override
     protected void onResume() {
         super.onResume();
@@ -83,12 +83,9 @@ public class HomeActivity extends SelectAppActivity {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                swipeStartY = event.getY();
-                break;
-            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_DOWN -> swipeStartY = event.getY();
+            case MotionEvent.ACTION_UP -> {
                 float deltaY = swipeStartY - event.getY();
-
                 if (deltaY > APPS_SWIPE_DISTANCE) {
                     if (FeaturePreference.isFeatureEnabled(SharedConst.PREF_OPEN_APP_FEATURE)) {
                         openAppsList();
@@ -96,7 +93,7 @@ public class HomeActivity extends SelectAppActivity {
                 } else if (-deltaY > SETTINGS_SWIPE_DISTANCE) {
                     openSettings();
                 }
-                break;
+            }
         }
 
         return super.onTouchEvent(event);

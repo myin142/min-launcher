@@ -1,5 +1,6 @@
 package io.github.myin.phone.views.settings.apps;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
@@ -32,6 +33,7 @@ public class ManageAppsActivity extends SelectAppActivity implements OnListChang
     @Inject
     HomeAppRepository homeAppRepository;
 
+    @SuppressLint("WrongConstant")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         AndroidInjection.inject(this);

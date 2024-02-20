@@ -5,7 +5,9 @@ import android.view.ContextMenu;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
-import com.annimon.stream.Optional;
+
+import java.util.Optional;
+
 import io.github.myin.phone.R;
 import io.github.myin.phone.data.setting.AppSetting;
 import io.github.myin.phone.list.TextViewHolder;

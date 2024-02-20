@@ -3,7 +3,8 @@ package io.github.myin.phone.notification;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import com.annimon.stream.function.Consumer;
+
+import java.util.function.Consumer;
 
 public class NotificationReceiver extends BroadcastReceiver {
 

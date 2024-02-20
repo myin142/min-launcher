@@ -1,5 +1,6 @@
 package io.github.myin.phone.views.settings;
 
+import android.annotation.SuppressLint;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -14,12 +15,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import io.github.myin.phone.R;
 import io.github.myin.phone.utils.FeaturePreference;
-import lombok.extern.java.Log;
 
 import java.util.Arrays;
 import java.util.List;
 
-@Log
 public class About extends AppCompatActivity {
 
     private View root;
@@ -38,7 +37,7 @@ public class About extends AppCompatActivity {
             info += " - " + version;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
-            log.warning("Failed to get application version");
+            System.out.println("Failed to get application version");
         }
 
         appInfo.setText(info);
@@ -51,6 +50,7 @@ public class About extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("WrongConstant")
     @Override
     protected void onResume() {
         super.onResume();

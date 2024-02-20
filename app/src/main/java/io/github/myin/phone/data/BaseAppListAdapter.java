@@ -4,13 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
-import com.annimon.stream.function.Consumer;
 import lombok.Setter;
 import io.github.myin.phone.list.OnListChangeListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 
 @Setter
 public abstract class BaseAppListAdapter<T extends BaseApp, V extends RecyclerView.ViewHolder> extends ListAdapter<T, V> {

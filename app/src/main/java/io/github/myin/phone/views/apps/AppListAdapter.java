@@ -9,8 +9,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ListAdapter;
-import com.annimon.stream.function.Consumer;
-import com.annimon.stream.function.Function;
+
+import java.util.function.Consumer;
+import java.util.function.Function;
+
 import io.github.myin.phone.R;
 import io.github.myin.phone.data.setting.AppSetting;
 

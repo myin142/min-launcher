@@ -11,19 +11,20 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.Subject;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.Collections;
 import java.util.List;
 
-@RequiredArgsConstructor
 public class AppsLoading extends Observable<List<ResolveInfo>> {
     private final Context context;
 
     private final Subject<String> reload = BehaviorSubject.create();
 
     private Runnable onLoadStart = () -> {};
+
+    public AppsLoading(Context context) {
+        this.context = context;
+    }
 
     @Override
     protected void subscribeActual(Observer<? super List<ResolveInfo>> observer) {

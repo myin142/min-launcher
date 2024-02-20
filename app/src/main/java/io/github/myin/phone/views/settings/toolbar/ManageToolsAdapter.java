@@ -20,7 +20,7 @@ import io.github.myin.phone.data.tool.HomeTool;
 @Setter
 public class ManageToolsAdapter extends BaseAppListAdapter<HomeTool, ManageToolsAdapter.ManageToolView> {
 
-    private PackageManager packageManager;
+    private final PackageManager packageManager;
 
     public ManageToolsAdapter(PackageManager pm) {
         super(new BaseAppDiffCallback<>());

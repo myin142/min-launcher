@@ -18,3 +18,4 @@
 keystore.properties
 /fastlane/report.xml
 /.bundle
+*.keystore

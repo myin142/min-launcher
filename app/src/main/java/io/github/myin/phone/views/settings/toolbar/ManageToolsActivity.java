@@ -1,5 +1,6 @@
 package io.github.myin.phone.views.settings.toolbar;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.ResolveInfo;
@@ -34,6 +35,7 @@ public class ManageToolsActivity extends SelectAppActivity implements OnListChan
     @Inject
     HomeToolRepository homeToolRepository;
 
+    @SuppressLint("WrongConstant")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         AndroidInjection.inject(this);

@@ -4,22 +4,19 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.text.Editable;
 import android.text.TextWatcher;
-import com.annimon.stream.Collectors;
-import com.annimon.stream.Optional;
-import com.annimon.stream.Stream;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.BehaviorSubject;
-import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
-@RequiredArgsConstructor
 public class AppsListSearch extends Observable<List<ResolveInfo>> implements TextWatcher {
 
     private final PackageManager packageManager;
@@ -28,6 +25,10 @@ public class AppsListSearch extends Observable<List<ResolveInfo>> implements Tex
     private List<ResolveInfo> appsList = new ArrayList<>();
 
     private Runnable onFinish = () -> {};
+
+    public AppsListSearch(PackageManager packageManager) {
+        this.packageManager = packageManager;
+    }
 
     public void setOnFinish(Runnable onFinish) {
         this.onFinish = onFinish;
@@ -69,7 +70,7 @@ public class AppsListSearch extends Observable<List<ResolveInfo>> implements Tex
     }
 
     private List<ResolveInfo> filteredAppsList(String name) {
-        return Stream.of(appsList)
+        return appsList.stream()
                 .filter(app -> app.loadLabel(packageManager).toString().toLowerCase().contains(name.toLowerCase()))
 //                .filter(app -> app.label.toLowerCase().contains(name.toLowerCase()))
                 .collect(Collectors.toList());

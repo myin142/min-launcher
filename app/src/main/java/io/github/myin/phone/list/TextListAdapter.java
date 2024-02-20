@@ -2,24 +2,24 @@ package io.github.myin.phone.list;
 
 import android.util.TypedValue;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
-import com.annimon.stream.function.BiFunction;
-import com.annimon.stream.function.Consumer;
-import com.annimon.stream.function.Function;
-import lombok.Setter;
+
+import java.util.function.Consumer;
+import java.util.function.Function;
+
 import io.github.myin.phone.R;
+import lombok.Setter;
 
 @Setter
 public class TextListAdapter<T> extends ListAdapter<T, TextViewHolder> {
 
     private Function<T, String> displayFunction;
     private Consumer<T> onItemClickListener;
-    private int fontSize;
+    private final int fontSize;
 
     public TextListAdapter(DiffUtil.ItemCallback<T> diffUtil, int size) {
         super(diffUtil);
