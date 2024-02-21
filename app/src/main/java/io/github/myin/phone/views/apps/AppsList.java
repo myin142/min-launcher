@@ -12,6 +12,8 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import dagger.android.AndroidInjection;
@@ -125,8 +127,11 @@ public class AppsList extends AppCompatActivity {
 
     private void focusSearchInput() {
         if (searchInput.requestFocus()) {
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+//            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//            imm.showSoftInput(searchInput, InputMethodManager.SHOW_FORCED);
+//            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+            // Only this works?
+            new WindowInsetsControllerCompat(getWindow(), searchInput).show(WindowInsetsCompat.Type.ime());
         }
     }
 
