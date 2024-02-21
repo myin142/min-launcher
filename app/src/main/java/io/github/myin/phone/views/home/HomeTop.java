@@ -21,13 +21,16 @@ import io.github.myin.phone.utils.FeaturePreference;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.Date;
 import java.util.Locale;
 
 public class HomeTop extends Fragment {
 
-    private DateFormat dateFormat;
-    private DateFormat timeFormat;
+    private DateTimeFormatter dateFormat;
+    private DateTimeFormatter timeFormat;
 
     private TextView dateView;
     private TextView timeView;
@@ -53,8 +56,11 @@ public class HomeTop extends Fragment {
         timeView.setOnClickListener((View v) -> openAlarm());
 
         Locale locale = Configuration.getCurrentLocale(getContext());
-        timeFormat = SimpleDateFormat.getTimeInstance(DateFormat.SHORT, locale);
-        dateFormat = SimpleDateFormat.getDateInstance(DateFormat.MEDIUM, locale);
+        timeFormat = DateTimeFormatter.ofPattern("hh:mm a", locale); // TODO: make am/pm configurable
+        dateFormat = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT).withLocale(locale);
+        if (Locale.JAPAN.getLanguage().equals(locale.getLanguage())) {
+            dateFormat = DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG).withLocale(locale);
+        }
 
         updateCurrentTime();
         timeTickReceiver = new BroadcastReceiver() {
@@ -105,7 +111,7 @@ public class HomeTop extends Fragment {
     }
 
     private void updateCurrentTime() {
-        Date currentDate = new Date();
+        ZonedDateTime currentDate = ZonedDateTime.now();
         dateView.setText(dateFormat.format(currentDate));
         timeView.setText(timeFormat.format(currentDate));
     }
