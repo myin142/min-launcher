@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import dagger.android.AndroidInjection;
 import io.github.myin.phone.R;
+import io.github.myin.phone.data.setting.AppSettingRepository;
 import io.github.myin.phone.list.OnListChangeListener;
 import io.github.myin.phone.utils.FeaturePreference;
 import io.github.myin.phone.views.apps.AppsList;
@@ -20,6 +21,7 @@ import io.github.myin.phone.views.SelectAppActivity;
 
 import javax.inject.Inject;
 import java.util.List;
+import java.util.Optional;
 
 public class ManageAppsActivity extends SelectAppActivity implements OnListChangeListener<HomeApp> {
 
@@ -32,6 +34,8 @@ public class ManageAppsActivity extends SelectAppActivity implements OnListChang
 
     @Inject
     HomeAppRepository homeAppRepository;
+    @Inject
+    AppSettingRepository appSettingRepository;
 
     @SuppressLint("WrongConstant")
     @Override
@@ -52,6 +56,12 @@ public class ManageAppsActivity extends SelectAppActivity implements OnListChang
         editAppsList.setHasFixedSize(true);
 
         appsAdapter = new ManageAppsAdapter();
+        appsAdapter.setDisplayFn(app -> {
+            final var appSetting = appSettingRepository.getOneByPackageAndClass(app.packageName, app.className);
+            return Optional.ofNullable(appSetting.getCustomName())
+                    .filter(x -> !x.isBlank())
+                    .orElse(app.toString());
+        });
         appsAdapter.setOnListChange(this);
         appsAdapter.setOnItemClick(this::openEditAppsList);
 

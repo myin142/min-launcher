@@ -12,7 +12,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
-@Setter
 public abstract class BaseAppListAdapter<T extends BaseApp, V extends RecyclerView.ViewHolder> extends ListAdapter<T, V> {
 
     protected OnListChangeListener<T> onListChange;
@@ -22,6 +21,13 @@ public abstract class BaseAppListAdapter<T extends BaseApp, V extends RecyclerVi
         super(diffCallback);
     }
 
+    public void setOnListChange(OnListChangeListener<T> onListChange) {
+        this.onListChange = onListChange;
+    }
+
+    public void setOnItemClick(Consumer<T> onItemClick) {
+        this.onItemClick = onItemClick;
+    }
 
     public void addItem(T app) {
         updateCurrentList(list -> {

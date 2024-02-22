@@ -4,18 +4,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
-import lombok.Setter;
+
+import java.util.function.Function;
+
 import io.github.myin.phone.R;
 import io.github.myin.phone.data.BaseAppListAdapter;
 import io.github.myin.phone.data.app.HomeApp;
 import io.github.myin.phone.data.BaseAppDiffCallback;
 import io.github.myin.phone.list.TextViewHolder;
 
-@Setter
 public class ManageAppsAdapter extends BaseAppListAdapter<HomeApp, ManageAppsAdapter.ManageAppView> {
+
+    private Function<HomeApp, String> displayFn = HomeApp::toString;
 
     public ManageAppsAdapter() {
         super(new BaseAppDiffCallback<>());
+    }
+
+    public void setDisplayFn(Function<HomeApp, String> displayFn) {
+        this.displayFn = displayFn;
     }
 
     @NonNull
@@ -30,7 +37,7 @@ public class ManageAppsAdapter extends BaseAppListAdapter<HomeApp, ManageAppsAda
     @Override
     public void onBindViewHolder(@NonNull ManageAppView holder, int position) {
         HomeApp app = getItem(position);
-        holder.setText(app.label);
+        holder.setText(displayFn.apply(app));
         holder.setOnTextClick(v -> {
             if (onItemClick != null) {
                 onItemClick.accept(app);

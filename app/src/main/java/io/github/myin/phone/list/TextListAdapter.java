@@ -14,7 +14,6 @@ import java.util.function.Function;
 import io.github.myin.phone.R;
 import lombok.Setter;
 
-@Setter
 public class TextListAdapter<T> extends ListAdapter<T, TextViewHolder> {
 
     private Function<T, String> displayFunction;
@@ -24,6 +23,14 @@ public class TextListAdapter<T> extends ListAdapter<T, TextViewHolder> {
     public TextListAdapter(DiffUtil.ItemCallback<T> diffUtil, int size) {
         super(diffUtil);
         this.fontSize = size;
+    }
+
+    public void setDisplayFunction(Function<T, String> displayFunction) {
+        this.displayFunction = displayFunction;
+    }
+
+    public void setOnItemClickListener(Consumer<T> onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 
     @NonNull

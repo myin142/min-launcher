@@ -8,12 +8,16 @@ import android.view.MotionEvent;
 import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.Optional;
+
 import dagger.android.AndroidInjection;
 import io.github.myin.phone.R;
 import io.github.myin.phone.SharedConst;
 import io.github.myin.phone.data.app.HomeApp;
 import io.github.myin.phone.data.BaseAppDiffCallback;
 import io.github.myin.phone.data.app.HomeAppRepository;
+import io.github.myin.phone.data.setting.AppSettingRepository;
 import io.github.myin.phone.list.NoScrollLinearLayout;
 import io.github.myin.phone.list.TextListAdapter;
 import io.github.myin.phone.utils.FeaturePreference;
@@ -39,6 +43,8 @@ public class HomeActivity extends SelectAppActivity {
 
     @Inject
     HomeAppRepository homeAppRepository;
+    @Inject
+    AppSettingRepository appSettingRepository;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,6 +55,12 @@ public class HomeActivity extends SelectAppActivity {
         root = findViewById(R.id.root);
 
         appAdapter = new TextListAdapter<>(new BaseAppDiffCallback<>(), getResources().getDimensionPixelSize(R.dimen.title_size));
+        appAdapter.setDisplayFunction(app -> {
+            final var appSetting = appSettingRepository.getOneByPackageAndClass(app.packageName, app.className);
+            return Optional.ofNullable(appSetting.getCustomName())
+                    .filter(x -> !x.isBlank())
+                    .orElse(app.toString());
+        });
         appAdapter.setOnItemClickListener(homeApp -> {
             Intent appIntent = homeApp.getActivityIntent();
             startActivity(appIntent);

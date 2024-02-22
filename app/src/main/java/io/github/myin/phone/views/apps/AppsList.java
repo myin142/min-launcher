@@ -72,10 +72,10 @@ public class AppsList extends AppCompatActivity {
 
         findViewById(R.id.root).setLayoutDirection(FeaturePreference.getLayoutDirection().getValue());
 
-        listAdapter = new AppListAdapter(getPackageManager(), this::findAppSetting);
+        listAdapter = new AppListAdapter(getPackageManager(), appSettingRepository::findByResolveInfo);
         listAdapter.setOnItemClickListener(this::closeWithAppResult);
 
-        AppsListSearch appsListSearch = new AppsListSearch(getPackageManager(), this::findAppSetting);
+        AppsListSearch appsListSearch = new AppsListSearch(getPackageManager(), appSettingRepository::findByResolveInfo);
         searchDisposable = appsListSearch.subscribe(this::setAppsList);
 
         searchInput = findViewById(R.id.search_input);
@@ -142,7 +142,7 @@ public class AppsList extends AppCompatActivity {
     private void setAppsList(List<ResolveInfo> infoList) {
         List<ResolveInfo> filteredList = new ArrayList<>();
         for (ResolveInfo info : infoList) {
-            AppSetting setting = findAppSetting(info);
+            AppSetting setting = appSettingRepository.findByResolveInfo(info);
             if (setting.isHidden()) {
                 if (FeaturePreference.isFeatureEnabled(SharedConst.PREF_SHOW_HIDDEN_APPS)) {
                     filteredList.add(info);
@@ -180,7 +180,7 @@ public class AppsList extends AppCompatActivity {
     }
 
     private void openCustomNameEditDialog(ResolveInfo info, int position) {
-        AppSetting app = findAppSetting(info);
+        AppSetting app = appSettingRepository.findByResolveInfo(info);
         final EditText input = new EditText(AppsList.this);
         final String original = info.loadLabel(getPackageManager()).toString();
         input.setHint(original);
@@ -202,7 +202,7 @@ public class AppsList extends AppCompatActivity {
     }
 
     private void hideApplication(int position, ResolveInfo info) {
-        AppSetting app = findAppSetting(info);
+        AppSetting app = appSettingRepository.findByResolveInfo(info);
         app.toggleHidden();
         appSettingRepository.insert(app);
         if (FeaturePreference.isFeatureEnabled(SharedConst.PREF_SHOW_HIDDEN_APPS)) {
@@ -216,19 +216,6 @@ public class AppsList extends AppCompatActivity {
         Intent uninstallIntent = new IntentBuilder(info).uninstall();
         startActivity(uninstallIntent);
         dirty = true;
-    }
-
-    private AppSetting findAppSetting(ResolveInfo info) {
-        String pkg = info.activityInfo.packageName;
-        String cls = info.activityInfo.name;
-
-        List<AppSetting> apps = appSettingRepository.findByPackageAndClass(pkg, cls);
-
-        if (apps.isEmpty()) {
-            return new AppSetting(pkg, cls);
-        } else {
-            return apps.get(0);
-        }
     }
 
     private void closeWithAppResult(ResolveInfo app) {
