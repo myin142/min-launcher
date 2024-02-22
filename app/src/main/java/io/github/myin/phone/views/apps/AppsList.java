@@ -9,13 +9,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import dagger.android.AndroidInjection;
 import io.github.myin.phone.SharedConst;
 import io.github.myin.phone.data.setting.AppSetting;
@@ -26,6 +29,7 @@ import io.reactivex.disposables.Disposable;
 import io.github.myin.phone.R;
 
 import javax.inject.Inject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,7 +75,7 @@ public class AppsList extends AppCompatActivity {
         listAdapter = new AppListAdapter(getPackageManager(), this::findAppSetting);
         listAdapter.setOnItemClickListener(this::closeWithAppResult);
 
-        AppsListSearch appsListSearch = new AppsListSearch(getPackageManager());
+        AppsListSearch appsListSearch = new AppsListSearch(getPackageManager(), this::findAppSetting);
         searchDisposable = appsListSearch.subscribe(this::setAppsList);
 
         searchInput = findViewById(R.id.search_input);
@@ -137,7 +141,7 @@ public class AppsList extends AppCompatActivity {
 
     private void setAppsList(List<ResolveInfo> infoList) {
         List<ResolveInfo> filteredList = new ArrayList<>();
-        for (ResolveInfo info: infoList) {
+        for (ResolveInfo info : infoList) {
             AppSetting setting = findAppSetting(info);
             if (setting.isHidden()) {
                 if (FeaturePreference.isFeatureEnabled(SharedConst.PREF_SHOW_HIDDEN_APPS)) {
@@ -162,23 +166,56 @@ public class AppsList extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case AppViewHolder.MENU_HIDE_ACTION:
-                AppSetting app = findAppSetting(info);
-                app.toggleHidden();
-                appSettingRepository.insert(app);
-                if (FeaturePreference.isFeatureEnabled(SharedConst.PREF_SHOW_HIDDEN_APPS)) {
-                    listAdapter.notifyItemChanged(position);
-                } else {
-                    reloadList();
-                }
+                hideApplication(position, info);
                 break;
             case AppViewHolder.MENU_UNINSTALL_ACTION:
-                Intent uninstallIntent = new IntentBuilder(info).uninstall();
-                startActivity(uninstallIntent);
-                dirty = true;
+                uninstallApplication(info);
+                break;
+            case AppViewHolder.MENU_RENAME_ACTION:
+                openCustomNameEditDialog(info, position);
                 break;
         }
 
         return super.onContextItemSelected(item);
+    }
+
+    private void openCustomNameEditDialog(ResolveInfo info, int position) {
+        AppSetting app = findAppSetting(info);
+        final EditText input = new EditText(AppsList.this);
+        final String original = info.loadLabel(getPackageManager()).toString();
+        input.setHint(original);
+        input.setText(app.getCustomName());
+
+        new AlertDialog.Builder(AppsList.this)
+                .setTitle(R.string.app_rename)
+                .setMessage(original)
+                .setView(input)
+                .setPositiveButton(R.string.button_ok, (dialog, whichButton) -> {
+                    final var customName = input.getText().toString();
+                    app.setCustomName(customName);
+                    appSettingRepository.insert(app);
+                    listAdapter.notifyItemChanged(position);
+                })
+                .setNegativeButton(R.string.button_cancel, (dialog, whichButton) -> {
+                    // Do nothing.
+                }).show();
+    }
+
+    private void hideApplication(int position, ResolveInfo info) {
+        AppSetting app = findAppSetting(info);
+        app.toggleHidden();
+        appSettingRepository.insert(app);
+        if (FeaturePreference.isFeatureEnabled(SharedConst.PREF_SHOW_HIDDEN_APPS)) {
+            listAdapter.notifyItemChanged(position);
+        } else {
+            reloadList();
+        }
+    }
+
+    private void uninstallApplication(ResolveInfo info) {
+        Intent uninstallIntent = new IntentBuilder(info).uninstall();
+        startActivity(uninstallIntent);
+        dirty = true;
     }
 
     private AppSetting findAppSetting(ResolveInfo info) {

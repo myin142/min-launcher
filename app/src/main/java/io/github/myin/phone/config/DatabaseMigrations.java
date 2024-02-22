@@ -32,4 +32,14 @@ public class DatabaseMigrations {
         }
     };
 
+    static final Migration MIGRATION_3_4 = new Migration(3, 4) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("""
+                    ALTER TABLE `app_settings`
+                    ADD custom_name TEXT;
+                    """);
+        }
+    };
+
 }

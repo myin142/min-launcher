@@ -37,7 +37,7 @@ public class MainApplication extends Application implements HasAndroidInjector {
         registerActivityLifecycleCallbacks(new SimpleActivityLifecycleCallback(){
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-                activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
             }
         });
     }

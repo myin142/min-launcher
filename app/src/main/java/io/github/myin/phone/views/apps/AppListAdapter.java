@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ListAdapter;
 
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -45,11 +46,13 @@ public class AppListAdapter extends ListAdapter<ResolveInfo, AppViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull AppViewHolder holder, int position) {
         ResolveInfo item = getItem(position);
+        AppSetting setting = infoSettingFn.apply(item);
 
-        String text = item.loadLabel(packageManager).toString();
+        final var text = Optional.ofNullable(setting.getCustomName())
+                .filter(x -> !x.isBlank())
+                .orElseGet(() -> item.loadLabel(packageManager).toString());
         holder.setText(text);
 
-        AppSetting setting = infoSettingFn.apply(item);
         holder.setAppSetting(setting);
         if (setting.isHidden()) {
             holder.getTextView().setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);

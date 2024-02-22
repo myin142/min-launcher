@@ -4,6 +4,8 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.text.Editable;
 import android.text.TextWatcher;
+
+import io.github.myin.phone.data.setting.AppSetting;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -15,19 +17,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class AppsListSearch extends Observable<List<ResolveInfo>> implements TextWatcher {
 
     private final PackageManager packageManager;
+
+    private final Function<ResolveInfo, AppSetting> infoAppSettingFunction;
 
     private final BehaviorSubject<String> changed = BehaviorSubject.create();
     private List<ResolveInfo> appsList = new ArrayList<>();
 
     private Runnable onFinish = () -> {};
 
-    public AppsListSearch(PackageManager packageManager) {
+    public AppsListSearch(PackageManager packageManager, Function<ResolveInfo, AppSetting> infoSettingFn) {
         this.packageManager = packageManager;
+        this.infoAppSettingFunction = infoSettingFn;
     }
 
     public void setOnFinish(Runnable onFinish) {
@@ -71,8 +78,15 @@ public class AppsListSearch extends Observable<List<ResolveInfo>> implements Tex
 
     private List<ResolveInfo> filteredAppsList(String name) {
         return appsList.stream()
-                .filter(app -> app.loadLabel(packageManager).toString().toLowerCase().contains(name.toLowerCase()))
-//                .filter(app -> app.label.toLowerCase().contains(name.toLowerCase()))
+                .filter(app -> {
+                    final var appSetting = this.infoAppSettingFunction.apply(app);
+                    final var originalName = app.loadLabel(packageManager).toString();
+
+                    return Stream.of(originalName, appSetting.getCustomName())
+                            .filter(x -> x != null && !x.isBlank())
+                            .map(String::toLowerCase)
+                            .anyMatch(x -> x.contains(name.toLowerCase()));
+                })
                 .collect(Collectors.toList());
     }
 

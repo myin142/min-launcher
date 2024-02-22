@@ -4,6 +4,10 @@
     <string name="app_hide">Hide App</string>
     <string name="app_show">Show App</string>
     <string name="app_uninstall">Uninstall App</string>
+    <string name="app_rename">Rename App</string>
+
+    <string name="button_ok">OK</string>
+    <string name="button_cancel">Cancel</string>
 
     <string name="start_intro_text">Swipe down to open settings</string>
 

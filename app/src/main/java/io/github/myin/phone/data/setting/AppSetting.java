@@ -10,6 +10,9 @@ public class AppSetting extends BaseApp {
     @ColumnInfo(name = "hidden")
     private boolean hidden;
 
+    @ColumnInfo(name = "custom_name")
+    private String customName;
+
     public AppSetting(String packageName, String className) {
         super(packageName, className);
     }
@@ -24,5 +27,13 @@ public class AppSetting extends BaseApp {
 
     public boolean isHidden() {
         return hidden;
+    }
+
+    public String getCustomName() {
+        return customName;
+    }
+
+    public void setCustomName(String customName) {
+        this.customName = customName;
     }
 }
