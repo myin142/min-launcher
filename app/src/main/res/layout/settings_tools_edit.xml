@@ -1,46 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/root"
-        android:padding="@dimen/screen_padding">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/screen_padding"
+    android:paddingTop="@dimen/screen_padding"
+    android:paddingRight="@dimen/screen_padding"
+    android:paddingBottom="@dimen/screen_padding_bot">
 
-    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
-                  app:layout_constraintEnd_toEndOf="parent"
-                  app:layout_constraintBottom_toTopOf="@+id/actions"
-                  app:layout_constraintTop_toTopOf="parent"
-                  android:id="@+id/title"
-                  app:layout_constraintStart_toStartOf="parent">
-        <TextView android:text="@string/settings_edit_tools"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:textSize="@dimen/title_size"/>
-    </LinearLayout>
-    <LinearLayout android:orientation="vertical"
-                  android:layout_width="0dp"
-                  android:layout_height="0dp"
-                  android:id="@+id/actions"
-                  app:layout_constraintTop_toBottomOf="@+id/title"
-                  app:layout_constraintBottom_toTopOf="@+id/edit_tools_list"
-                  app:layout_constraintStart_toStartOf="parent"
-                  app:layout_constraintEnd_toEndOf="parent"
-                  android:layout_marginTop="@dimen/view_padding"
-                  android:layout_marginBottom="@dimen/view_padding" >
+    <LinearLayout
+        android:id="@+id/title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/actions"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/add_tool"
-                android:text="@string/settings_add_tool"/>
-    </LinearLayout>
-    <androidx.recyclerview.widget.RecyclerView
-            android:orientation="horizontal"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/edit_tools_list"
-            app:layout_constraintTop_toBottomOf="@+id/actions"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
-    </androidx.recyclerview.widget.RecyclerView>
+            android:text="@string/settings_edit_tools"
+            android:textSize="@dimen/title_size" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/actions"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/view_padding"
+        android:layout_marginBottom="@dimen/view_padding"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/edit_tools_list"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title">
+
+        <TextView
+            android:id="@+id/add_tool"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_add_tool" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/edit_tools_list"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/actions"></androidx.recyclerview.widget.RecyclerView>
 </androidx.constraintlayout.widget.ConstraintLayout>
