@@ -18,7 +18,6 @@
     <string name="settings_edit_tools">Edit Toolbar</string>
     <string name="settings_add_tool">Add Tool</string>
 
-    <string name="settings_enable_open_apps">Enable Open Apps</string>
     <string name="settings_enable_show_clock">Show Clock</string>
     <string name="settings_enable_show_date">Show Date</string>
     <string name="settings_enable_show_hidden_apps">Show hidden apps</string>

@@ -99,9 +99,7 @@ public class HomeActivity extends SelectAppActivity {
             case MotionEvent.ACTION_UP -> {
                 float deltaY = swipeStartY - event.getY();
                 if (deltaY > APPS_SWIPE_DISTANCE) {
-                    if (FeaturePreference.isFeatureEnabled(SharedConst.PREF_OPEN_APP_FEATURE)) {
-                        openAppsList();
-                    }
+                    openAppsList();
                 } else if (-deltaY > SETTINGS_SWIPE_DISTANCE) {
                     openSettings();
                 }
