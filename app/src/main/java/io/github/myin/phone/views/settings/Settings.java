@@ -5,8 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
+
+import java.util.function.Consumer;
+
 import io.github.myin.phone.R;
 import io.github.myin.phone.SharedConst;
 import io.github.myin.phone.utils.FeaturePreference;
@@ -28,7 +33,9 @@ public class Settings extends AppCompatActivity {
         findViewById(R.id.edit_tools).setOnClickListener(v -> openEditTools());
         findViewById(R.id.about).setOnClickListener(v -> openAbout());
 
-        initSwitch(R.id.show_clock, SharedConst.PREF_SHOW_CLOCK_FEATURE);
+        initSwitch(R.id.show_clock, SharedConst.PREF_SHOW_CLOCK_FEATURE, isChecked -> findViewById(R.id.time_format_24).setVisibility(isChecked ? View.VISIBLE : View.GONE));
+        initSwitch(R.id.time_format_24, SharedConst.PREF_TIME_FORMAT_24);
+
         initSwitch(R.id.show_date, SharedConst.PREF_SHOW_DATE_FEATURE);
         initSwitch(R.id.show_hidden_apps, SharedConst.PREF_SHOW_HIDDEN_APPS);
 
@@ -65,9 +72,19 @@ public class Settings extends AppCompatActivity {
     }
 
     private void initSwitch(int id, String feature) {
-        Switch switchWidget = findViewById(id);
+        initSwitch(id, feature, x -> {
+        });
+    }
+
+    private void initSwitch(int id, String feature, Consumer<Boolean> onToggle) {
+        SwitchCompat switchWidget = findViewById(id);
         switchWidget.setChecked(FeaturePreference.isFeatureEnabled(feature));
-        switchWidget.setOnCheckedChangeListener((buttonView, isChecked) -> FeaturePreference.toggleFeature(feature, isChecked));
+        switchWidget.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            FeaturePreference.toggleFeature(feature, isChecked);
+            onToggle.accept(isChecked);
+        });
+
+        onToggle.accept(switchWidget.isChecked());
     }
 
     public void openEditApps() {

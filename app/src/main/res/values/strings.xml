@@ -18,6 +18,7 @@
     <string name="settings_edit_tools">Edit Toolbar</string>
     <string name="settings_add_tool">Add Tool</string>
 
+    <string name="settings_enable_24_time_format">Use 24h time format</string>
     <string name="settings_enable_show_clock">Show Clock</string>
     <string name="settings_enable_show_date">Show Date</string>
     <string name="settings_enable_show_hidden_apps">Show hidden apps</string>

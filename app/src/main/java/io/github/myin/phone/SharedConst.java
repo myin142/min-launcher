@@ -7,4 +7,5 @@ public interface SharedConst {
     String PREF_SHOW_DATE_FEATURE = "prefFeatShowDate";
     String PREF_SHOW_HIDDEN_APPS = "prefFeatShowHiddenApps";
     String PREF_LAYOUT_DIRECTION = "prefFeatLayoutDirection";
+    String PREF_TIME_FORMAT_24 = "prefFeatTimeFormat24";
 }

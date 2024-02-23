@@ -39,12 +39,23 @@ public final class FeaturePreference {
 
     private static Map<String, Object> featureValues;
 
+    private static List<Runnable> onFeatureChangeObserver = new ArrayList<>();
+
     public static void init(Context ctx) {
         preferences = getSharedPreferences(ctx);
         features = preferences.getStringSet(SharedConst.PREF_ENABLED_FEATURES, new HashSet<>());
 
         featureValues = new HashMap<>();
         featureValues.put(SharedConst.PREF_LAYOUT_DIRECTION, preferences.getInt(SharedConst.PREF_LAYOUT_DIRECTION, LayoutDirection.LEFT.value));
+    }
+
+    public static void addObserver(Runnable runnable) {
+        onFeatureChangeObserver.add(runnable);
+        runnable.run();
+    }
+
+    public static void removeObserver(Runnable runnable) {
+        onFeatureChangeObserver.remove(runnable);
     }
 
     private static SharedPreferences getSharedPreferences(Context ctx) {
@@ -70,6 +81,9 @@ public final class FeaturePreference {
         }
 
         saveFeatureSettings(features);
+        for (Runnable runnable : onFeatureChangeObserver) {
+            runnable.run();
+        }
     }
 
     private static void saveFeatureSettings(Set<String> enabledFeatures) {

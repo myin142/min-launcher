@@ -45,6 +45,14 @@ public class HomeTop extends Fragment {
         return inflater.inflate(R.layout.home_top, container, false);
     }
 
+    private DateTimeFormatter getTimeFormatter() {
+        if (FeaturePreference.isFeatureEnabled(SharedConst.PREF_TIME_FORMAT_24)) {
+            return DateTimeFormatter.ofPattern("HH:mm");
+        }
+
+        return DateTimeFormatter.ofPattern("hh:mm a");
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -56,7 +64,8 @@ public class HomeTop extends Fragment {
         timeView.setOnClickListener((View v) -> openAlarm());
 
         Locale locale = Configuration.getCurrentLocale(getContext());
-        timeFormat = DateTimeFormatter.ofPattern("hh:mm a", locale); // TODO: make am/pm configurable
+        FeaturePreference.addObserver(() -> timeFormat = getTimeFormatter().withLocale(locale));
+
         dateFormat = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT).withLocale(locale);
         if (Locale.JAPAN.getLanguage().equals(locale.getLanguage())) {
             dateFormat = DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG).withLocale(locale);
