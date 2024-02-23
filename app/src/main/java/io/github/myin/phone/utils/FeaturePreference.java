@@ -39,7 +39,7 @@ public final class FeaturePreference {
 
     private static Map<String, Object> featureValues;
 
-    private static List<Runnable> onFeatureChangeObserver = new ArrayList<>();
+    private static final List<Runnable> onFeatureChangeObserver = new ArrayList<>();
 
     public static void init(Context ctx) {
         preferences = getSharedPreferences(ctx);

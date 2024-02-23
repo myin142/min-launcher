@@ -9,22 +9,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import io.github.myin.phone.R;
 import io.github.myin.phone.SharedConst;
-import io.github.myin.phone.notification.NotificationChange;
-import io.github.myin.phone.notification.NotificationService;
 import io.github.myin.phone.utils.Configuration;
 import io.github.myin.phone.utils.FeaturePreference;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
-import java.util.Date;
 import java.util.Locale;
 
 public class HomeTop extends Fragment {
@@ -78,35 +71,6 @@ public class HomeTop extends Fragment {
                 updateCurrentTime();
             }
         };
-
-//        notificationCountView = view.findViewById(R.id.badge_value);
-//        notificationCountReceiver = new BroadcastReceiver() {
-//            @Override
-//            public void onReceive(Context context, Intent intent) {
-//                NotificationChange change = new NotificationChange(intent);
-//                notificationCountView.setText(String.valueOf(change.getNotificationCount()));
-//            }
-//        };
-
-//        new Thread() {
-//            @Override
-//            public void run() {
-//                try {
-//                    Thread.sleep(5000);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//                NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), "TEST_NOTFICATION_ID_MYIN")
-//                        .setContentTitle("My notification")
-//                        .setContentText("Much longer text that cannot fit one line...")
-//                        .setStyle(new NotificationCompat.BigTextStyle()
-//                                .bigText("Much longer text that cannot fit one line..."))
-//                        .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-//
-//                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getContext());
-//                notificationManager.notify(198312, builder.build());
-//            }
-//        }.start();
     }
 
     private void updateVisibility() {
@@ -131,14 +95,12 @@ public class HomeTop extends Fragment {
         updateVisibility();
         updateCurrentTime();
         getActivity().registerReceiver(timeTickReceiver, new IntentFilter(Intent.ACTION_TIME_TICK));
-//        getActivity().registerReceiver(notificationCountReceiver, new IntentFilter(NotificationService.NOTIFICATION_CHANGE));
     }
 
     @Override
     public void onPause() {
         super.onPause();
         getActivity().unregisterReceiver(timeTickReceiver);
-//        getActivity().unregisterReceiver(notificationCountReceiver);
     }
 
     private void openCalendar() {
