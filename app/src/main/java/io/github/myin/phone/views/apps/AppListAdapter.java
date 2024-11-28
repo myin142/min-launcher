@@ -54,9 +54,7 @@ public class AppListAdapter extends ListAdapter<ResolveInfo, AppViewHolder> {
         holder.setText(text);
 
         holder.setAppSetting(setting);
-        if (setting.isHidden()) {
-            holder.getTextView().setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-        }
+        holder.getTextView().setPaintFlags(setting.isHidden() ? Paint.STRIKE_THRU_TEXT_FLAG : 0);
 
         holder.setOnTextClick(v -> {
             if (onItemClickListener != null) {

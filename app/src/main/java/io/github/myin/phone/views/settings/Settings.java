@@ -3,6 +3,7 @@ package io.github.myin.phone.views.settings;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
@@ -87,9 +88,8 @@ public class Settings extends AppCompatActivity {
 
         final var calendarIds = FeaturePreference.getCalendarEnabled();
         for (Calendar calendar : calendarService.readCalendar(this)) {
-            final var calendarBtn = new SwitchCompat(this);
+            final var calendarBtn = new SwitchCompat(new ContextThemeWrapper(this, R.style.ListText));
             calendarBtn.setText(calendar.getName());
-            calendarBtn.setTextAppearance(R.style.ListText);
 
             final var layout = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             calendarBtn.setLayoutParams(layout);

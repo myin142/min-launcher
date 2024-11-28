@@ -59,6 +59,14 @@
                 android:textSize="@dimen/text_size"/>
 
         <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/show_date"
+                style="@style/ListText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_enable_show_date"
+                android:textAlignment="viewStart"/>
+
+        <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/show_clock"
                 style="@style/ListText"
                 android:layout_width="match_parent"
@@ -72,14 +80,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_enable_24_time_format"
-                android:textAlignment="viewStart"/>
-
-        <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/show_date"
-                style="@style/ListText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/settings_enable_show_date"
                 android:textAlignment="viewStart"/>
 
         <androidx.appcompat.widget.SwitchCompat
