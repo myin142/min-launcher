@@ -93,7 +93,7 @@ public class HomeActivity extends SelectAppActivity {
         appsView.setLayoutManager(new NoScrollLinearLayout(this));
         appsView.setAdapter(appAdapter);
 
-        calendarAdapter = new TextListAdapter<>(new CalendarDiffCallback(), getResources().getDimensionPixelSize(R.dimen.note_size), true, textView -> textView.setAlpha(0.5f));
+        calendarAdapter = new TextListAdapter<>(new CalendarDiffCallback(), getResources().getDimensionPixelSize(R.dimen.note_size), true);
         calendarAdapter.setDisplayFunction(ev -> {
             final var format = FeaturePreference.getDateTimeFormatter(getApplicationContext());
             return format.format(ev.getDate()) + "\n" + ev.getTitle();

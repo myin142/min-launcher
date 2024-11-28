@@ -3,6 +3,8 @@ package io.github.myin.phone.data.calendar
 import android.content.Context
 import android.database.Cursor
 import android.provider.CalendarContract
+import androidx.core.database.getLongOrNull
+import androidx.core.database.getStringOrNull
 import androidx.room.util.newStringBuilder
 import io.github.myin.phone.utils.FeaturePreference
 import java.time.*
@@ -43,7 +45,7 @@ class CalendarService {
         val cursor = context.contentResolver
             .query(
                 CalendarContract.Events.CONTENT_URI,
-                arrayOf(CalendarContract.Events.TITLE, CalendarContract.Events.DTSTART),
+                arrayOf(CalendarContract.Events._ID, CalendarContract.Events.TITLE, CalendarContract.Events.DTSTART),
                 selection,
                 null,
                 "${CalendarContract.Events.DTSTART} ASC"
@@ -51,9 +53,9 @@ class CalendarService {
 
         return cursorToList(cursor) {
             CalendarEvent(
-                id = 1,
-                title = it.getString(0),
-                date = getDate(it.getString(1).toLong()),
+                id = it.getLongOrNull(0) ?: -1,
+                title = it.getStringOrNull(1) ?: "No title",
+                date = getDate(it.getLongOrNull(2)) ?: LocalDateTime.now(),
             )
         }.take(take);
     }
@@ -71,7 +73,10 @@ class CalendarService {
         return result
     }
 
-    private fun getDate(milliSeconds: Long): LocalDateTime {
+    private fun getDate(milliSeconds: Long?): LocalDateTime? {
+        if (milliSeconds == null) {
+            return null
+        }
         return LocalDateTime.ofInstant(Instant.ofEpochMilli(milliSeconds), ZoneId.systemDefault())
     }
 }

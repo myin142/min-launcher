@@ -2,7 +2,6 @@ package io.github.myin.phone.views.settings;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.health.connect.datatypes.ExerciseCompletionGoal;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +11,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 
-import java.time.Duration;
-import java.time.ZonedDateTime;
 import java.util.function.Consumer;
 
-import androidx.core.app.ActivityCompat;
 import io.github.myin.phone.R;
 import io.github.myin.phone.SharedConst;
 import io.github.myin.phone.data.calendar.Calendar;
@@ -26,15 +22,12 @@ import io.github.myin.phone.utils.Permission;
 import io.github.myin.phone.views.settings.apps.ManageAppsActivity;
 import io.github.myin.phone.views.settings.toolbar.ManageToolsActivity;
 
-import javax.inject.Inject;
-
 public class Settings extends AppCompatActivity {
 
     private Spinner layoutDirection;
     private LinearLayout calendarLayout;
     private Button calendarPermission;
 
-//    @Inject
     CalendarService calendarService = new CalendarService();
 
     @Override
