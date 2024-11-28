@@ -6,6 +6,9 @@
     <!-- Permission needed for Android P and above -->
     <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" />
 
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+
     <application
         android:name=".config.MainApplication"
         android:allowBackup="true"

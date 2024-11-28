@@ -1,110 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:homeApp="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/root"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layoutDirection="ltr"
-    android:padding="@dimen/screen_padding">
+                                                   xmlns:homeApp="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:id="@+id/root"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
+                                                   android:layoutDirection="ltr"
+                                                   android:padding="@dimen/screen_padding">
 
     <LinearLayout
-        android:id="@+id/title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        homeApp:layout_constraintEnd_toEndOf="parent"
-        homeApp:layout_constraintStart_toStartOf="parent"
-        homeApp:layout_constraintTop_toTopOf="parent">
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            homeApp:layout_constraintEnd_toEndOf="parent"
+            homeApp:layout_constraintStart_toStartOf="parent"
+            homeApp:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/settings"
-            android:textSize="@dimen/title_size" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings"
+                android:textSize="@dimen/title_size"/>
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/view_padding"
-        android:layout_marginBottom="@dimen/view_padding"
-        android:orientation="vertical"
-        homeApp:layout_constraintBottom_toBottomOf="parent"
-        homeApp:layout_constraintEnd_toEndOf="parent"
-        homeApp:layout_constraintStart_toStartOf="parent"
-        homeApp:layout_constraintTop_toBottomOf="@+id/title">
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/view_padding"
+            android:layout_marginBottom="@dimen/view_padding"
+            android:orientation="vertical"
+            homeApp:layout_constraintBottom_toBottomOf="parent"
+            homeApp:layout_constraintEnd_toEndOf="parent"
+            homeApp:layout_constraintStart_toStartOf="parent"
+            homeApp:layout_constraintTop_toBottomOf="@+id/title">
 
         <TextView
-            android:id="@+id/edit_apps"
-            style="@style/ListText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/settings_edit_apps"
-            android:textSize="@dimen/text_size" />
+                android:id="@+id/edit_apps"
+                style="@style/ListText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_edit_apps"
+                android:textSize="@dimen/text_size"/>
 
         <TextView
-            android:id="@+id/edit_tools"
-            style="@style/ListText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/settings_edit_tools"
-            android:textSize="@dimen/text_size" />
+                android:id="@+id/edit_tools"
+                style="@style/ListText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_edit_tools"
+                android:textSize="@dimen/text_size"/>
 
         <TextView
-            android:id="@+id/about"
-            style="@style/ListText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/about"
-            android:textSize="@dimen/text_size" />
+                android:id="@+id/about"
+                style="@style/ListText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/about"
+                android:textSize="@dimen/text_size"/>
 
         <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/show_clock"
-            style="@style/ListText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/settings_enable_show_clock"
-            android:textAlignment="viewStart" />
+                android:id="@+id/show_clock"
+                style="@style/ListText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_enable_show_clock"
+                android:textAlignment="viewStart"/>
 
         <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/time_format_24"
-            style="@style/ListText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/settings_enable_24_time_format"
-            android:textAlignment="viewStart" />
+                android:id="@+id/time_format_24"
+                style="@style/ListText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_enable_24_time_format"
+                android:textAlignment="viewStart"/>
 
         <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/show_date"
-            style="@style/ListText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/settings_enable_show_date"
-            android:textAlignment="viewStart" />
+                android:id="@+id/show_date"
+                style="@style/ListText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_enable_show_date"
+                android:textAlignment="viewStart"/>
 
         <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/show_hidden_apps"
-            style="@style/ListText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/settings_enable_show_hidden_apps"
-            android:textAlignment="viewStart" />
-        <!--
-                <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="@dimen/half_view_padding"
-                        android:paddingBottom="@dimen/half_view_padding">
-                </LinearLayout>
-        -->
+                android:id="@+id/show_hidden_apps"
+                style="@style/ListText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_enable_show_hidden_apps"
+                android:textAlignment="viewStart"/>
 
         <Spinner
-            android:id="@+id/layout_direction"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/half_view_padding"
-            android:paddingBottom="@dimen/half_view_padding"
-            android:spinnerMode="dropdown" />
+                android:id="@+id/layout_direction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/half_view_padding"
+                android:paddingBottom="@dimen/half_view_padding"
+                android:spinnerMode="dropdown"/>
+
+        <Button android:id="@+id/request_calendar_permission" android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/request_calendar_permission"/>
+        <ScrollView android:layout_width="match_parent" android:layout_height="wrap_content">
+            <LinearLayout
+                    android:id="@+id/calendar_list"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical">
+            </LinearLayout>
+        </ScrollView>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

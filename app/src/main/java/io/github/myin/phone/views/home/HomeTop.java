@@ -56,13 +56,8 @@ public class HomeTop extends Fragment {
         timeView = view.findViewById(R.id.home_top_time);
         timeView.setOnClickListener((View v) -> openAlarm());
 
-        Locale locale = Configuration.getCurrentLocale(getContext());
-        FeaturePreference.addObserver(() -> timeFormat = getTimeFormatter().withLocale(locale));
-
-        dateFormat = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT).withLocale(locale);
-        if (Locale.JAPAN.getLanguage().equals(locale.getLanguage())) {
-            dateFormat = DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG).withLocale(locale);
-        }
+        FeaturePreference.addObserver(() -> timeFormat = FeaturePreference.getTimeFormatter(getContext()));
+        dateFormat = FeaturePreference.getDateTimeFormatter(getContext());
 
         updateCurrentTime();
         timeTickReceiver = new BroadcastReceiver() {

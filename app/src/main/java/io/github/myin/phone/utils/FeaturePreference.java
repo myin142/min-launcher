@@ -6,6 +6,8 @@ import android.view.View;
 
 import io.github.myin.phone.SharedConst;
 
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
@@ -47,6 +49,7 @@ public final class FeaturePreference {
 
         featureValues = new HashMap<>();
         featureValues.put(SharedConst.PREF_LAYOUT_DIRECTION, preferences.getInt(SharedConst.PREF_LAYOUT_DIRECTION, LayoutDirection.LEFT.value));
+        featureValues.put(SharedConst.PREF_CALENDAR_ENABLED, preferences.getStringSet(SharedConst.PREF_CALENDAR_ENABLED, new HashSet<>()));
     }
 
     public static void addObserver(Runnable runnable) {
@@ -102,10 +105,45 @@ public final class FeaturePreference {
         setFeatureSetting(editor -> editor.putInt(SharedConst.PREF_LAYOUT_DIRECTION, dir.value));
     }
 
+    public static Set<String> getCalendarEnabled() {
+        return (Set<String>) featureValues.get(SharedConst.PREF_CALENDAR_ENABLED);
+    }
+
+    public static void setCalendarEnabled(String calendar, boolean enabled) {
+        Set<String> enabledCalendars = new HashSet<>(getCalendarEnabled());
+        if (enabled) {
+            enabledCalendars.add(calendar);
+        } else {
+            enabledCalendars.remove(calendar);
+        }
+
+        featureValues.put(SharedConst.PREF_CALENDAR_ENABLED, enabledCalendars);
+        setFeatureSetting(editor -> editor.putStringSet(SharedConst.PREF_CALENDAR_ENABLED, enabledCalendars));
+    }
+
     private static void setFeatureSetting(Consumer<SharedPreferences.Editor> action) {
         SharedPreferences.Editor editor = preferences.edit();
         action.accept(editor);
         editor.apply();
+    }
+
+    public static DateTimeFormatter getDateTimeFormatter(Context context) {
+        var locale = Configuration.getCurrentLocale(context);
+        var dateFormat = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT).withLocale(locale);
+        if (Locale.JAPAN.getLanguage().equals(locale.getLanguage())) {
+            dateFormat = DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG).withLocale(locale);
+        }
+
+        return dateFormat;
+    }
+
+    public static DateTimeFormatter getTimeFormatter(Context context) {
+        var locale = Configuration.getCurrentLocale(context);
+        if (isFeatureEnabled(SharedConst.PREF_TIME_FORMAT_24)) {
+            return DateTimeFormatter.ofPattern("HH:mm").withLocale(locale);
+        }
+
+        return DateTimeFormatter.ofPattern("hh:mm a").withLocale(locale);
     }
 
 }

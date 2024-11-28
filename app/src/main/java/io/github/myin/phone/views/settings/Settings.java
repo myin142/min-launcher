@@ -2,25 +2,40 @@ package io.github.myin.phone.views.settings;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.health.connect.datatypes.ExerciseCompletionGoal;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.*;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 
+import java.time.Duration;
+import java.time.ZonedDateTime;
 import java.util.function.Consumer;
 
+import androidx.core.app.ActivityCompat;
 import io.github.myin.phone.R;
 import io.github.myin.phone.SharedConst;
+import io.github.myin.phone.data.calendar.Calendar;
+import io.github.myin.phone.data.calendar.CalendarService;
 import io.github.myin.phone.utils.FeaturePreference;
+import io.github.myin.phone.utils.Permission;
 import io.github.myin.phone.views.settings.apps.ManageAppsActivity;
 import io.github.myin.phone.views.settings.toolbar.ManageToolsActivity;
+
+import javax.inject.Inject;
 
 public class Settings extends AppCompatActivity {
 
     private Spinner layoutDirection;
+    private LinearLayout calendarLayout;
+    private Button calendarPermission;
+
+//    @Inject
+    CalendarService calendarService = new CalendarService();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,6 +47,11 @@ public class Settings extends AppCompatActivity {
         findViewById(R.id.edit_apps).setOnClickListener(v -> openEditApps());
         findViewById(R.id.edit_tools).setOnClickListener(v -> openEditTools());
         findViewById(R.id.about).setOnClickListener(v -> openAbout());
+
+        calendarLayout = findViewById(R.id.calendar_list);
+        calendarPermission = findViewById(R.id.request_calendar_permission);
+        calendarPermission.setOnClickListener(view -> Permission.Companion.requestPermission(this, Permission.READ_CALENDAR));
+        checkIfCalendarPermissionGranted();
 
         initSwitch(R.id.show_clock, SharedConst.PREF_SHOW_CLOCK_FEATURE, isChecked -> findViewById(R.id.time_format_24).setVisibility(isChecked ? View.VISIBLE : View.GONE));
         initSwitch(R.id.time_format_24, SharedConst.PREF_TIME_FORMAT_24);
@@ -60,6 +80,36 @@ public class Settings extends AppCompatActivity {
         });
     }
 
+    private void checkIfCalendarPermissionGranted() {
+        if (Permission.Companion.hasPermission(this, Permission.READ_CALENDAR)) {
+            calendarPermission.setVisibility(View.GONE);
+            loadCalendar();
+        } else {
+            calendarPermission.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void loadCalendar() {
+        calendarLayout.removeAllViews();
+
+        final var calendarIds = FeaturePreference.getCalendarEnabled();
+        for (Calendar calendar : calendarService.readCalendar(this)) {
+            final var calendarBtn = new SwitchCompat(this);
+            calendarBtn.setText(calendar.getName());
+            calendarBtn.setTextAppearance(R.style.ListText);
+
+            final var layout = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            calendarBtn.setLayoutParams(layout);
+            calendarBtn.setChecked(calendarIds.contains(String.valueOf(calendar.getId())));
+            calendarBtn.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
+            calendarBtn.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                FeaturePreference.setCalendarEnabled(String.valueOf(calendar.getId()), isChecked);
+            });
+
+            calendarLayout.addView(calendarBtn);
+        }
+    }
+
     @SuppressLint("WrongConstant")
     private void updateLayout() {
         findViewById(R.id.root).setLayoutDirection(FeaturePreference.getLayoutDirection().getValue());
@@ -68,6 +118,7 @@ public class Settings extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        checkIfCalendarPermissionGranted();
         layoutDirection.setSelection(FeaturePreference.getLayoutDirection().ordinal());
     }
 
