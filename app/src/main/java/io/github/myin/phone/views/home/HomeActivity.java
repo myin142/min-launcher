@@ -9,6 +9,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.lang.invoke.VarHandle;
@@ -48,6 +49,7 @@ public class HomeActivity extends SelectAppActivity {
 
     private TextListAdapter<HomeApp> appAdapter;
     private TextListAdapter<CalendarEvent> calendarAdapter;
+    private RecyclerView calendarView;
 
     private View homeTop;
     private View root;
@@ -91,19 +93,19 @@ public class HomeActivity extends SelectAppActivity {
         appsView.setLayoutManager(new NoScrollLinearLayout(this));
         appsView.setAdapter(appAdapter);
 
-        calendarAdapter = new TextListAdapter<>(new CalendarDiffCallback(), getResources().getDimensionPixelSize(R.dimen.note_size));
+        calendarAdapter = new TextListAdapter<>(new CalendarDiffCallback(), getResources().getDimensionPixelSize(R.dimen.note_size), true, textView -> textView.setAlpha(0.5f));
         calendarAdapter.setDisplayFunction(ev -> {
             final var format = FeaturePreference.getDateTimeFormatter(getApplicationContext());
-            return format.format(ev.getDate()) + " " + ev.getTitle();
+            return format.format(ev.getDate()) + "\n" + ev.getTitle();
         });
-        RecyclerView calendarView = findViewById(R.id.event_list);
+        calendarView = findViewById(R.id.event_list);
         calendarView.setLayoutManager(new NoScrollLinearLayout(this));
         calendarView.setAdapter(calendarAdapter);
         loadCalendarEvents();
     }
 
     private void loadCalendarEvents() {
-        final var events = calendarService.readCalendarEvent(this, ZonedDateTime.now().minusDays(1), Duration.ofDays(30));
+        final var events = calendarService.readCalendarEvent(this, ZonedDateTime.now().minusDays(1), Duration.ofDays(30), 8);
         calendarAdapter.submitList(events);
     }
 
@@ -117,6 +119,7 @@ public class HomeActivity extends SelectAppActivity {
         homeTop.setVisibility((!showDate && !showClock) ? View.GONE : View.VISIBLE);
 
         root.setLayoutDirection(FeaturePreference.getLayoutDirection().getValue());
+        calendarView.setLayoutDirection(FeaturePreference.getLayoutDirection().flip().getValue());
         loadCalendarEvents();
     }
 

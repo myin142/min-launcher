@@ -29,6 +29,10 @@ public final class FeaturePreference {
             return value;
         }
 
+        public LayoutDirection flip() {
+            return this == LEFT ? RIGHT : LEFT;
+        }
+
         public static Optional<LayoutDirection> fromValue(Integer value) {
             return Stream.of(LayoutDirection.values())
                     .filter(dir -> dir.value == value)

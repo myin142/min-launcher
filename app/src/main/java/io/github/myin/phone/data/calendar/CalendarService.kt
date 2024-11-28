@@ -3,6 +3,7 @@ package io.github.myin.phone.data.calendar
 import android.content.Context
 import android.database.Cursor
 import android.provider.CalendarContract
+import androidx.room.util.newStringBuilder
 import io.github.myin.phone.utils.FeaturePreference
 import java.time.*
 
@@ -23,7 +24,8 @@ class CalendarService {
     fun readCalendarEvent(
         context: Context,
         fromTime: ZonedDateTime,
-        duration: Duration = Duration.ofDays(30)
+        duration: Duration = Duration.ofDays(30),
+        take: Int = 10,
     ): List<CalendarEvent> {
         val calendar = FeaturePreference.getCalendarEnabled();
         if (calendar.isEmpty()) {
@@ -41,7 +43,10 @@ class CalendarService {
         val cursor = context.contentResolver
             .query(
                 CalendarContract.Events.CONTENT_URI,
-                arrayOf(CalendarContract.Events.TITLE, CalendarContract.Events.DTSTART), selection, null, null
+                arrayOf(CalendarContract.Events.TITLE, CalendarContract.Events.DTSTART),
+                selection,
+                null,
+                "${CalendarContract.Events.DTSTART} ASC"
             )
 
         return cursorToList(cursor) {
@@ -50,7 +55,7 @@ class CalendarService {
                 title = it.getString(0),
                 date = getDate(it.getString(1).toLong()),
             )
-        }
+        }.take(take);
     }
 
     private fun <T> cursorToList(cursor: Cursor?, mapFn: (c: Cursor) -> T): List<T> {

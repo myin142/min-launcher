@@ -18,11 +18,19 @@ public class TextListAdapter<T> extends ListAdapter<T, TextViewHolder> {
 
     private Function<T, String> displayFunction;
     private Consumer<T> onItemClickListener;
+    private Consumer<TextView> textViewFormatter;
     private final int fontSize;
+    private final boolean reverse;
 
     public TextListAdapter(DiffUtil.ItemCallback<T> diffUtil, int size) {
+        this(diffUtil, size, false, (x) -> {});
+    }
+
+    public TextListAdapter(DiffUtil.ItemCallback<T> diffUtil, int size, boolean reverse, Consumer<TextView> textViewFormatter) {
         super(diffUtil);
         this.fontSize = size;
+        this.reverse = reverse;
+        this.textViewFormatter = textViewFormatter;
     }
 
     public void setDisplayFunction(Function<T, String> displayFunction) {
@@ -42,6 +50,9 @@ public class TextListAdapter<T> extends ListAdapter<T, TextViewHolder> {
         if (fontSize != -1) {
             view.setTextSize(TypedValue.COMPLEX_UNIT_PX, fontSize);
         }
+
+        view.setTextAlignment(reverse ? TextView.TEXT_ALIGNMENT_VIEW_START : TextView.TEXT_ALIGNMENT_VIEW_END);
+        textViewFormatter.accept(view);
 
         return new TextViewHolder(view, view);
     }
