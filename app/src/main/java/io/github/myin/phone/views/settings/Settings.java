@@ -22,6 +22,7 @@ import io.github.myin.phone.utils.FeaturePreference;
 import io.github.myin.phone.utils.Permission;
 import io.github.myin.phone.views.settings.apps.ManageAppsActivity;
 import io.github.myin.phone.views.settings.toolbar.ManageToolsActivity;
+import io.github.myin.phone.views.todo.TodoActivity;
 
 public class Settings extends AppCompatActivity {
 
@@ -41,6 +42,7 @@ public class Settings extends AppCompatActivity {
         findViewById(R.id.edit_apps).setOnClickListener(v -> openEditApps());
         findViewById(R.id.edit_tools).setOnClickListener(v -> openEditTools());
         findViewById(R.id.about).setOnClickListener(v -> openAbout());
+        findViewById(R.id.edit_todos).setOnClickListener(v -> openTodoList());
 
         calendarLayout = findViewById(R.id.calendar_list);
         calendarPermission = findViewById(R.id.request_calendar_permission);
@@ -147,5 +149,10 @@ public class Settings extends AppCompatActivity {
     public void openAbout() {
         Intent aboutIntent = new Intent(this, About.class);
         startActivity(aboutIntent);
+    }
+
+    public void openTodoList() {
+        Intent todoIntent = new Intent(this, TodoActivity.class);
+        startActivity(todoIntent);
     }
 }

@@ -51,6 +51,14 @@
                 android:textSize="@dimen/text_size"/>
 
         <TextView
+                android:id="@+id/edit_todos"
+                style="@style/ListText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/edit_todos"
+                android:textSize="@dimen/text_size"/>
+
+        <TextView
                 android:id="@+id/about"
                 style="@style/ListText"
                 android:layout_width="wrap_content"

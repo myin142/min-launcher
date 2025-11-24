@@ -36,7 +36,7 @@
     <string name="request_calendar_permission">Request calendar permission</string>
 
     <string name="todo">ToDo</string>
-    <string name="create_todo">Create ToDo</string>
-    <string name="add_todo">Add ToDo</string>
     <string name="calendar">Calendar</string>
+    <string name="create_todo">Create ToDo</string>
+    <string name="edit_todos">Edit ToDos</string>
 </resources>

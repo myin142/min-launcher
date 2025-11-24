@@ -33,7 +33,6 @@ import io.github.myin.phone.utils.FeaturePreference;
 import io.github.myin.phone.views.SelectAppActivity;
 import io.github.myin.phone.views.apps.AppsList;
 import io.github.myin.phone.views.settings.Settings;
-import io.github.myin.phone.views.todo.TodoActivity;
 
 import javax.inject.Inject;
 
@@ -42,7 +41,6 @@ public class HomeActivity extends SelectAppActivity {
     public static final int REQ_APPS_CHANGED = 1;
 
     private static final int REQ_OPEN_APP = 3;
-    private static final int REQ_ADD_TODO = 10;
 
     private static final int APPS_SWIPE_DISTANCE = 150;
     private static final int SETTINGS_SWIPE_DISTANCE = 800;
@@ -199,29 +197,6 @@ public class HomeActivity extends SelectAppActivity {
         boolean showToDo = eventList.getVisibility() == View.VISIBLE;
         showTodoList(showToDo);
         FeaturePreference.setHomeShowTodo(showToDo);
-    }
-
-    public void onAddTodoClicked(View v) {
-        Intent intent = new Intent(this, TodoActivity.class);
-        startActivityForResult(intent, REQ_ADD_TODO);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == REQ_ADD_TODO && resultCode == RESULT_OK && data != null) {
-            String text = data.getStringExtra(io.github.myin.phone.views.todo.TodoActivity.RESULT_TODO_TEXT);
-            if (text != null) {
-                text = text.trim();
-                if (!text.isEmpty()) {
-                    TodoItem item = new TodoItem();
-                    item.title = text;
-                    item.completed = false;
-                    todoItemRepository.insert(item);
-                }
-            }
-        } else {
-            super.onActivityResult(requestCode, resultCode, data);
-        }
     }
 
 }
