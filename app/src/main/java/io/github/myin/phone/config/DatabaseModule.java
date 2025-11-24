@@ -8,6 +8,7 @@ import dagger.Module;
 import dagger.Provides;
 import io.github.myin.phone.data.app.HomeAppRepository;
 import io.github.myin.phone.data.setting.AppSettingRepository;
+import io.github.myin.phone.data.todo.TodoItemRepository;
 import io.github.myin.phone.data.tool.HomeToolRepository;
 
 import javax.inject.Singleton;
@@ -23,7 +24,8 @@ public class DatabaseModule {
                 .addMigrations(
                         DatabaseMigrations.MIGRATION_1_2,
                         DatabaseMigrations.MIGRATION_2_3,
-                        DatabaseMigrations.MIGRATION_3_4
+                        DatabaseMigrations.MIGRATION_3_4,
+                        DatabaseMigrations.MIGRATION_4_5
                 )
                 .build();
     }
@@ -44,6 +46,12 @@ public class DatabaseModule {
     @Singleton
     public AppSettingRepository appSettingRepository(MainDatabase database) {
         return database.appSettingRepository();
+    }
+
+    @Provides
+    @Singleton
+    public TodoItemRepository todoItemRepository(MainDatabase database) {
+        return database.todoItemRepository();
     }
 
 }

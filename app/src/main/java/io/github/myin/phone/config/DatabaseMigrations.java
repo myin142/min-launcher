@@ -6,6 +6,9 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 public class DatabaseMigrations {
 
+    // Prevent instantiation
+    private DatabaseMigrations() {}
+
     static final Migration MIGRATION_1_2 = new Migration(1, 2) {
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
@@ -41,5 +44,18 @@ public class DatabaseMigrations {
                     """);
         }
     };
+
+    static final Migration MIGRATION_4_5 = new Migration(4, 5) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("CREATE TABLE IF NOT EXISTS `todo_items` (" +
+                    "`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+                    "`title` TEXT," +
+                    "`completed` INTEGER NOT NULL" +
+                    ")");
+        }
+    };
+
+
 
 }

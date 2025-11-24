@@ -35,48 +35,98 @@
                       android:gravity="center"
                       android:layout_height="wrap_content"
                       android:orientation="horizontal">
+            <LinearLayout
+                    android:id="@+id/start_intro"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="@dimen/view_padding"
+                        android:text="@string/start_intro_text"
+                        android:textAlignment="center"/>
+
+                <ImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/intro_arrow_height"
+                        homeApp:srcCompat="@drawable/ic_down_arrow"/>
+            </LinearLayout>
             <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/apps_list"
                     android:layout_weight="1"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"/>
+
             <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/event_list"
                     android:layout_weight="1"
                     android:alpha="0.5"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"/>
-        </LinearLayout>
 
-
-        <LinearLayout
-                android:id="@+id/start_intro"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-            <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="match_parent"
+            <LinearLayout
+                    android:id="@+id/todo_list_container"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="@dimen/view_padding"
-                    android:text="@string/start_intro_text"
-                    android:textAlignment="center"/>
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
-            <ImageView
-                    android:id="@+id/imageView2"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/intro_arrow_height"
-                    homeApp:srcCompat="@drawable/ic_down_arrow"/>
+                <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/todo_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
+
+                <TextView
+                        android:id="@+id/add_todo_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/add_todo"
+                        android:onClick="onAddTodoClicked"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center"
+                        android:padding="@dimen/view_padding" />
+
+            </LinearLayout>
         </LinearLayout>
+
+
     </LinearLayout>
 
-    <fragment
-            android:id="@+id/home_bottom"
-            android:name="io.github.myin.phone.views.home.HomeBottom"
+    <LinearLayout
+            android:id="@+id/home_bottom_container"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
             homeApp:layout_constraintBottom_toBottomOf="parent"
             homeApp:layout_constraintEnd_toEndOf="parent"
-            homeApp:layout_constraintStart_toStartOf="parent"/>
+            homeApp:layout_constraintStart_toStartOf="parent">
+
+        <fragment
+                android:id="@+id/home_bottom"
+                android:name="io.github.myin.phone.views.home.HomeBottom"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+        <TextView
+                android:id="@+id/home_bottom_action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/todo"
+                android:onClick="onHomeBottomActionClicked"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="@dimen/view_padding"/>
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

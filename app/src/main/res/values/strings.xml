@@ -33,4 +33,6 @@
     <string name="about_source"><a href="https://github.com/myin142/min-launcher">Source Code</a></string>
     <string name="about_images"><a href="https://github.com/myin142/min-launcher#image-credits">Image Credits</a></string>
     <string name="request_calendar_permission">Request calendar permission</string>
+    <string name="todo">ToDo</string>
+    <string name="add_todo">Add ToDo</string>
 </resources>

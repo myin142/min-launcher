@@ -8,10 +8,13 @@ import io.github.myin.phone.data.setting.AppSetting;
 import io.github.myin.phone.data.setting.AppSettingRepository;
 import io.github.myin.phone.data.tool.HomeTool;
 import io.github.myin.phone.data.tool.HomeToolRepository;
+import io.github.myin.phone.data.todo.TodoItem;
+import io.github.myin.phone.data.todo.TodoItemRepository;
 
-@Database(entities = {HomeApp.class, HomeTool.class, AppSetting.class}, version = 4, exportSchema = false)
+@Database(entities = {HomeApp.class, HomeTool.class, AppSetting.class, TodoItem.class}, version = 5, exportSchema = false)
 public abstract class MainDatabase extends RoomDatabase {
     abstract HomeAppRepository homeAppRepository();
     abstract HomeToolRepository homeToolRepository();
     abstract AppSettingRepository appSettingRepository();
+    abstract TodoItemRepository todoItemRepository();
 }

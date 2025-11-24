@@ -3,9 +3,11 @@ package io.github.myin.phone.views.home;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DiffUtil;
@@ -27,6 +29,8 @@ import io.github.myin.phone.data.calendar.CalendarDiffCallback;
 import io.github.myin.phone.data.calendar.CalendarEvent;
 import io.github.myin.phone.data.calendar.CalendarService;
 import io.github.myin.phone.data.setting.AppSettingRepository;
+import io.github.myin.phone.data.todo.TodoItem;
+import io.github.myin.phone.data.todo.TodoItemDiffCallback;
 import io.github.myin.phone.list.NoScrollLinearLayout;
 import io.github.myin.phone.list.TextListAdapter;
 import io.github.myin.phone.utils.FeaturePreference;
@@ -49,7 +53,10 @@ public class HomeActivity extends SelectAppActivity {
 
     private TextListAdapter<HomeApp> appAdapter;
     private TextListAdapter<CalendarEvent> calendarAdapter;
+    private TextListAdapter<TodoItem> todoAdapter;
     private RecyclerView calendarView;
+    private RecyclerView todoView; // new field for todo list
+    private View todoContainer; // container wrapping the todo list and add button
 
     private View homeTop;
     private View root;
@@ -102,6 +109,20 @@ public class HomeActivity extends SelectAppActivity {
         calendarView.setLayoutManager(new NoScrollLinearLayout(this));
         calendarView.setAdapter(calendarAdapter);
         loadCalendarEvents();
+
+        todoAdapter = new TextListAdapter<>(new TodoItemDiffCallback(), getResources().getDimensionPixelSize(R.dimen.note_size), true);
+        todoAdapter.setDisplayFunction(item -> item.title);
+        todoAdapter.setStrikethroughFunction(item -> item.completed);
+        todoView = findViewById(R.id.todo_list);
+        todoView.setLayoutManager(new NoScrollLinearLayout(this));
+        todoView.setAdapter(todoAdapter);
+
+        todoContainer = findViewById(R.id.todo_list_container);
+        View addTodoBtn = findViewById(R.id.add_todo_button);
+        if (addTodoBtn != null) {
+            // keep a simple click feedback until real add flow is implemented
+            addTodoBtn.setOnClickListener(v -> onAddTodoClicked(v));
+        }
     }
 
     private void loadCalendarEvents() {
@@ -156,6 +177,23 @@ public class HomeActivity extends SelectAppActivity {
     private void openSettings() {
         Intent appsIntent = new Intent(this, Settings.class);
         startActivityForResult(appsIntent, HomeActivity.REQ_APPS_CHANGED);
+    }
+
+    public void onHomeBottomActionClicked(View v) {
+        // Toggle visibility between event_list and todo_list container
+        View eventList = findViewById(R.id.event_list);
+        if (eventList.getVisibility() == View.VISIBLE) {
+            eventList.setVisibility(View.GONE);
+            if (todoContainer != null) todoContainer.setVisibility(View.VISIBLE);
+        } else {
+            eventList.setVisibility(View.VISIBLE);
+            if (todoContainer != null) todoContainer.setVisibility(View.GONE);
+        }
+    }
+
+    public void onAddTodoClicked(View v) {
+        // Placeholder action: show a Toast. Replace with add-UI later.
+        Toast.makeText(this, getString(R.string.add_todo), Toast.LENGTH_SHORT).show();
     }
 
 }
