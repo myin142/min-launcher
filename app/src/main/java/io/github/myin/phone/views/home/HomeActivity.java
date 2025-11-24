@@ -33,6 +33,7 @@ import io.github.myin.phone.utils.FeaturePreference;
 import io.github.myin.phone.views.SelectAppActivity;
 import io.github.myin.phone.views.apps.AppsList;
 import io.github.myin.phone.views.settings.Settings;
+import io.github.myin.phone.views.todo.TodoActivity;
 
 import javax.inject.Inject;
 
@@ -42,9 +43,11 @@ public class HomeActivity extends SelectAppActivity {
 
     private static final int REQ_OPEN_APP = 3;
 
-    private static final int APPS_SWIPE_DISTANCE = 150;
+    private static final int APPS_SWIPE_DISTANCE = 200;
     private static final int SETTINGS_SWIPE_DISTANCE = 800;
+    private static final int TODO_SWIPE_DISTANCE = 200;
     private float swipeStartY;
+    private float swipeStartX;
 
     private TextListAdapter<HomeApp> appAdapter;
     private TextListAdapter<CalendarEvent> calendarAdapter;
@@ -95,6 +98,8 @@ public class HomeActivity extends SelectAppActivity {
         });
 
         View startIntro = findViewById(R.id.start_intro);
+
+//        startIntro.setVisibility(homeAppRepository.countHomeApps() > 0 ? View.GONE : View.VISIBLE);
         homeAppRepository.getHomeAppsSorted().observe(this, appList -> {
             startIntro.setVisibility(appList.isEmpty() ? View.VISIBLE : View.GONE);
             appAdapter.submitList(appList);
@@ -161,13 +166,22 @@ public class HomeActivity extends SelectAppActivity {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN -> swipeStartY = event.getY();
+            case MotionEvent.ACTION_DOWN -> {
+                swipeStartY = event.getY();
+                swipeStartX = event.getX();
+            }
             case MotionEvent.ACTION_UP -> {
-                float deltaY = swipeStartY - event.getY();
+                final float deltaY = swipeStartY - event.getY();
+                final float deltaX = swipeStartX - event.getX();
                 if (deltaY > APPS_SWIPE_DISTANCE) {
                     openAppsList();
                 } else if (-deltaY > SETTINGS_SWIPE_DISTANCE) {
                     openSettings();
+                } else {
+                    final var isLeft = FeaturePreference.getLayoutDirection() == FeaturePreference.LayoutDirection.LEFT;
+                    if (isLeft && deltaX > TODO_SWIPE_DISTANCE || !isLeft && -deltaX > TODO_SWIPE_DISTANCE) {
+                        openTodo();
+                    }
                 }
             }
         }
@@ -190,6 +204,11 @@ public class HomeActivity extends SelectAppActivity {
 
     private void openSettings() {
         Intent appsIntent = new Intent(this, Settings.class);
+        startActivityForResult(appsIntent, HomeActivity.REQ_APPS_CHANGED);
+    }
+
+    private void openTodo() {
+        Intent appsIntent = new Intent(this, TodoActivity.class);
         startActivityForResult(appsIntent, HomeActivity.REQ_APPS_CHANGED);
     }
 
