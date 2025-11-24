@@ -54,6 +54,7 @@ public final class FeaturePreference {
         featureValues = new HashMap<>();
         featureValues.put(SharedConst.PREF_LAYOUT_DIRECTION, preferences.getInt(SharedConst.PREF_LAYOUT_DIRECTION, LayoutDirection.LEFT.value));
         featureValues.put(SharedConst.PREF_CALENDAR_ENABLED, preferences.getStringSet(SharedConst.PREF_CALENDAR_ENABLED, new HashSet<>()));
+        featureValues.put(SharedConst.PREF_HOME_SHOW_TODO, preferences.getBoolean(SharedConst.PREF_HOME_SHOW_TODO, false));
     }
 
     public static void addObserver(Runnable runnable) {
@@ -123,6 +124,15 @@ public final class FeaturePreference {
 
         featureValues.put(SharedConst.PREF_CALENDAR_ENABLED, enabledCalendars);
         setFeatureSetting(editor -> editor.putStringSet(SharedConst.PREF_CALENDAR_ENABLED, enabledCalendars));
+    }
+
+    public static boolean isHomeShowTodo() {
+        return Boolean.TRUE.equals(featureValues.get(SharedConst.PREF_HOME_SHOW_TODO));
+    }
+
+    public static void setHomeShowTodo(boolean show) {
+        featureValues.put(SharedConst.PREF_HOME_SHOW_TODO, show);
+        setFeatureSetting(editor -> editor.putBoolean(SharedConst.PREF_HOME_SHOW_TODO, show));
     }
 
     private static void setFeatureSetting(Consumer<SharedPreferences.Editor> action) {

@@ -107,7 +107,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:textSize="@dimen/text_size"
-                android:padding="@dimen/view_padding"/>
+                android:paddingVertical="@dimen/half_view_padding"/>
 
     </LinearLayout>
 

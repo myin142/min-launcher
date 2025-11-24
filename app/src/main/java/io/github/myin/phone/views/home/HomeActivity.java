@@ -54,6 +54,10 @@ public class HomeActivity extends SelectAppActivity {
     private RecyclerView calendarView;
     private RecyclerView todoView;
 
+    private View eventList;
+    private View todoList;
+    private TextView bottomAction;
+
     private View homeTop;
     private View root;
 
@@ -75,6 +79,10 @@ public class HomeActivity extends SelectAppActivity {
 
         root = findViewById(R.id.root);
         homeTop = findViewById(R.id.home_top);
+
+        eventList = findViewById(R.id.event_list);
+        todoList = findViewById(R.id.todo_list);
+        bottomAction = findViewById(R.id.home_bottom_action);
 
         appAdapter = new TextListAdapter<>(new BaseAppDiffCallback<>(), getResources().getDimensionPixelSize(R.dimen.title_size));
         appAdapter.setDisplayFunction(app -> {
@@ -117,9 +125,19 @@ public class HomeActivity extends SelectAppActivity {
         TodoTouchHelper touchHelper = new TodoTouchHelper(todoAdapter, todoItemRepository);
         touchHelper.attachToRecyclerView(todoView);
 
-        todoItemRepository.getAll().observe(this, list -> {
-            todoAdapter.submitList(list);
+        todoItemRepository.getAll().observe(this, list -> todoAdapter.submitList(list));
+        showTodoList(FeaturePreference.isHomeShowTodo());
+
+        FeaturePreference.addObserver(() -> {
+            boolean showTodoButton = FeaturePreference.isFeatureEnabled(SharedConst.PREF_SHOW_TODO_BUTTON);
+            bottomAction.setVisibility(showTodoButton ? View.VISIBLE : View.GONE);
         });
+    }
+
+    private void showTodoList(boolean show) {
+        eventList.setVisibility(show ? View.GONE : View.VISIBLE);
+        todoList.setVisibility(show ? View.VISIBLE : View.GONE);
+        bottomAction.setText(getString(show ? R.string.calendar : R.string.todo));
     }
 
     private void loadCalendarEvents() {
@@ -178,20 +196,9 @@ public class HomeActivity extends SelectAppActivity {
     }
 
     public void onHomeBottomActionClicked(View v) {
-        // Toggle visibility between event_list and todo_list container
-        View eventList = findViewById(R.id.event_list);
-        View todoList = findViewById(R.id.todo_list);
-        TextView bottomAction = findViewById(R.id.home_bottom_action);
-
-        if (eventList.getVisibility() == View.VISIBLE) {
-            eventList.setVisibility(View.GONE);
-            todoList.setVisibility(View.VISIBLE);
-            bottomAction.setText(getString(R.string.calendar));
-        } else {
-            eventList.setVisibility(View.VISIBLE);
-            todoList.setVisibility(View.GONE);
-            bottomAction.setText(getString(R.string.todo));
-        }
+        boolean showToDo = eventList.getVisibility() == View.VISIBLE;
+        showTodoList(showToDo);
+        FeaturePreference.setHomeShowTodo(showToDo);
     }
 
     public void onAddTodoClicked(View v) {

@@ -9,4 +9,6 @@ public interface SharedConst {
     String PREF_LAYOUT_DIRECTION = "prefFeatLayoutDirection";
     String PREF_TIME_FORMAT_24 = "prefFeatTimeFormat24";
     String PREF_CALENDAR_ENABLED = "prefFeatCalendarEnabled";
+    String PREF_HOME_SHOW_TODO = "prefHomeShowTodo";
+    String PREF_SHOW_TODO_BUTTON = "prefShowTodoButton";
 }

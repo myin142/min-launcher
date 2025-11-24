@@ -52,6 +52,7 @@ public class Settings extends AppCompatActivity {
 
         initSwitch(R.id.show_date, SharedConst.PREF_SHOW_DATE_FEATURE);
         initSwitch(R.id.show_hidden_apps, SharedConst.PREF_SHOW_HIDDEN_APPS);
+        initSwitch(R.id.show_todo_button, SharedConst.PREF_SHOW_TODO_BUTTON);
 
         layoutDirection = findViewById(R.id.layout_direction);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,

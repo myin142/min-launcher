@@ -90,6 +90,14 @@
                 android:text="@string/settings_enable_show_hidden_apps"
                 android:textAlignment="viewStart"/>
 
+        <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/show_todo_button"
+                style="@style/ListText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_show_todo_button"
+                android:textAlignment="viewStart"/>
+
         <Spinner
                 android:id="@+id/layout_direction"
                 android:layout_width="wrap_content"
