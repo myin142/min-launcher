@@ -140,7 +140,12 @@ public class HomeActivity extends SelectAppActivity {
     private void showTodoList(boolean show) {
         eventList.setVisibility(show ? View.GONE : View.VISIBLE);
         todoList.setVisibility(show ? View.VISIBLE : View.GONE);
-        bottomAction.setText(getString(show ? R.string.calendar : R.string.todo));
+
+        var txt = getString(show ? R.string.calendar : R.string.todo);
+        if (!show) {
+            txt += " (" + todoAdapter.getItemCount() + ")";
+        }
+        bottomAction.setText(txt);
     }
 
     private void loadCalendarEvents() {
