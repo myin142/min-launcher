@@ -70,7 +70,7 @@ public class AppsList extends AppCompatActivity {
         setContentView(R.layout.apps_activity);
 
         overrideActivityTransition(OVERRIDE_TRANSITION_OPEN, R.anim.anim_bottom_in, R.anim.anim_bottom_out);
-        overrideActivityTransition(OVERRIDE_TRANSITION_CLOSE, R.anim.anim_bottom_in, R.anim.anim_bottom_out);
+//        overrideActivityTransition(OVERRIDE_TRANSITION_CLOSE, R.anim.anim_bottom_in, R.anim.anim_bottom_out);
 
         findViewById(R.id.root).setLayoutDirection(FeaturePreference.getLayoutDirection().getValue());
 

@@ -4,7 +4,7 @@ apply plugin: 'org.jetbrains.kotlin.android'
 android {
     defaultConfig {
         applicationId "io.github.myin.phone"
-        minSdkVersion 27
+        minSdkVersion 34
         compileSdk 35
         buildToolsVersion = "35.0.0"
         targetSdkVersion 35

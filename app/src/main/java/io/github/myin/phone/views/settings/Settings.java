@@ -38,7 +38,7 @@ public class Settings extends AppCompatActivity {
         setContentView(R.layout.settings_activity);
 
         overrideActivityTransition(OVERRIDE_TRANSITION_OPEN, R.anim.anim_top_in, R.anim.anim_top_out);
-        overrideActivityTransition(OVERRIDE_TRANSITION_CLOSE, R.anim.anim_top_in, R.anim.anim_top_out);
+//        overrideActivityTransition(OVERRIDE_TRANSITION_CLOSE, R.anim.anim_top_in, R.anim.anim_top_out);
 
         updateLayout();
 
