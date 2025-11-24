@@ -5,6 +5,7 @@ Features
 - [x] Search for installed apps
 - [x] Show time + date
 - [x] Show calendar events
+- [x] ToDo list
 
 ## Image Credits
 
