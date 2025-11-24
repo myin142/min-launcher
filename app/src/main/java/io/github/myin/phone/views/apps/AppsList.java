@@ -68,7 +68,9 @@ public class AppsList extends AppCompatActivity {
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.apps_activity);
-        overridePendingTransition(R.anim.anim_bottom_in, R.anim.anim_bottom_out);
+
+        overrideActivityTransition(OVERRIDE_TRANSITION_OPEN, R.anim.anim_bottom_in, R.anim.anim_bottom_out);
+        overrideActivityTransition(OVERRIDE_TRANSITION_CLOSE, R.anim.anim_bottom_in, R.anim.anim_bottom_out);
 
         findViewById(R.id.root).setLayoutDirection(FeaturePreference.getLayoutDirection().getValue());
 

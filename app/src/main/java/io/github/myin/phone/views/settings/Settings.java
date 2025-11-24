@@ -36,7 +36,10 @@ public class Settings extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
-        overridePendingTransition(R.anim.anim_top_in, R.anim.anim_top_out);
+
+        overrideActivityTransition(OVERRIDE_TRANSITION_OPEN, R.anim.anim_top_in, R.anim.anim_top_out);
+        overrideActivityTransition(OVERRIDE_TRANSITION_CLOSE, R.anim.anim_top_in, R.anim.anim_top_out);
+
         updateLayout();
 
         findViewById(R.id.edit_apps).setOnClickListener(v -> openEditApps());

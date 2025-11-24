@@ -177,7 +177,7 @@ public class HomeActivity extends SelectAppActivity {
                     openAppsList();
                 } else if (-deltaY > SETTINGS_SWIPE_DISTANCE) {
                     openSettings();
-                } else {
+                } else if (FeaturePreference.isHomeShowTodo()) {
                     final var isLeft = FeaturePreference.getLayoutDirection() == FeaturePreference.LayoutDirection.LEFT;
                     if (isLeft && deltaX > TODO_SWIPE_DISTANCE || !isLeft && -deltaX > TODO_SWIPE_DISTANCE) {
                         openTodo();
