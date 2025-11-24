@@ -3,18 +3,13 @@ package io.github.myin.phone.views.home;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
-import androidx.annotation.NonNull;
+import android.widget.TextView;
 import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.lang.invoke.VarHandle;
 import java.time.Duration;
 import java.time.ZonedDateTime;
 import java.util.Optional;
@@ -31,13 +26,14 @@ import io.github.myin.phone.data.calendar.CalendarService;
 import io.github.myin.phone.data.setting.AppSettingRepository;
 import io.github.myin.phone.data.todo.TodoItem;
 import io.github.myin.phone.data.todo.TodoItemDiffCallback;
+import io.github.myin.phone.data.todo.TodoItemRepository;
 import io.github.myin.phone.list.NoScrollLinearLayout;
 import io.github.myin.phone.list.TextListAdapter;
 import io.github.myin.phone.utils.FeaturePreference;
 import io.github.myin.phone.views.SelectAppActivity;
 import io.github.myin.phone.views.apps.AppsList;
 import io.github.myin.phone.views.settings.Settings;
-import org.jetbrains.annotations.NotNull;
+import io.github.myin.phone.views.todo.TodoActivity;
 
 import javax.inject.Inject;
 
@@ -46,6 +42,7 @@ public class HomeActivity extends SelectAppActivity {
     public static final int REQ_APPS_CHANGED = 1;
 
     private static final int REQ_OPEN_APP = 3;
+    private static final int REQ_ADD_TODO = 10;
 
     private static final int APPS_SWIPE_DISTANCE = 150;
     private static final int SETTINGS_SWIPE_DISTANCE = 800;
@@ -55,8 +52,7 @@ public class HomeActivity extends SelectAppActivity {
     private TextListAdapter<CalendarEvent> calendarAdapter;
     private TextListAdapter<TodoItem> todoAdapter;
     private RecyclerView calendarView;
-    private RecyclerView todoView; // new field for todo list
-    private View todoContainer; // container wrapping the todo list and add button
+    private RecyclerView todoView;
 
     private View homeTop;
     private View root;
@@ -65,6 +61,8 @@ public class HomeActivity extends SelectAppActivity {
     HomeAppRepository homeAppRepository;
     @Inject
     AppSettingRepository appSettingRepository;
+    @Inject
+    TodoItemRepository todoItemRepository;
 
     // TODO: don't understand inject anymore, fix this another time
     CalendarService calendarService = new CalendarService();
@@ -112,17 +110,16 @@ public class HomeActivity extends SelectAppActivity {
 
         todoAdapter = new TextListAdapter<>(new TodoItemDiffCallback(), getResources().getDimensionPixelSize(R.dimen.note_size), true);
         todoAdapter.setDisplayFunction(item -> item.title);
-        todoAdapter.setStrikethroughFunction(item -> item.completed);
         todoView = findViewById(R.id.todo_list);
         todoView.setLayoutManager(new NoScrollLinearLayout(this));
         todoView.setAdapter(todoAdapter);
 
-        todoContainer = findViewById(R.id.todo_list_container);
-        View addTodoBtn = findViewById(R.id.add_todo_button);
-        if (addTodoBtn != null) {
-            // keep a simple click feedback until real add flow is implemented
-            addTodoBtn.setOnClickListener(v -> onAddTodoClicked(v));
-        }
+        TodoTouchHelper touchHelper = new TodoTouchHelper(todoAdapter, todoItemRepository);
+        touchHelper.attachToRecyclerView(todoView);
+
+        todoItemRepository.getAll().observe(this, list -> {
+            todoAdapter.submitList(list);
+        });
     }
 
     private void loadCalendarEvents() {
@@ -141,6 +138,7 @@ public class HomeActivity extends SelectAppActivity {
 
         root.setLayoutDirection(FeaturePreference.getLayoutDirection().getValue());
         calendarView.setLayoutDirection(FeaturePreference.getLayoutDirection().flip().getValue());
+        todoView.setLayoutDirection(FeaturePreference.getLayoutDirection().flip().getValue());
         loadCalendarEvents();
     }
 
@@ -182,18 +180,41 @@ public class HomeActivity extends SelectAppActivity {
     public void onHomeBottomActionClicked(View v) {
         // Toggle visibility between event_list and todo_list container
         View eventList = findViewById(R.id.event_list);
+        View todoList = findViewById(R.id.todo_list);
+        TextView bottomAction = findViewById(R.id.home_bottom_action);
+
         if (eventList.getVisibility() == View.VISIBLE) {
             eventList.setVisibility(View.GONE);
-            if (todoContainer != null) todoContainer.setVisibility(View.VISIBLE);
+            todoList.setVisibility(View.VISIBLE);
+            bottomAction.setText(getString(R.string.calendar));
         } else {
             eventList.setVisibility(View.VISIBLE);
-            if (todoContainer != null) todoContainer.setVisibility(View.GONE);
+            todoList.setVisibility(View.GONE);
+            bottomAction.setText(getString(R.string.todo));
         }
     }
 
     public void onAddTodoClicked(View v) {
-        // Placeholder action: show a Toast. Replace with add-UI later.
-        Toast.makeText(this, getString(R.string.add_todo), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, TodoActivity.class);
+        startActivityForResult(intent, REQ_ADD_TODO);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == REQ_ADD_TODO && resultCode == RESULT_OK && data != null) {
+            String text = data.getStringExtra(io.github.myin.phone.views.todo.TodoActivity.RESULT_TODO_TEXT);
+            if (text != null) {
+                text = text.trim();
+                if (!text.isEmpty()) {
+                    TodoItem item = new TodoItem();
+                    item.title = text;
+                    item.completed = false;
+                    todoItemRepository.insert(item);
+                }
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
 }

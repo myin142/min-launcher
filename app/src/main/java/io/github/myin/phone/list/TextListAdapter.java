@@ -18,7 +18,6 @@ import lombok.Setter;
 public class TextListAdapter<T> extends ListAdapter<T, TextViewHolder> {
 
     private Function<T, String> displayFunction;
-    private Function<T, Boolean> strikethroughFunction;
     private Consumer<T> onItemClickListener;
 
     private final int fontSize;
@@ -56,11 +55,6 @@ public class TextListAdapter<T> extends ListAdapter<T, TextViewHolder> {
 
         String text = (this.displayFunction != null) ? this.displayFunction.apply(item) : item.toString();
         holder.setText(text);
-
-        if (strikethroughFunction != null) {
-            boolean strike = Boolean.TRUE.equals(strikethroughFunction.apply(item));
-            holder.getTextView().setPaintFlags(strike ? android.graphics.Paint.STRIKE_THRU_TEXT_FLAG : 0);
-        }
 
         holder.setOnTextClick(v -> {
             if (onItemClickListener != null) {

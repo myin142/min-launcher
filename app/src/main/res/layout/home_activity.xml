@@ -40,6 +40,7 @@
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:visibility="gone"
                     android:orientation="vertical">
 
                 <TextView
@@ -67,36 +68,16 @@
                     android:layout_weight="1"
                     android:alpha="0.5"
                     android:layout_width="0dp"
+                    android:visibility="gone"
                     android:layout_height="wrap_content"/>
 
-            <LinearLayout
-                    android:id="@+id/todo_list_container"
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/todo_list"
                     android:layout_weight="1"
+                    android:alpha="0.5"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/todo_list"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"/>
-
-                <TextView
-                        android:id="@+id/add_todo_button"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/add_todo"
-                        android:onClick="onAddTodoClicked"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:gravity="center"
-                        android:padding="@dimen/view_padding" />
-
-            </LinearLayout>
+                    android:layout_height="wrap_content"/>
         </LinearLayout>
-
 
     </LinearLayout>
 
@@ -125,6 +106,7 @@
                 android:onClick="onHomeBottomActionClicked"
                 android:clickable="true"
                 android:focusable="true"
+                android:textSize="@dimen/text_size"
                 android:padding="@dimen/view_padding"/>
 
     </LinearLayout>

@@ -37,6 +37,7 @@
         <activity android:name=".views.settings.apps.ManageAppsActivity" />
         <activity android:name=".views.settings.toolbar.ManageToolsActivity" />
         <activity android:name=".views.settings.About" />
+        <activity android:name=".views.todo.TodoActivity" />
     </application>
 
     <queries>

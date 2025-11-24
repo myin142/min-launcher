@@ -8,8 +8,8 @@ import dagger.Module;
 import dagger.Provides;
 import io.github.myin.phone.data.app.HomeAppRepository;
 import io.github.myin.phone.data.setting.AppSettingRepository;
-import io.github.myin.phone.data.todo.TodoItemRepository;
 import io.github.myin.phone.data.tool.HomeToolRepository;
+import io.github.myin.phone.data.todo.TodoItemRepository;
 
 import javax.inject.Singleton;
 
