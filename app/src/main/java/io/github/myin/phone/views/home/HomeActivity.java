@@ -99,7 +99,7 @@ public class HomeActivity extends SelectAppActivity {
 
         View startIntro = findViewById(R.id.start_intro);
 
-//        startIntro.setVisibility(homeAppRepository.countHomeApps() > 0 ? View.GONE : View.VISIBLE);
+        startIntro.setVisibility(homeAppRepository.countHomeApps() > 0 ? View.GONE : View.VISIBLE);
         homeAppRepository.getHomeAppsSorted().observe(this, appList -> {
             startIntro.setVisibility(appList.isEmpty() ? View.VISIBLE : View.GONE);
             appAdapter.submitList(appList);
@@ -161,6 +161,9 @@ public class HomeActivity extends SelectAppActivity {
         boolean showDate = FeaturePreference.isFeatureEnabled(SharedConst.PREF_SHOW_DATE_FEATURE);
         boolean showClock = FeaturePreference.isFeatureEnabled(SharedConst.PREF_SHOW_CLOCK_FEATURE);
         homeTop.setVisibility((!showDate && !showClock) ? View.GONE : View.VISIBLE);
+
+        boolean showTodo = FeaturePreference.isFeatureEnabled(SharedConst.PREF_HOME_SHOW_TODO);
+        showTodoList(showTodo);
 
         root.setLayoutDirection(FeaturePreference.getLayoutDirection().getValue());
         calendarView.setLayoutDirection(FeaturePreference.getLayoutDirection().flip().getValue());
