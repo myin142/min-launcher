@@ -162,8 +162,9 @@ public class HomeActivity extends SelectAppActivity {
         boolean showClock = FeaturePreference.isFeatureEnabled(SharedConst.PREF_SHOW_CLOCK_FEATURE);
         homeTop.setVisibility((!showDate && !showClock) ? View.GONE : View.VISIBLE);
 
-        boolean showTodo = FeaturePreference.isFeatureEnabled(SharedConst.PREF_HOME_SHOW_TODO);
-        showTodoList(showTodo);
+        final var todos = todoItemRepository.getAllCurrent();
+        todoAdapter.submitList(todos);
+        showTodoList(FeaturePreference.isHomeShowTodo());
 
         root.setLayoutDirection(FeaturePreference.getLayoutDirection().getValue());
         calendarView.setLayoutDirection(FeaturePreference.getLayoutDirection().flip().getValue());

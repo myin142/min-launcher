@@ -11,6 +11,9 @@ public interface TodoItemRepository {
     @Query("SELECT * FROM todo_items ORDER BY id ASC")
     LiveData<List<TodoItem>> getAll();
 
+    @Query("SELECT * FROM todo_items ORDER BY id ASC")
+    List<TodoItem> getAllCurrent();
+
     @Query("SELECT * FROM todo_items WHERE id = :id LIMIT 1")
     TodoItem findById(int id);
 
