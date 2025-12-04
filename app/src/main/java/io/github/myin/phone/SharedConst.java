@@ -11,4 +11,5 @@ public interface SharedConst {
     String PREF_CALENDAR_ENABLED = "prefFeatCalendarEnabled";
     String PREF_HOME_SHOW_TODO = "prefHomeShowTodo";
     String PREF_SHOW_TODO_BUTTON = "prefShowTodoButton";
+    String PREF_THEME_ID = "prefThemeId";
 }

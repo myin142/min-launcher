@@ -66,6 +66,7 @@ public class AppsList extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         AndroidInjection.inject(this);
+        setTheme(FeaturePreference.getThemeResourceId());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.apps_activity);
 

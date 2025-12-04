@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:gravity="center">
+
+    <!-- Theme preview chip showing the colors -->
+    <LinearLayout
+        android:id="@+id/theme_chip"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:padding="1dp">
+
+        <LinearLayout
+            android:id="@+id/color_text"
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+        </LinearLayout>
+        <LinearLayout
+                android:id="@+id/color_background"
+                android:layout_width="10dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Theme name -->
+    <TextView
+        android:id="@+id/theme_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textSize="12sp"
+        android:maxLines="2"
+        android:gravity="center"/>
+
+</LinearLayout>
+

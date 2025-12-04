@@ -74,6 +74,8 @@ public class HomeActivity extends SelectAppActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        setTheme(FeaturePreference.getThemeResourceId());
+
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_activity);
@@ -156,6 +158,7 @@ public class HomeActivity extends SelectAppActivity {
     @SuppressLint("WrongConstant")
     @Override
     protected void onResume() {
+        setTheme(FeaturePreference.getThemeResourceId());
         super.onResume();
 
         boolean showDate = FeaturePreference.isFeatureEnabled(SharedConst.PREF_SHOW_DATE_FEATURE);

@@ -25,6 +25,7 @@ public class About extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        setTheme(FeaturePreference.getThemeResourceId());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.about_activity);
         root = findViewById(R.id.root);

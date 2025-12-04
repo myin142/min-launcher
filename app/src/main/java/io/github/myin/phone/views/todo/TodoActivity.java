@@ -3,7 +3,6 @@ package io.github.myin.phone.views.todo;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -40,15 +39,15 @@ public class TodoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         AndroidInjection.inject(this);
+        setTheme(FeaturePreference.getThemeResourceId());
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.todo_activity);
 
         if (FeaturePreference.getLayoutDirection() == FeaturePreference.LayoutDirection.LEFT) {
             overrideActivityTransition(OVERRIDE_TRANSITION_OPEN, R.anim.anim_right_in, R.anim.anim_right_out);
-//            overrideActivityTransition(OVERRIDE_TRANSITION_CLOSE, R.anim.anim_right_in, R.anim.anim_right_out);
         } else {
             overrideActivityTransition(OVERRIDE_TRANSITION_OPEN, R.anim.anim_left_in, R.anim.anim_left_out);
-//            overrideActivityTransition(OVERRIDE_TRANSITION_CLOSE, R.anim.anim_left_in, R.anim.anim_left_out);
         }
 
         findViewById(R.id.root).setLayoutDirection(FeaturePreference.getLayoutDirection().getValue());

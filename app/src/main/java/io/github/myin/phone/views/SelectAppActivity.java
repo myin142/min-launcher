@@ -4,13 +4,21 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import io.github.myin.phone.data.app.HomeApp;
+import io.github.myin.phone.utils.FeaturePreference;
 import io.github.myin.phone.utils.IntentBuilder;
 import io.github.myin.phone.views.apps.AppsList;
 
 public abstract class SelectAppActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        setTheme(FeaturePreference.getThemeResourceId());
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

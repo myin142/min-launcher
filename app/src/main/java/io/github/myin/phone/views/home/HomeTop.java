@@ -12,13 +12,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import io.github.myin.phone.R;
 import io.github.myin.phone.SharedConst;
-import io.github.myin.phone.utils.Configuration;
 import io.github.myin.phone.utils.FeaturePreference;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
-import java.util.Locale;
 
 public class HomeTop extends Fragment {
 
@@ -27,23 +24,13 @@ public class HomeTop extends Fragment {
 
     private TextView dateView;
     private TextView timeView;
-    private TextView notificationCountView;
 
     private BroadcastReceiver timeTickReceiver;
-    private BroadcastReceiver notificationCountReceiver;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.home_top, container, false);
-    }
-
-    private DateTimeFormatter getTimeFormatter() {
-        if (FeaturePreference.isFeatureEnabled(SharedConst.PREF_TIME_FORMAT_24)) {
-            return DateTimeFormatter.ofPattern("HH:mm");
-        }
-
-        return DateTimeFormatter.ofPattern("hh:mm a");
     }
 
     @Override

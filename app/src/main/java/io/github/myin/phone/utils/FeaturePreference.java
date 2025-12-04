@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.view.View;
 
 import io.github.myin.phone.SharedConst;
+import io.github.myin.phone.theme.ThemeId;
 
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -55,6 +56,7 @@ public final class FeaturePreference {
         featureValues.put(SharedConst.PREF_LAYOUT_DIRECTION, preferences.getInt(SharedConst.PREF_LAYOUT_DIRECTION, LayoutDirection.LEFT.value));
         featureValues.put(SharedConst.PREF_CALENDAR_ENABLED, preferences.getStringSet(SharedConst.PREF_CALENDAR_ENABLED, new HashSet<>()));
         featureValues.put(SharedConst.PREF_HOME_SHOW_TODO, preferences.getBoolean(SharedConst.PREF_HOME_SHOW_TODO, false));
+        featureValues.put(SharedConst.PREF_THEME_ID, preferences.getString(SharedConst.PREF_THEME_ID, ThemeId.DEFAULT.getId()));
     }
 
     public static void addObserver(Runnable runnable) {
@@ -133,6 +135,23 @@ public final class FeaturePreference {
     public static void setHomeShowTodo(boolean show) {
         featureValues.put(SharedConst.PREF_HOME_SHOW_TODO, show);
         setFeatureSetting(editor -> editor.putBoolean(SharedConst.PREF_HOME_SHOW_TODO, show));
+    }
+
+    public static ThemeId getThemeId() {
+        Object themeId = featureValues.get(SharedConst.PREF_THEME_ID);
+        return Optional.ofNullable(themeId)
+                .map(id -> ThemeId.Companion.fromId((String) id))
+                .orElse(ThemeId.DEFAULT);
+    }
+
+    public static int getThemeResourceId() {
+        return getThemeId().getStyleResId();
+    }
+
+    public static void setThemeId(ThemeId themeId) {
+        final var theme = (themeId != null) ? themeId : ThemeId.DEFAULT;
+        featureValues.put(SharedConst.PREF_THEME_ID, theme.getId());
+        setFeatureSetting(editor -> editor.putString(SharedConst.PREF_THEME_ID, theme.getId()));
     }
 
     private static void setFeatureSetting(Consumer<SharedPreferences.Editor> action) {
