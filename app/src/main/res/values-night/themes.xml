@@ -2,9 +2,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <style name="AppTheme.Ocean" parent="AppTheme">
         <item name="colorPrimary">#FBECB3</item>
-        <item name="colorPrimaryDark">#0B1224</item>
+        <item name="colorPrimaryDark">#13203D</item>
         <item name="colorAccent">#FFDC00</item>
-        <item name="android:colorBackground">#0B1224</item>
+        <item name="android:colorBackground">#13203D</item>
         <item name="android:textColor">#FBECB3</item>
     </style>
 </resources>
