@@ -7,7 +7,7 @@ import io.github.myin.phone.R
  */
 enum class ThemeId(val id: String, val displayName: String, val styleResId: Int) {
     DEFAULT("default", "Default", R.style.AppTheme),
-    TEST("test", "Test", R.style.AppTheme_Test),
+    OCEAN("ocean", "Ocean", R.style.AppTheme_Ocean),
     ;
 
     companion object {
